@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace CabinTempArduino
 {
-    public partial class Form1 : Form
+    public partial class LimitsForm : Form
     {
-        public Form1()
+        public LimitsForm()
         {
             InitializeComponent();
         }

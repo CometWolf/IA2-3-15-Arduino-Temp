@@ -1,6 +1,6 @@
 ﻿namespace CabinTempArduino
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,25 +29,25 @@
         private void InitializeComponent()
         {
             this.grbBatteryStatus = new System.Windows.Forms.GroupBox();
+            this.lblBatteryStatus = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.prbBatteryStatus = new System.Windows.Forms.ProgressBar();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lblBatteryStatus = new System.Windows.Forms.Label();
             this.rtbDatabaseValues = new System.Windows.Forms.RichTextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtFetchLast = new System.Windows.Forms.TextBox();
             this.btnFetch = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.btnLimits = new System.Windows.Forms.Button();
+            this.btnSubscribers = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grbFetchingValues = new System.Windows.Forms.GroupBox();
+            this.cboAnnotation = new System.Windows.Forms.ComboBox();
+            this.chbError = new System.Windows.Forms.CheckBox();
+            this.chbTemperature = new System.Windows.Forms.CheckBox();
             this.grbBatteryStatus.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.grbFetchingValues.SuspendLayout();
             this.SuspendLayout();
             // 
             // grbBatteryStatus
@@ -61,6 +61,24 @@
             this.grbBatteryStatus.TabIndex = 0;
             this.grbBatteryStatus.TabStop = false;
             this.grbBatteryStatus.Text = "Battery Status";
+            // 
+            // lblBatteryStatus
+            // 
+            this.lblBatteryStatus.AutoSize = true;
+            this.lblBatteryStatus.Location = new System.Drawing.Point(390, 29);
+            this.lblBatteryStatus.Name = "lblBatteryStatus";
+            this.lblBatteryStatus.Size = new System.Drawing.Size(27, 13);
+            this.lblBatteryStatus.TabIndex = 4;
+            this.lblBatteryStatus.Text = "N/A";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(390, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(43, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Status: ";
             // 
             // prbBatteryStatus
             // 
@@ -84,24 +102,6 @@
             this.label1.Size = new System.Drawing.Size(70, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Current temp.";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(390, 19);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Status: ";
-            // 
-            // lblBatteryStatus
-            // 
-            this.lblBatteryStatus.AutoSize = true;
-            this.lblBatteryStatus.Location = new System.Drawing.Point(430, 19);
-            this.lblBatteryStatus.Name = "lblBatteryStatus";
-            this.lblBatteryStatus.Size = new System.Drawing.Size(27, 13);
-            this.lblBatteryStatus.TabIndex = 4;
-            this.lblBatteryStatus.Text = "N/A";
             // 
             // rtbDatabaseValues
             // 
@@ -141,105 +141,110 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(3, 22);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(94, 13);
+            this.label3.Size = new System.Drawing.Size(71, 13);
             this.label3.TabIndex = 7;
-            this.label3.Text = "How many values:";
+            this.label3.Text = "Fetch for last:";
             // 
-            // button1
+            // btnLimits
             // 
-            this.button1.Location = new System.Drawing.Point(12, 261);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(114, 23);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Limits";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnLimits.Location = new System.Drawing.Point(12, 261);
+            this.btnLimits.Name = "btnLimits";
+            this.btnLimits.Size = new System.Drawing.Size(114, 23);
+            this.btnLimits.TabIndex = 8;
+            this.btnLimits.Text = "Limits";
+            this.btnLimits.UseVisualStyleBackColor = true;
+            this.btnLimits.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // btnSubscribers
             // 
-            this.button2.Location = new System.Drawing.Point(12, 290);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(114, 23);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "Subscribers";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(6, 87);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(82, 17);
-            this.radioButton1.TabIndex = 10;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Temperatue";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(6, 110);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(47, 17);
-            this.radioButton2.TabIndex = 11;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Error";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // radioButton3
-            // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(6, 133);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(101, 17);
-            this.radioButton3.TabIndex = 12;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Temp. and Error";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.btnSubscribers.Location = new System.Drawing.Point(12, 290);
+            this.btnSubscribers.Name = "btnSubscribers";
+            this.btnSubscribers.Size = new System.Drawing.Size(114, 23);
+            this.btnSubscribers.TabIndex = 9;
+            this.btnSubscribers.Text = "Subscribers";
+            this.btnSubscribers.UseVisualStyleBackColor = true;
+            this.btnSubscribers.Click += new System.EventHandler(this.btnSubscribers_Click);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 71);
+            this.label5.Location = new System.Drawing.Point(3, 93);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(75, 13);
             this.label5.TabIndex = 13;
             this.label5.Text = "What to fetch:";
             // 
-            // groupBox1
+            // grbFetchingValues
             // 
-            this.groupBox1.Controls.Add(this.txtFetchLast);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.btnFetch);
-            this.groupBox1.Controls.Add(this.radioButton3);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 61);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(114, 183);
-            this.groupBox1.TabIndex = 14;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Fetching values";
+            this.grbFetchingValues.Controls.Add(this.cboAnnotation);
+            this.grbFetchingValues.Controls.Add(this.chbError);
+            this.grbFetchingValues.Controls.Add(this.chbTemperature);
+            this.grbFetchingValues.Controls.Add(this.txtFetchLast);
+            this.grbFetchingValues.Controls.Add(this.label5);
+            this.grbFetchingValues.Controls.Add(this.btnFetch);
+            this.grbFetchingValues.Controls.Add(this.label3);
+            this.grbFetchingValues.Location = new System.Drawing.Point(12, 61);
+            this.grbFetchingValues.Name = "grbFetchingValues";
+            this.grbFetchingValues.Size = new System.Drawing.Size(114, 183);
+            this.grbFetchingValues.TabIndex = 14;
+            this.grbFetchingValues.TabStop = false;
+            this.grbFetchingValues.Text = "Fetching values";
             // 
-            // Form1
+            // cboAnnotation
+            // 
+            this.cboAnnotation.FormattingEnabled = true;
+            this.cboAnnotation.Items.AddRange(new object[] {
+            "Values",
+            "Day(s)",
+            "Month(s)",
+            "Year(s)"});
+            this.cboAnnotation.Location = new System.Drawing.Point(6, 64);
+            this.cboAnnotation.Name = "cboAnnotation";
+            this.cboAnnotation.Size = new System.Drawing.Size(101, 21);
+            this.cboAnnotation.TabIndex = 16;
+            this.cboAnnotation.Text = "Annotation";
+            // 
+            // chbError
+            // 
+            this.chbError.AutoSize = true;
+            this.chbError.Location = new System.Drawing.Point(6, 132);
+            this.chbError.Name = "chbError";
+            this.chbError.Size = new System.Drawing.Size(48, 17);
+            this.chbError.TabIndex = 15;
+            this.chbError.Text = "Error";
+            this.chbError.UseVisualStyleBackColor = true;
+            // 
+            // chbTemperature
+            // 
+            this.chbTemperature.AutoSize = true;
+            this.chbTemperature.Location = new System.Drawing.Point(6, 109);
+            this.chbTemperature.Name = "chbTemperature";
+            this.chbTemperature.Size = new System.Drawing.Size(86, 17);
+            this.chbTemperature.TabIndex = 14;
+            this.chbTemperature.Text = "Temperature";
+            this.chbTemperature.UseVisualStyleBackColor = true;
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(488, 381);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.grbFetchingValues);
+            this.Controls.Add(this.btnSubscribers);
+            this.Controls.Add(this.btnLimits);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.rtbDatabaseValues);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.grbBatteryStatus);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.Name = "MainForm";
+            this.Text = "Morten\'s cabin temperature!";
             this.grbBatteryStatus.ResumeLayout(false);
             this.grbBatteryStatus.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.grbFetchingValues.ResumeLayout(false);
+            this.grbFetchingValues.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -258,13 +263,13 @@
         private System.Windows.Forms.TextBox txtFetchLast;
         private System.Windows.Forms.Button btnFetch;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.Button btnLimits;
+        private System.Windows.Forms.Button btnSubscribers;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grbFetchingValues;
+        private System.Windows.Forms.ComboBox cboAnnotation;
+        private System.Windows.Forms.CheckBox chbError;
+        private System.Windows.Forms.CheckBox chbTemperature;
     }
 }
 

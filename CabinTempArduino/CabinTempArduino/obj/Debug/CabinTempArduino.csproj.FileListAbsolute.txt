@@ -4,8 +4,8 @@ C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTem
 C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\bin\Debug\CabinTempArduino.exe
 C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\bin\Debug\CabinTempArduino.pdb
 C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.csprojResolveAssemblyReference.cache
-C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.Form1.resources
 C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.Properties.Resources.resources
 C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.csproj.GenerateResource.Cache
 C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.exe
 C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.pdb
+C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.MainForm.resources
