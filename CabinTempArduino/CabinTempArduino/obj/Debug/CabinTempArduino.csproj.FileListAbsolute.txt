@@ -9,3 +9,4 @@ C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTem
 C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.exe
 C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.pdb
 C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.MainForm.resources
+C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.LimitsForm.resources

@@ -28,35 +28,52 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtValue = new System.Windows.Forms.TextBox();
+            this.cboLimitType = new System.Windows.Forms.ComboBox();
+            this.btnSetLimit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // label1
+            // txtValue
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(25, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Upper limit";
+            this.txtValue.Location = new System.Drawing.Point(115, 12);
+            this.txtValue.Name = "txtValue";
+            this.txtValue.Size = new System.Drawing.Size(60, 20);
+            this.txtValue.TabIndex = 0;
             // 
-            // textBox1
+            // cboLimitType
             // 
-            this.textBox1.Location = new System.Drawing.Point(133, 64);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 1;
+            this.cboLimitType.FormattingEnabled = true;
+            this.cboLimitType.Items.AddRange(new object[] {
+            "High alarm",
+            "Upper limit",
+            "Lower limit",
+            "Low alarm"});
+            this.cboLimitType.Location = new System.Drawing.Point(12, 11);
+            this.cboLimitType.Name = "cboLimitType";
+            this.cboLimitType.Size = new System.Drawing.Size(97, 21);
+            this.cboLimitType.TabIndex = 1;
+            this.cboLimitType.Text = "Limit type";
+            // 
+            // btnSetLimit
+            // 
+            this.btnSetLimit.Location = new System.Drawing.Point(12, 38);
+            this.btnSetLimit.Name = "btnSetLimit";
+            this.btnSetLimit.Size = new System.Drawing.Size(163, 23);
+            this.btnSetLimit.TabIndex = 2;
+            this.btnSetLimit.Text = "Set limit";
+            this.btnSetLimit.UseVisualStyleBackColor = true;
             // 
             // LimitsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(187, 72);
+            this.Controls.Add(this.btnSetLimit);
+            this.Controls.Add(this.cboLimitType);
+            this.Controls.Add(this.txtValue);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "LimitsForm";
-            this.Text = "LimitsForm";
+            this.Text = "Limits";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -64,7 +81,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtValue;
+        private System.Windows.Forms.ComboBox cboLimitType;
+        private System.Windows.Forms.Button btnSetLimit;
+
     }
 }
