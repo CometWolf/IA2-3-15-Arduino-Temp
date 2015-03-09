@@ -150,7 +150,7 @@
             // lblConfirmPassword
             // 
             this.lblConfirmPassword.AutoSize = true;
-            this.lblConfirmPassword.Location = new System.Drawing.Point(118, 153);
+            this.lblConfirmPassword.Location = new System.Drawing.Point(115, 153);
             this.lblConfirmPassword.Name = "lblConfirmPassword";
             this.lblConfirmPassword.Size = new System.Drawing.Size(90, 13);
             this.lblConfirmPassword.TabIndex = 12;
