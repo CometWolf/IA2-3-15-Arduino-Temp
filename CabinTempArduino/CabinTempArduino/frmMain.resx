@@ -117,71 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;lblStatus.Name" xml:space="preserve">
-    <value>lblStatus</value>
-  </data>
-  <data name="&gt;&gt;lblStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblStatus.Parent" xml:space="preserve">
-    <value>grbBatteryStatus</value>
-  </data>
-  <data name="&gt;&gt;lblStatus.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;lblStatusStatic.Name" xml:space="preserve">
-    <value>lblStatusStatic</value>
-  </data>
-  <data name="&gt;&gt;lblStatusStatic.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblStatusStatic.Parent" xml:space="preserve">
-    <value>grbBatteryStatus</value>
-  </data>
-  <data name="&gt;&gt;lblStatusStatic.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;prbBatteryStatus.Name" xml:space="preserve">
-    <value>prbBatteryStatus</value>
-  </data>
-  <data name="&gt;&gt;prbBatteryStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;prbBatteryStatus.Parent" xml:space="preserve">
-    <value>grbBatteryStatus</value>
-  </data>
-  <data name="&gt;&gt;prbBatteryStatus.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="grbBatteryStatus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 363</value>
-  </data>
-  <data name="grbBatteryStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>465, 51</value>
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="grbBatteryStatus.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="grbBatteryStatus.Text" xml:space="preserve">
-    <value>Battery Status</value>
-  </data>
-  <data name="&gt;&gt;grbBatteryStatus.Name" xml:space="preserve">
-    <value>grbBatteryStatus</value>
-  </data>
-  <data name="&gt;&gt;grbBatteryStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grbBatteryStatus.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;grbBatteryStatus.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
   <data name="lblStatus.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lblStatus.Location" type="System.Drawing.Point, System.Drawing">
     <value>390, 29</value>
   </data>
@@ -253,6 +193,30 @@
   </data>
   <data name="&gt;&gt;prbBatteryStatus.ZOrder" xml:space="preserve">
     <value>2</value>
+  </data>
+  <data name="grbBatteryStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 363</value>
+  </data>
+  <data name="grbBatteryStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>465, 51</value>
+  </data>
+  <data name="grbBatteryStatus.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="grbBatteryStatus.Text" xml:space="preserve">
+    <value>Battery Status</value>
+  </data>
+  <data name="&gt;&gt;grbBatteryStatus.Name" xml:space="preserve">
+    <value>grbBatteryStatus</value>
+  </data>
+  <data name="&gt;&gt;grbBatteryStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grbBatteryStatus.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;grbBatteryStatus.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 24</value>
@@ -405,13 +369,13 @@
     <value>3, 22</value>
   </data>
   <data name="lblFetchForLast.Size" type="System.Drawing.Size, System.Drawing">
-    <value>71, 13</value>
+    <value>89, 13</value>
   </data>
   <data name="lblFetchForLast.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
   <data name="lblFetchForLast.Text" xml:space="preserve">
-    <value>Fetch for last:</value>
+    <value>Fetch for the last:</value>
   </data>
   <data name="&gt;&gt;lblFetchForLast.Name" xml:space="preserve">
     <value>lblFetchForLast</value>
@@ -561,7 +525,7 @@
     <value>2</value>
   </data>
   <data name="cboAnnotation.Items" xml:space="preserve">
-    <value>Values</value>
+    <value>Entries</value>
   </data>
   <data name="cboAnnotation.Items1" xml:space="preserve">
     <value>Day(s)</value>

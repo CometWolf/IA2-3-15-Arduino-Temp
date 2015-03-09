@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.grbBatteryStatus = new System.Windows.Forms.GroupBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblStatusStatic = new System.Windows.Forms.Label();
@@ -223,24 +223,24 @@
             // 
             // chartFetchedValues
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartFetchedValues.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            legend2.Position.Auto = false;
-            legend2.Position.Height = 4F;
-            legend2.Position.Width = 24.92401F;
-            legend2.Position.X = 44F;
-            legend2.Position.Y = 95F;
-            legend2.TitleAlignment = System.Drawing.StringAlignment.Near;
-            this.chartFetchedValues.Legends.Add(legend2);
+            chartArea4.Name = "ChartArea1";
+            this.chartFetchedValues.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            legend4.Position.Auto = false;
+            legend4.Position.Height = 4F;
+            legend4.Position.Width = 24.92401F;
+            legend4.Position.X = 44F;
+            legend4.Position.Y = 95F;
+            legend4.TitleAlignment = System.Drawing.StringAlignment.Near;
+            this.chartFetchedValues.Legends.Add(legend4);
             resources.ApplyResources(this.chartFetchedValues, "chartFetchedValues");
             this.chartFetchedValues.Name = "chartFetchedValues";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.LegendText = "#SERIESNAME";
-            series2.Name = "Temp.";
-            this.chartFetchedValues.Series.Add(series2);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Legend = "Legend1";
+            series4.LegendText = "#SERIESNAME";
+            series4.Name = "Temp.";
+            this.chartFetchedValues.Series.Add(series4);
             this.chartFetchedValues.Click += new System.EventHandler(this.chartFetchedValues_Click);
             // 
             // totGraph
