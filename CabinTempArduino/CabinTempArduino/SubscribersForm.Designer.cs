@@ -1,6 +1,6 @@
 ﻿namespace CabinTempArduino
 {
-    partial class LimitsForm
+    partial class SubscribersForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "LimitsForm";
+            this.Text = "SubscribersForm";
         }
 
         #endregion
