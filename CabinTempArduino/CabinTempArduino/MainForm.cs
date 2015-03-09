@@ -34,5 +34,11 @@ namespace CabinTempArduino
             SettingsForm settingsForm = new SettingsForm();
             settingsForm.ShowDialog();
         }
+
+        private void chartFetchedValues_Click(object sender, EventArgs e)
+        {
+            Chart chart = new Chart();
+            chart.Show();
+        }
     }
 }

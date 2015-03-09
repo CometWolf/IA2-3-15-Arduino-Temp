@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.grbBatteryStatus = new System.Windows.Forms.GroupBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblStatusStatic = new System.Windows.Forms.Label();
@@ -48,9 +51,17 @@
             this.chbTemperature = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.grbEdit = new System.Windows.Forms.GroupBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabTable = new System.Windows.Forms.TabPage();
+            this.tabGraph = new System.Windows.Forms.TabPage();
+            this.chartFetchedValues = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.grbBatteryStatus.SuspendLayout();
             this.grbFetchingValues.SuspendLayout();
             this.grbEdit.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabTable.SuspendLayout();
+            this.tabGraph.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartFetchedValues)).BeginInit();
             this.SuspendLayout();
             // 
             // grbBatteryStatus
@@ -108,9 +119,9 @@
             // 
             // rtbDatabaseValues
             // 
-            this.rtbDatabaseValues.Location = new System.Drawing.Point(132, 24);
+            this.rtbDatabaseValues.Location = new System.Drawing.Point(3, 3);
             this.rtbDatabaseValues.Name = "rtbDatabaseValues";
-            this.rtbDatabaseValues.Size = new System.Drawing.Size(345, 333);
+            this.rtbDatabaseValues.Size = new System.Drawing.Size(327, 300);
             this.rtbDatabaseValues.TabIndex = 3;
             this.rtbDatabaseValues.Text = "";
             // 
@@ -249,15 +260,71 @@
             this.grbEdit.TabStop = false;
             this.grbEdit.Text = "Edit";
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabTable);
+            this.tabControl1.Controls.Add(this.tabGraph);
+            this.tabControl1.Location = new System.Drawing.Point(132, 25);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(344, 332);
+            this.tabControl1.TabIndex = 17;
+            // 
+            // tabTable
+            // 
+            this.tabTable.Controls.Add(this.rtbDatabaseValues);
+            this.tabTable.Location = new System.Drawing.Point(4, 22);
+            this.tabTable.Name = "tabTable";
+            this.tabTable.Padding = new System.Windows.Forms.Padding(3);
+            this.tabTable.Size = new System.Drawing.Size(336, 306);
+            this.tabTable.TabIndex = 0;
+            this.tabTable.Text = "Table";
+            this.tabTable.UseVisualStyleBackColor = true;
+            // 
+            // tabGraph
+            // 
+            this.tabGraph.Controls.Add(this.chartFetchedValues);
+            this.tabGraph.Location = new System.Drawing.Point(4, 22);
+            this.tabGraph.Name = "tabGraph";
+            this.tabGraph.Padding = new System.Windows.Forms.Padding(3);
+            this.tabGraph.Size = new System.Drawing.Size(336, 306);
+            this.tabGraph.TabIndex = 1;
+            this.tabGraph.Text = "Graph";
+            this.tabGraph.UseVisualStyleBackColor = true;
+            // 
+            // chartFetchedValues
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chartFetchedValues.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            legend1.Position.Auto = false;
+            legend1.Position.Height = 4F;
+            legend1.Position.Width = 24.92401F;
+            legend1.Position.X = 44F;
+            legend1.Position.Y = 95F;
+            legend1.TitleAlignment = System.Drawing.StringAlignment.Near;
+            this.chartFetchedValues.Legends.Add(legend1);
+            this.chartFetchedValues.Location = new System.Drawing.Point(3, 3);
+            this.chartFetchedValues.Name = "chartFetchedValues";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.LegendText = "#SERIESNAME";
+            series1.Name = "Temp.";
+            this.chartFetchedValues.Series.Add(series1);
+            this.chartFetchedValues.Size = new System.Drawing.Size(330, 300);
+            this.chartFetchedValues.TabIndex = 18;
+            this.chartFetchedValues.Click += new System.EventHandler(this.chartFetchedValues_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(488, 425);
+            this.ClientSize = new System.Drawing.Size(486, 425);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.grbEdit);
             this.Controls.Add(this.grbFetchingValues);
             this.Controls.Add(this.lblFetchedValuesDB);
-            this.Controls.Add(this.rtbDatabaseValues);
             this.Controls.Add(this.lblCurrentTemp);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.grbBatteryStatus);
@@ -270,6 +337,10 @@
             this.grbFetchingValues.ResumeLayout(false);
             this.grbFetchingValues.PerformLayout();
             this.grbEdit.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabTable.ResumeLayout(false);
+            this.tabGraph.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartFetchedValues)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -297,6 +368,10 @@
         private System.Windows.Forms.CheckBox chbTemperature;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox grbEdit;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabTable;
+        private System.Windows.Forms.TabPage tabGraph;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartFetchedValues;
     }
 }
 

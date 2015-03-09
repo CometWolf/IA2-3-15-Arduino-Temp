@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cboPreset = new System.Windows.Forms.ComboBox();
-            this.txtCustomInterval = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.rbtMinutes = new System.Windows.Forms.RadioButton();
             this.rbtSeconds = new System.Windows.Forms.RadioButton();
-            this.button1 = new System.Windows.Forms.Button();
+            this.txtCustomInterval = new System.Windows.Forms.TextBox();
+            this.cboPreset = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,28 +51,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Log interval";
             // 
-            // cboPreset
+            // button1
             // 
-            this.cboPreset.FormattingEnabled = true;
-            this.cboPreset.Items.AddRange(new object[] {
-            "60 minutes",
-            "30 minutes",
-            "15 minutes",
-            "Custom"});
-            this.cboPreset.Location = new System.Drawing.Point(6, 19);
-            this.cboPreset.Name = "cboPreset";
-            this.cboPreset.Size = new System.Drawing.Size(121, 21);
-            this.cboPreset.TabIndex = 0;
-            this.cboPreset.Text = "Preset";
-            this.cboPreset.SelectedIndexChanged += new System.EventHandler(this.cboPreset_SelectedIndexChanged);
-            // 
-            // txtCustomInterval
-            // 
-            this.txtCustomInterval.Location = new System.Drawing.Point(133, 19);
-            this.txtCustomInterval.Name = "txtCustomInterval";
-            this.txtCustomInterval.Size = new System.Drawing.Size(81, 20);
-            this.txtCustomInterval.TabIndex = 1;
-            this.txtCustomInterval.Text = "Custom interval";
+            this.button1.Location = new System.Drawing.Point(6, 46);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(121, 40);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Set interval";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // rbtMinutes
             // 
@@ -96,14 +82,29 @@
             this.rbtSeconds.Text = "Seconds";
             this.rbtSeconds.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // txtCustomInterval
             // 
-            this.button1.Location = new System.Drawing.Point(6, 46);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(121, 40);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Set interval";
-            this.button1.UseVisualStyleBackColor = true;
+            this.txtCustomInterval.Location = new System.Drawing.Point(133, 19);
+            this.txtCustomInterval.Name = "txtCustomInterval";
+            this.txtCustomInterval.Size = new System.Drawing.Size(81, 20);
+            this.txtCustomInterval.TabIndex = 1;
+            this.txtCustomInterval.Text = "Custom interval";
+            this.txtCustomInterval.Click += new System.EventHandler(this.txtCustomInterval_Click);
+            // 
+            // cboPreset
+            // 
+            this.cboPreset.FormattingEnabled = true;
+            this.cboPreset.Items.AddRange(new object[] {
+            "60 minutes",
+            "30 minutes",
+            "15 minutes",
+            "Custom"});
+            this.cboPreset.Location = new System.Drawing.Point(6, 19);
+            this.cboPreset.Name = "cboPreset";
+            this.cboPreset.Size = new System.Drawing.Size(121, 21);
+            this.cboPreset.TabIndex = 0;
+            this.cboPreset.Text = "Preset";
+            this.cboPreset.SelectedIndexChanged += new System.EventHandler(this.cboPreset_SelectedIndexChanged);
             // 
             // SettingsForm
             // 

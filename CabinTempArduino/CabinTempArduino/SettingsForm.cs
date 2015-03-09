@@ -34,7 +34,13 @@ namespace CabinTempArduino
                 rbtSeconds.Enabled = true;
                 rbtMinutes.Enabled = true;
             }
-                    
+
+        }
+
+        private void txtCustomInterval_Click(object sender, EventArgs e)
+        {
+            if (txtCustomInterval.Text == "Custom interval")
+                txtCustomInterval.Text = "";
         }
     }
 }
