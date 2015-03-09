@@ -1,0 +1,3 @@
+C:\Users\Martin\AppData\Local\Temporary Projects\CabinTempArduino\bin\Debug\CabinTempArduino.exe.config
+C:\Users\Martin\Documents\GitHub\CabinTempArduino\CabinTempArduino\bin\Debug\CabinTempArduino.exe.config
+C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\bin\Debug\CabinTempArduino.exe.config
