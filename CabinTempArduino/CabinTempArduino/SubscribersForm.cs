@@ -16,5 +16,16 @@ namespace CabinTempArduino
         {
             InitializeComponent();
         }
+
+        private void cboSelectSubscriber_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboSelectSubscriber.Text != "New")
+                btnSubmit.Text = "Submit changes";
+
+            if (cboSelectSubscriber.Text == "New")
+                btnDelete.Enabled = false;
+            else
+                btnDelete.Enabled = true;
+        }
     }
 }

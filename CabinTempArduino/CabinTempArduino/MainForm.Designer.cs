@@ -46,8 +46,11 @@
             this.cboAnnotation = new System.Windows.Forms.ComboBox();
             this.chbError = new System.Windows.Forms.CheckBox();
             this.chbTemperature = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.grbBatteryStatus.SuspendLayout();
             this.grbFetchingValues.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // grbBatteryStatus
@@ -55,7 +58,7 @@
             this.grbBatteryStatus.Controls.Add(this.lblBatteryStatus);
             this.grbBatteryStatus.Controls.Add(this.label2);
             this.grbBatteryStatus.Controls.Add(this.prbBatteryStatus);
-            this.grbBatteryStatus.Location = new System.Drawing.Point(12, 320);
+            this.grbBatteryStatus.Location = new System.Drawing.Point(11, 363);
             this.grbBatteryStatus.Name = "grbBatteryStatus";
             this.grbBatteryStatus.Size = new System.Drawing.Size(465, 51);
             this.grbBatteryStatus.TabIndex = 0;
@@ -107,7 +110,7 @@
             // 
             this.rtbDatabaseValues.Location = new System.Drawing.Point(132, 24);
             this.rtbDatabaseValues.Name = "rtbDatabaseValues";
-            this.rtbDatabaseValues.Size = new System.Drawing.Size(345, 290);
+            this.rtbDatabaseValues.Size = new System.Drawing.Size(345, 333);
             this.rtbDatabaseValues.TabIndex = 3;
             this.rtbDatabaseValues.Text = "";
             // 
@@ -147,9 +150,9 @@
             // 
             // btnLimits
             // 
-            this.btnLimits.Location = new System.Drawing.Point(12, 261);
+            this.btnLimits.Location = new System.Drawing.Point(6, 48);
             this.btnLimits.Name = "btnLimits";
-            this.btnLimits.Size = new System.Drawing.Size(114, 23);
+            this.btnLimits.Size = new System.Drawing.Size(101, 23);
             this.btnLimits.TabIndex = 8;
             this.btnLimits.Text = "Limits";
             this.btnLimits.UseVisualStyleBackColor = true;
@@ -157,9 +160,9 @@
             // 
             // btnSubscribers
             // 
-            this.btnSubscribers.Location = new System.Drawing.Point(12, 290);
+            this.btnSubscribers.Location = new System.Drawing.Point(6, 77);
             this.btnSubscribers.Name = "btnSubscribers";
-            this.btnSubscribers.Size = new System.Drawing.Size(114, 23);
+            this.btnSubscribers.Size = new System.Drawing.Size(101, 23);
             this.btnSubscribers.TabIndex = 9;
             this.btnSubscribers.Text = "Subscribers";
             this.btnSubscribers.UseVisualStyleBackColor = true;
@@ -224,14 +227,34 @@
             this.chbTemperature.Text = "Temperature";
             this.chbTemperature.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(6, 19);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(101, 23);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "Settings";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnLimits);
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.btnSubscribers);
+            this.groupBox1.Location = new System.Drawing.Point(12, 250);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(114, 107);
+            this.groupBox1.TabIndex = 16;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Edit";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(488, 381);
+            this.ClientSize = new System.Drawing.Size(488, 425);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grbFetchingValues);
-            this.Controls.Add(this.btnSubscribers);
-            this.Controls.Add(this.btnLimits);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.rtbDatabaseValues);
             this.Controls.Add(this.label1);
@@ -245,6 +268,7 @@
             this.grbBatteryStatus.PerformLayout();
             this.grbFetchingValues.ResumeLayout(false);
             this.grbFetchingValues.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -270,6 +294,8 @@
         private System.Windows.Forms.ComboBox cboAnnotation;
         private System.Windows.Forms.CheckBox chbError;
         private System.Windows.Forms.CheckBox chbTemperature;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 
