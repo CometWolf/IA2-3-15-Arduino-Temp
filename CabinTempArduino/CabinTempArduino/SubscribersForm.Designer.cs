@@ -196,7 +196,7 @@
             this.Controls.Add(this.lblFirstName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "SubscribersForm";
-            this.Text = "Edit subscribers";
+            this.Text = "Subscribers";
             this.ResumeLayout(false);
             this.PerformLayout();
 

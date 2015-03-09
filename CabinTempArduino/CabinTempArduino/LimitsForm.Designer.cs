@@ -75,7 +75,7 @@
             this.Controls.Add(this.cboLimitType);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "LimitsForm";
-            this.Text = "Edit limits";
+            this.Text = "Limits";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -29,34 +29,34 @@
         private void InitializeComponent()
         {
             this.grbBatteryStatus = new System.Windows.Forms.GroupBox();
-            this.lblBatteryStatus = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.lblStatusStatic = new System.Windows.Forms.Label();
             this.prbBatteryStatus = new System.Windows.Forms.ProgressBar();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblCurrentTemp = new System.Windows.Forms.Label();
             this.rtbDatabaseValues = new System.Windows.Forms.RichTextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblFetchedValuesDB = new System.Windows.Forms.Label();
             this.txtFetchLast = new System.Windows.Forms.TextBox();
             this.btnFetch = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblFetchForLast = new System.Windows.Forms.Label();
             this.btnLimits = new System.Windows.Forms.Button();
             this.btnSubscribers = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblWhatToFetch = new System.Windows.Forms.Label();
             this.grbFetchingValues = new System.Windows.Forms.GroupBox();
             this.cboAnnotation = new System.Windows.Forms.ComboBox();
             this.chbError = new System.Windows.Forms.CheckBox();
             this.chbTemperature = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grbEdit = new System.Windows.Forms.GroupBox();
             this.grbBatteryStatus.SuspendLayout();
             this.grbFetchingValues.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.grbEdit.SuspendLayout();
             this.SuspendLayout();
             // 
             // grbBatteryStatus
             // 
-            this.grbBatteryStatus.Controls.Add(this.lblBatteryStatus);
-            this.grbBatteryStatus.Controls.Add(this.label2);
+            this.grbBatteryStatus.Controls.Add(this.lblStatus);
+            this.grbBatteryStatus.Controls.Add(this.lblStatusStatic);
             this.grbBatteryStatus.Controls.Add(this.prbBatteryStatus);
             this.grbBatteryStatus.Location = new System.Drawing.Point(11, 363);
             this.grbBatteryStatus.Name = "grbBatteryStatus";
@@ -65,23 +65,23 @@
             this.grbBatteryStatus.TabStop = false;
             this.grbBatteryStatus.Text = "Battery Status";
             // 
-            // lblBatteryStatus
+            // lblStatus
             // 
-            this.lblBatteryStatus.AutoSize = true;
-            this.lblBatteryStatus.Location = new System.Drawing.Point(390, 29);
-            this.lblBatteryStatus.Name = "lblBatteryStatus";
-            this.lblBatteryStatus.Size = new System.Drawing.Size(27, 13);
-            this.lblBatteryStatus.TabIndex = 4;
-            this.lblBatteryStatus.Text = "N/A";
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(390, 29);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(27, 13);
+            this.lblStatus.TabIndex = 4;
+            this.lblStatus.Text = "N/A";
             // 
-            // label2
+            // lblStatusStatic
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(390, 16);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Status: ";
+            this.lblStatusStatic.AutoSize = true;
+            this.lblStatusStatic.Location = new System.Drawing.Point(390, 16);
+            this.lblStatusStatic.Name = "lblStatusStatic";
+            this.lblStatusStatic.Size = new System.Drawing.Size(43, 13);
+            this.lblStatusStatic.TabIndex = 3;
+            this.lblStatusStatic.Text = "Status: ";
             // 
             // prbBatteryStatus
             // 
@@ -97,14 +97,14 @@
             this.textBox1.Size = new System.Drawing.Size(114, 20);
             this.textBox1.TabIndex = 1;
             // 
-            // label1
+            // lblCurrentTemp
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 8);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Current temp.";
+            this.lblCurrentTemp.AutoSize = true;
+            this.lblCurrentTemp.Location = new System.Drawing.Point(12, 8);
+            this.lblCurrentTemp.Name = "lblCurrentTemp";
+            this.lblCurrentTemp.Size = new System.Drawing.Size(70, 13);
+            this.lblCurrentTemp.TabIndex = 2;
+            this.lblCurrentTemp.Text = "Current temp.";
             // 
             // rtbDatabaseValues
             // 
@@ -114,14 +114,14 @@
             this.rtbDatabaseValues.TabIndex = 3;
             this.rtbDatabaseValues.Text = "";
             // 
-            // label4
+            // lblFetchedValuesDB
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(129, 9);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(168, 13);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Fetched values from the database";
+            this.lblFetchedValuesDB.AutoSize = true;
+            this.lblFetchedValuesDB.Location = new System.Drawing.Point(129, 9);
+            this.lblFetchedValuesDB.Name = "lblFetchedValuesDB";
+            this.lblFetchedValuesDB.Size = new System.Drawing.Size(168, 13);
+            this.lblFetchedValuesDB.TabIndex = 4;
+            this.lblFetchedValuesDB.Text = "Fetched values from the database";
             // 
             // txtFetchLast
             // 
@@ -139,14 +139,14 @@
             this.btnFetch.Text = "Fetch values";
             this.btnFetch.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // lblFetchForLast
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 22);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 13);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Fetch for last:";
+            this.lblFetchForLast.AutoSize = true;
+            this.lblFetchForLast.Location = new System.Drawing.Point(3, 22);
+            this.lblFetchForLast.Name = "lblFetchForLast";
+            this.lblFetchForLast.Size = new System.Drawing.Size(71, 13);
+            this.lblFetchForLast.TabIndex = 7;
+            this.lblFetchForLast.Text = "Fetch for last:";
             // 
             // btnLimits
             // 
@@ -168,14 +168,14 @@
             this.btnSubscribers.UseVisualStyleBackColor = true;
             this.btnSubscribers.Click += new System.EventHandler(this.btnSubscribers_Click);
             // 
-            // label5
+            // lblWhatToFetch
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 93);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(75, 13);
-            this.label5.TabIndex = 13;
-            this.label5.Text = "What to fetch:";
+            this.lblWhatToFetch.AutoSize = true;
+            this.lblWhatToFetch.Location = new System.Drawing.Point(3, 93);
+            this.lblWhatToFetch.Name = "lblWhatToFetch";
+            this.lblWhatToFetch.Size = new System.Drawing.Size(75, 13);
+            this.lblWhatToFetch.TabIndex = 13;
+            this.lblWhatToFetch.Text = "What to fetch:";
             // 
             // grbFetchingValues
             // 
@@ -183,9 +183,9 @@
             this.grbFetchingValues.Controls.Add(this.chbError);
             this.grbFetchingValues.Controls.Add(this.chbTemperature);
             this.grbFetchingValues.Controls.Add(this.txtFetchLast);
-            this.grbFetchingValues.Controls.Add(this.label5);
+            this.grbFetchingValues.Controls.Add(this.lblWhatToFetch);
             this.grbFetchingValues.Controls.Add(this.btnFetch);
-            this.grbFetchingValues.Controls.Add(this.label3);
+            this.grbFetchingValues.Controls.Add(this.lblFetchForLast);
             this.grbFetchingValues.Location = new System.Drawing.Point(12, 61);
             this.grbFetchingValues.Name = "grbFetchingValues";
             this.grbFetchingValues.Size = new System.Drawing.Size(114, 183);
@@ -236,28 +236,28 @@
             this.button1.Text = "Settings";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // grbEdit
             // 
-            this.groupBox1.Controls.Add(this.btnLimits);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.btnSubscribers);
-            this.groupBox1.Location = new System.Drawing.Point(12, 250);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(114, 107);
-            this.groupBox1.TabIndex = 16;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Edit";
+            this.grbEdit.Controls.Add(this.btnLimits);
+            this.grbEdit.Controls.Add(this.button1);
+            this.grbEdit.Controls.Add(this.btnSubscribers);
+            this.grbEdit.Location = new System.Drawing.Point(12, 250);
+            this.grbEdit.Name = "grbEdit";
+            this.grbEdit.Size = new System.Drawing.Size(114, 107);
+            this.grbEdit.TabIndex = 16;
+            this.grbEdit.TabStop = false;
+            this.grbEdit.Text = "Edit";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(488, 425);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.grbEdit);
             this.Controls.Add(this.grbFetchingValues);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lblFetchedValuesDB);
             this.Controls.Add(this.rtbDatabaseValues);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblCurrentTemp);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.grbBatteryStatus);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -268,7 +268,7 @@
             this.grbBatteryStatus.PerformLayout();
             this.grbFetchingValues.ResumeLayout(false);
             this.grbFetchingValues.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
+            this.grbEdit.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -279,23 +279,23 @@
         private System.Windows.Forms.GroupBox grbBatteryStatus;
         private System.Windows.Forms.ProgressBar prbBatteryStatus;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lblBatteryStatus;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblCurrentTemp;
+        private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.Label lblStatusStatic;
         private System.Windows.Forms.RichTextBox rtbDatabaseValues;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblFetchedValuesDB;
         private System.Windows.Forms.TextBox txtFetchLast;
         private System.Windows.Forms.Button btnFetch;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblFetchForLast;
         private System.Windows.Forms.Button btnLimits;
         private System.Windows.Forms.Button btnSubscribers;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblWhatToFetch;
         private System.Windows.Forms.GroupBox grbFetchingValues;
         private System.Windows.Forms.ComboBox cboAnnotation;
         private System.Windows.Forms.CheckBox chbError;
         private System.Windows.Forms.CheckBox chbTemperature;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grbEdit;
     }
 }
 
