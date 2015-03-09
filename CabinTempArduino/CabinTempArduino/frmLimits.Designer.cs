@@ -1,6 +1,6 @@
 ﻿namespace CabinTempArduino
 {
-    partial class LimitsForm
+    partial class frmLimits
     {
         /// <summary>
         /// Required designer variable.
@@ -65,7 +65,7 @@
             this.btnSetLimit.Text = "Set limit";
             this.btnSetLimit.UseVisualStyleBackColor = true;
             // 
-            // LimitsForm
+            // frmLimits
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -74,7 +74,8 @@
             this.Controls.Add(this.txtValue);
             this.Controls.Add(this.cboLimitType);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "LimitsForm";
+            this.Name = "frmLimits";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Limits";
             this.ResumeLayout(false);
             this.PerformLayout();

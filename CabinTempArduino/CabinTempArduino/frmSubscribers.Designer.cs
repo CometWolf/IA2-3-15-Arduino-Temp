@@ -1,6 +1,6 @@
 ﻿namespace CabinTempArduino
 {
-    partial class SubscribersForm
+    partial class frmSubscribers
     {
         /// <summary>
         /// Required designer variable.
@@ -174,7 +174,7 @@
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
             // 
-            // SubscribersForm
+            // frmSubscribers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -195,7 +195,8 @@
             this.Controls.Add(this.txtFirstName);
             this.Controls.Add(this.lblFirstName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "SubscribersForm";
+            this.Name = "frmSubscribers";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Subscribers";
             this.ResumeLayout(false);
             this.PerformLayout();

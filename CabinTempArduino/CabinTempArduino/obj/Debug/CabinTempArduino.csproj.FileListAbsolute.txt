@@ -13,3 +13,16 @@ C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTem
 C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.SubscribersForm.resources
 C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.SettingsForm.resources
 C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.Chart.resources
+C:\Users\Martin Terjesen\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\bin\Debug\CabinTempArduino.exe.config
+C:\Users\Martin Terjesen\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.exe
+C:\Users\Martin Terjesen\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.pdb
+C:\Users\Martin Terjesen\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\bin\Debug\CabinTempArduino.exe
+C:\Users\Martin Terjesen\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\bin\Debug\CabinTempArduino.pdb
+C:\Users\Martin Terjesen\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.csprojResolveAssemblyReference.cache
+C:\Users\Martin Terjesen\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.frmChart.resources
+C:\Users\Martin Terjesen\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.frmLimits.resources
+C:\Users\Martin Terjesen\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.frmMain.resources
+C:\Users\Martin Terjesen\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.Properties.Resources.resources
+C:\Users\Martin Terjesen\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.frmSettings.resources
+C:\Users\Martin Terjesen\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.frmSubscribers.resources
+C:\Users\Martin Terjesen\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.csproj.GenerateResource.Cache

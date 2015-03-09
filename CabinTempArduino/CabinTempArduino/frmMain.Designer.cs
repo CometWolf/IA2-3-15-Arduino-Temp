@@ -1,6 +1,6 @@
 ﻿namespace CabinTempArduino
 {
-    partial class MainForm
+    partial class frmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.grbBatteryStatus = new System.Windows.Forms.GroupBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblStatusStatic = new System.Windows.Forms.Label();
@@ -55,6 +57,7 @@
             this.tabTable = new System.Windows.Forms.TabPage();
             this.tabGraph = new System.Windows.Forms.TabPage();
             this.chartFetchedValues = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.totGraph = new System.Windows.Forms.ToolTip(this.components);
             this.grbBatteryStatus.SuspendLayout();
             this.grbFetchingValues.SuspendLayout();
             this.grbEdit.SuspendLayout();
@@ -69,124 +72,80 @@
             this.grbBatteryStatus.Controls.Add(this.lblStatus);
             this.grbBatteryStatus.Controls.Add(this.lblStatusStatic);
             this.grbBatteryStatus.Controls.Add(this.prbBatteryStatus);
-            this.grbBatteryStatus.Location = new System.Drawing.Point(11, 363);
+            resources.ApplyResources(this.grbBatteryStatus, "grbBatteryStatus");
             this.grbBatteryStatus.Name = "grbBatteryStatus";
-            this.grbBatteryStatus.Size = new System.Drawing.Size(465, 51);
-            this.grbBatteryStatus.TabIndex = 0;
             this.grbBatteryStatus.TabStop = false;
-            this.grbBatteryStatus.Text = "Battery Status";
             // 
             // lblStatus
             // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(390, 29);
+            resources.ApplyResources(this.lblStatus, "lblStatus");
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(27, 13);
-            this.lblStatus.TabIndex = 4;
-            this.lblStatus.Text = "N/A";
             // 
             // lblStatusStatic
             // 
-            this.lblStatusStatic.AutoSize = true;
-            this.lblStatusStatic.Location = new System.Drawing.Point(390, 16);
+            resources.ApplyResources(this.lblStatusStatic, "lblStatusStatic");
             this.lblStatusStatic.Name = "lblStatusStatic";
-            this.lblStatusStatic.Size = new System.Drawing.Size(43, 13);
-            this.lblStatusStatic.TabIndex = 3;
-            this.lblStatusStatic.Text = "Status: ";
             // 
             // prbBatteryStatus
             // 
-            this.prbBatteryStatus.Location = new System.Drawing.Point(6, 19);
+            resources.ApplyResources(this.prbBatteryStatus, "prbBatteryStatus");
             this.prbBatteryStatus.Name = "prbBatteryStatus";
-            this.prbBatteryStatus.Size = new System.Drawing.Size(378, 23);
-            this.prbBatteryStatus.TabIndex = 1;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 24);
+            resources.ApplyResources(this.textBox1, "textBox1");
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(114, 20);
-            this.textBox1.TabIndex = 1;
+            this.textBox1.ReadOnly = true;
             // 
             // lblCurrentTemp
             // 
-            this.lblCurrentTemp.AutoSize = true;
-            this.lblCurrentTemp.Location = new System.Drawing.Point(12, 8);
+            resources.ApplyResources(this.lblCurrentTemp, "lblCurrentTemp");
             this.lblCurrentTemp.Name = "lblCurrentTemp";
-            this.lblCurrentTemp.Size = new System.Drawing.Size(70, 13);
-            this.lblCurrentTemp.TabIndex = 2;
-            this.lblCurrentTemp.Text = "Current temp.";
             // 
             // rtbDatabaseValues
             // 
-            this.rtbDatabaseValues.Location = new System.Drawing.Point(3, 3);
+            resources.ApplyResources(this.rtbDatabaseValues, "rtbDatabaseValues");
             this.rtbDatabaseValues.Name = "rtbDatabaseValues";
-            this.rtbDatabaseValues.Size = new System.Drawing.Size(327, 300);
-            this.rtbDatabaseValues.TabIndex = 3;
-            this.rtbDatabaseValues.Text = "";
             // 
             // lblFetchedValuesDB
             // 
-            this.lblFetchedValuesDB.AutoSize = true;
-            this.lblFetchedValuesDB.Location = new System.Drawing.Point(129, 9);
+            resources.ApplyResources(this.lblFetchedValuesDB, "lblFetchedValuesDB");
             this.lblFetchedValuesDB.Name = "lblFetchedValuesDB";
-            this.lblFetchedValuesDB.Size = new System.Drawing.Size(168, 13);
-            this.lblFetchedValuesDB.TabIndex = 4;
-            this.lblFetchedValuesDB.Text = "Fetched values from the database";
             // 
             // txtFetchLast
             // 
-            this.txtFetchLast.Location = new System.Drawing.Point(6, 38);
+            resources.ApplyResources(this.txtFetchLast, "txtFetchLast");
             this.txtFetchLast.Name = "txtFetchLast";
-            this.txtFetchLast.Size = new System.Drawing.Size(101, 20);
-            this.txtFetchLast.TabIndex = 5;
             // 
             // btnFetch
             // 
-            this.btnFetch.Location = new System.Drawing.Point(6, 154);
+            resources.ApplyResources(this.btnFetch, "btnFetch");
             this.btnFetch.Name = "btnFetch";
-            this.btnFetch.Size = new System.Drawing.Size(101, 23);
-            this.btnFetch.TabIndex = 6;
-            this.btnFetch.Text = "Fetch values";
             this.btnFetch.UseVisualStyleBackColor = true;
             // 
             // lblFetchForLast
             // 
-            this.lblFetchForLast.AutoSize = true;
-            this.lblFetchForLast.Location = new System.Drawing.Point(3, 22);
+            resources.ApplyResources(this.lblFetchForLast, "lblFetchForLast");
             this.lblFetchForLast.Name = "lblFetchForLast";
-            this.lblFetchForLast.Size = new System.Drawing.Size(71, 13);
-            this.lblFetchForLast.TabIndex = 7;
-            this.lblFetchForLast.Text = "Fetch for last:";
             // 
             // btnLimits
             // 
-            this.btnLimits.Location = new System.Drawing.Point(6, 48);
+            resources.ApplyResources(this.btnLimits, "btnLimits");
             this.btnLimits.Name = "btnLimits";
-            this.btnLimits.Size = new System.Drawing.Size(101, 23);
-            this.btnLimits.TabIndex = 8;
-            this.btnLimits.Text = "Limits";
             this.btnLimits.UseVisualStyleBackColor = true;
             this.btnLimits.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnSubscribers
             // 
-            this.btnSubscribers.Location = new System.Drawing.Point(6, 77);
+            resources.ApplyResources(this.btnSubscribers, "btnSubscribers");
             this.btnSubscribers.Name = "btnSubscribers";
-            this.btnSubscribers.Size = new System.Drawing.Size(101, 23);
-            this.btnSubscribers.TabIndex = 9;
-            this.btnSubscribers.Text = "Subscribers";
             this.btnSubscribers.UseVisualStyleBackColor = true;
             this.btnSubscribers.Click += new System.EventHandler(this.btnSubscribers_Click);
             // 
             // lblWhatToFetch
             // 
-            this.lblWhatToFetch.AutoSize = true;
-            this.lblWhatToFetch.Location = new System.Drawing.Point(3, 93);
+            resources.ApplyResources(this.lblWhatToFetch, "lblWhatToFetch");
             this.lblWhatToFetch.Name = "lblWhatToFetch";
-            this.lblWhatToFetch.Size = new System.Drawing.Size(75, 13);
-            this.lblWhatToFetch.TabIndex = 13;
-            this.lblWhatToFetch.Text = "What to fetch:";
             // 
             // grbFetchingValues
             // 
@@ -197,54 +156,37 @@
             this.grbFetchingValues.Controls.Add(this.lblWhatToFetch);
             this.grbFetchingValues.Controls.Add(this.btnFetch);
             this.grbFetchingValues.Controls.Add(this.lblFetchForLast);
-            this.grbFetchingValues.Location = new System.Drawing.Point(12, 61);
+            resources.ApplyResources(this.grbFetchingValues, "grbFetchingValues");
             this.grbFetchingValues.Name = "grbFetchingValues";
-            this.grbFetchingValues.Size = new System.Drawing.Size(114, 183);
-            this.grbFetchingValues.TabIndex = 14;
             this.grbFetchingValues.TabStop = false;
-            this.grbFetchingValues.Text = "Fetching values";
             // 
             // cboAnnotation
             // 
             this.cboAnnotation.FormattingEnabled = true;
             this.cboAnnotation.Items.AddRange(new object[] {
-            "Values",
-            "Day(s)",
-            "Month(s)",
-            "Year(s)"});
-            this.cboAnnotation.Location = new System.Drawing.Point(6, 64);
+            resources.GetString("cboAnnotation.Items"),
+            resources.GetString("cboAnnotation.Items1"),
+            resources.GetString("cboAnnotation.Items2"),
+            resources.GetString("cboAnnotation.Items3")});
+            resources.ApplyResources(this.cboAnnotation, "cboAnnotation");
             this.cboAnnotation.Name = "cboAnnotation";
-            this.cboAnnotation.Size = new System.Drawing.Size(101, 21);
-            this.cboAnnotation.TabIndex = 16;
-            this.cboAnnotation.Text = "Annotation";
             // 
             // chbError
             // 
-            this.chbError.AutoSize = true;
-            this.chbError.Location = new System.Drawing.Point(6, 132);
+            resources.ApplyResources(this.chbError, "chbError");
             this.chbError.Name = "chbError";
-            this.chbError.Size = new System.Drawing.Size(48, 17);
-            this.chbError.TabIndex = 15;
-            this.chbError.Text = "Error";
             this.chbError.UseVisualStyleBackColor = true;
             // 
             // chbTemperature
             // 
-            this.chbTemperature.AutoSize = true;
-            this.chbTemperature.Location = new System.Drawing.Point(6, 109);
+            resources.ApplyResources(this.chbTemperature, "chbTemperature");
             this.chbTemperature.Name = "chbTemperature";
-            this.chbTemperature.Size = new System.Drawing.Size(86, 17);
-            this.chbTemperature.TabIndex = 14;
-            this.chbTemperature.Text = "Temperature";
             this.chbTemperature.UseVisualStyleBackColor = true;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(6, 19);
+            resources.ApplyResources(this.button1, "button1");
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(101, 23);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "Settings";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
@@ -253,74 +195,64 @@
             this.grbEdit.Controls.Add(this.btnLimits);
             this.grbEdit.Controls.Add(this.button1);
             this.grbEdit.Controls.Add(this.btnSubscribers);
-            this.grbEdit.Location = new System.Drawing.Point(12, 250);
+            resources.ApplyResources(this.grbEdit, "grbEdit");
             this.grbEdit.Name = "grbEdit";
-            this.grbEdit.Size = new System.Drawing.Size(114, 107);
-            this.grbEdit.TabIndex = 16;
             this.grbEdit.TabStop = false;
-            this.grbEdit.Text = "Edit";
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabTable);
             this.tabControl1.Controls.Add(this.tabGraph);
-            this.tabControl1.Location = new System.Drawing.Point(132, 25);
+            resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(344, 332);
-            this.tabControl1.TabIndex = 17;
             // 
             // tabTable
             // 
             this.tabTable.Controls.Add(this.rtbDatabaseValues);
-            this.tabTable.Location = new System.Drawing.Point(4, 22);
+            resources.ApplyResources(this.tabTable, "tabTable");
             this.tabTable.Name = "tabTable";
-            this.tabTable.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTable.Size = new System.Drawing.Size(336, 306);
-            this.tabTable.TabIndex = 0;
-            this.tabTable.Text = "Table";
             this.tabTable.UseVisualStyleBackColor = true;
             // 
             // tabGraph
             // 
             this.tabGraph.Controls.Add(this.chartFetchedValues);
-            this.tabGraph.Location = new System.Drawing.Point(4, 22);
+            resources.ApplyResources(this.tabGraph, "tabGraph");
             this.tabGraph.Name = "tabGraph";
-            this.tabGraph.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGraph.Size = new System.Drawing.Size(336, 306);
-            this.tabGraph.TabIndex = 1;
-            this.tabGraph.Text = "Graph";
             this.tabGraph.UseVisualStyleBackColor = true;
             // 
             // chartFetchedValues
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartFetchedValues.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            legend1.Position.Auto = false;
-            legend1.Position.Height = 4F;
-            legend1.Position.Width = 24.92401F;
-            legend1.Position.X = 44F;
-            legend1.Position.Y = 95F;
-            legend1.TitleAlignment = System.Drawing.StringAlignment.Near;
-            this.chartFetchedValues.Legends.Add(legend1);
-            this.chartFetchedValues.Location = new System.Drawing.Point(3, 3);
+            chartArea2.Name = "ChartArea1";
+            this.chartFetchedValues.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            legend2.Position.Auto = false;
+            legend2.Position.Height = 4F;
+            legend2.Position.Width = 24.92401F;
+            legend2.Position.X = 44F;
+            legend2.Position.Y = 95F;
+            legend2.TitleAlignment = System.Drawing.StringAlignment.Near;
+            this.chartFetchedValues.Legends.Add(legend2);
+            resources.ApplyResources(this.chartFetchedValues, "chartFetchedValues");
             this.chartFetchedValues.Name = "chartFetchedValues";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.LegendText = "#SERIESNAME";
-            series1.Name = "Temp.";
-            this.chartFetchedValues.Series.Add(series1);
-            this.chartFetchedValues.Size = new System.Drawing.Size(330, 300);
-            this.chartFetchedValues.TabIndex = 18;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.LegendText = "#SERIESNAME";
+            series2.Name = "Temp.";
+            this.chartFetchedValues.Series.Add(series2);
             this.chartFetchedValues.Click += new System.EventHandler(this.chartFetchedValues_Click);
             // 
-            // MainForm
+            // totGraph
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.totGraph.AutoPopDelay = 3000;
+            this.totGraph.InitialDelay = 500;
+            this.totGraph.ReshowDelay = 10000;
+            // 
+            // frmMain
+            // 
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(486, 425);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.grbEdit);
             this.Controls.Add(this.grbFetchingValues);
@@ -330,8 +262,7 @@
             this.Controls.Add(this.grbBatteryStatus);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
-            this.Name = "MainForm";
-            this.Text = "Morten\'s cabin temperature!";
+            this.Name = "frmMain";
             this.grbBatteryStatus.ResumeLayout(false);
             this.grbBatteryStatus.PerformLayout();
             this.grbFetchingValues.ResumeLayout(false);
@@ -372,6 +303,7 @@
         private System.Windows.Forms.TabPage tabTable;
         private System.Windows.Forms.TabPage tabGraph;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartFetchedValues;
+        private System.Windows.Forms.ToolTip totGraph;
     }
 }
 

@@ -10,11 +10,19 @@ using System.Windows.Forms;
 
 namespace CabinTempArduino
 {
-    public partial class Chart : Form
+    public partial class frmLimits : Form
     {
-        public Chart()
+        public frmLimits()
         {
             InitializeComponent();
+        }
+
+        private void txtValue_Click(object sender, EventArgs e)
+        {
+            //GUI
+            if (txtValue.Text == "Value (C)")
+                txtValue.Text = "";
+            //END GUI
         }
     }
 }

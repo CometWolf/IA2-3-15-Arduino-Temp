@@ -45,46 +45,46 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Chart.cs">
+    <Compile Include="frmChart.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Chart.Designer.cs">
-      <DependentUpon>Chart.cs</DependentUpon>
+    <Compile Include="frmChart.Designer.cs">
+      <DependentUpon>frmChart.cs</DependentUpon>
     </Compile>
-    <Compile Include="LimitsForm.cs">
+    <Compile Include="frmLimits.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LimitsForm.Designer.cs">
-      <DependentUpon>LimitsForm.cs</DependentUpon>
+    <Compile Include="frmLimits.Designer.cs">
+      <DependentUpon>frmLimits.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingsForm.cs">
+    <Compile Include="frmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingsForm.Designer.cs">
-      <DependentUpon>SettingsForm.cs</DependentUpon>
+    <Compile Include="frmSettings.Designer.cs">
+      <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="SubscribersForm.cs">
+    <Compile Include="frmSubscribers.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SubscribersForm.Designer.cs">
-      <DependentUpon>SubscribersForm.cs</DependentUpon>
+    <Compile Include="frmSubscribers.Designer.cs">
+      <DependentUpon>frmSubscribers.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Chart.resx">
-      <DependentUpon>Chart.cs</DependentUpon>
+    <EmbeddedResource Include="frmChart.resx">
+      <DependentUpon>frmChart.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LimitsForm.resx">
-      <DependentUpon>LimitsForm.cs</DependentUpon>
+    <EmbeddedResource Include="frmLimits.resx">
+      <DependentUpon>frmLimits.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -95,11 +95,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="SettingsForm.resx">
-      <DependentUpon>SettingsForm.cs</DependentUpon>
+    <EmbeddedResource Include="frmSettings.resx">
+      <DependentUpon>frmSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SubscribersForm.resx">
-      <DependentUpon>SubscribersForm.cs</DependentUpon>
+    <EmbeddedResource Include="frmSubscribers.resx">
+      <DependentUpon>frmSubscribers.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

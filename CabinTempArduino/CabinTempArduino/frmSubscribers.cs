@@ -10,15 +10,16 @@ using System.Windows.Forms;
 
 namespace CabinTempArduino
 {
-    public partial class SubscribersForm : Form
+    public partial class frmSubscribers : Form
     {
-        public SubscribersForm()
+        public frmSubscribers()
         {
             InitializeComponent();
         }
 
         private void cboSelectSubscriber_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // GUI
             if (cboSelectSubscriber.Text != "New")
                 btnSubmit.Text = "Submit changes";
 
@@ -26,6 +27,7 @@ namespace CabinTempArduino
                 btnDelete.Enabled = false;
             else
                 btnDelete.Enabled = true;
+            //END GUI
         }
     }
 }

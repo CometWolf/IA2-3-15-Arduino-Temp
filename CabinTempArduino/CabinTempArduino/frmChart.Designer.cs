@@ -1,6 +1,6 @@
 ﻿namespace CabinTempArduino
 {
-    partial class Chart
+    partial class frmChart
     {
         /// <summary>
         /// Required designer variable.
@@ -59,13 +59,14 @@
             this.chartFetchedValues.Size = new System.Drawing.Size(1387, 612);
             this.chartFetchedValues.TabIndex = 19;
             // 
-            // Chart
+            // frmChart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1387, 612);
             this.Controls.Add(this.chartFetchedValues);
-            this.Name = "Chart";
+            this.Name = "frmChart";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Chart";
             ((System.ComponentModel.ISupportInitialize)(this.chartFetchedValues)).EndInit();
             this.ResumeLayout(false);

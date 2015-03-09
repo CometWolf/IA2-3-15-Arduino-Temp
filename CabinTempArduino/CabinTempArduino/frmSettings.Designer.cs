@@ -1,6 +1,6 @@
 ﻿namespace CabinTempArduino
 {
-    partial class SettingsForm
+    partial class frmSettings
     {
         /// <summary>
         /// Required designer variable.
@@ -106,14 +106,15 @@
             this.cboPreset.Text = "Preset";
             this.cboPreset.SelectedIndexChanged += new System.EventHandler(this.cboPreset_SelectedIndexChanged);
             // 
-            // SettingsForm
+            // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(250, 122);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "SettingsForm";
+            this.Name = "frmSettings";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

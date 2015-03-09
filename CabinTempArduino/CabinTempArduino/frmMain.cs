@@ -10,34 +10,38 @@ using System.Windows.Forms;
 
 namespace CabinTempArduino
 {
-    public partial class MainForm : Form
+    public partial class frmMain : Form
     {
-        public MainForm()
+        public frmMain()
         {
             InitializeComponent();
+
+            //GUI
+            totGraph.SetToolTip(chartFetchedValues, "Click to enlarge");
+            //END GUI        
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            LimitsForm limitForm = new LimitsForm();
+            frmLimits limitForm = new frmLimits();
             limitForm.ShowDialog();
         }
 
         private void btnSubscribers_Click(object sender, EventArgs e)
         {
-            SubscribersForm subscribersForm = new SubscribersForm();
+            frmSubscribers subscribersForm = new frmSubscribers();
             subscribersForm.ShowDialog();
         }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            SettingsForm settingsForm = new SettingsForm();
+            frmSettings settingsForm = new frmSettings();
             settingsForm.ShowDialog();
         }
 
         private void chartFetchedValues_Click(object sender, EventArgs e)
         {
-            Chart chart = new Chart();
+            frmChart chart = new frmChart();
             chart.Show();
         }
     }
