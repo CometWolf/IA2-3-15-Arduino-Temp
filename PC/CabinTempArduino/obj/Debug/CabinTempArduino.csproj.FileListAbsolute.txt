@@ -26,3 +26,9 @@ C:\Users\Martin Terjesen\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino
 C:\Users\Martin Terjesen\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.frmSettings.resources
 C:\Users\Martin Terjesen\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.frmSubscribers.resources
 C:\Users\Martin Terjesen\Documents\GitHub\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.csproj.GenerateResource.Cache
+C:\Users\Haakon\Documents\Prog prosjekt\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\bin\Debug\CabinTempArduino.exe.config
+C:\Users\Haakon\Documents\Prog prosjekt\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.exe
+C:\Users\Haakon\Documents\Prog prosjekt\IA2-3-15-Arduino-Temp\CabinTempArduino\CabinTempArduino\obj\Debug\CabinTempArduino.pdb
+C:\Users\Haakon\Documents\Prog prosjekt\IA2-3-15-Arduino-Temp\PC\CabinTempArduino\bin\Debug\CabinTempArduino.exe.config
+C:\Users\Haakon\Documents\Prog prosjekt\IA2-3-15-Arduino-Temp\PC\CabinTempArduino\obj\Debug\CabinTempArduino.exe
+C:\Users\Haakon\Documents\Prog prosjekt\IA2-3-15-Arduino-Temp\PC\CabinTempArduino\obj\Debug\CabinTempArduino.pdb
