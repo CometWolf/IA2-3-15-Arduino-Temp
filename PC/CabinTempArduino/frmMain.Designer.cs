@@ -106,6 +106,7 @@
             // 
             resources.ApplyResources(this.rtbDatabaseValues, "rtbDatabaseValues");
             this.rtbDatabaseValues.Name = "rtbDatabaseValues";
+            this.rtbDatabaseValues.ReadOnly = true;
             // 
             // lblFetchedValuesDB
             // 
