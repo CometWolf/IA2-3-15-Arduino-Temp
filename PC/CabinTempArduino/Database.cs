@@ -241,6 +241,10 @@ namespace CabinTempArduino
                 myAccessConnection.Close();
             }
         }
+        /// <summary>
+        /// Gets all registered temperatures in TemperaturLogg
+        /// </summary>
+        /// <returns>Temperature table values as string</returns>
         public string[,] GetTemperature()
         {
             string[,] temperature;
@@ -274,5 +278,40 @@ namespace CabinTempArduino
             }
             return temperature;
         }
+        /// <summary>
+        /// Gets settings from Instillinger
+        /// </summary>
+        /// <returns>Settings</returns>
+        public string[] GetSettings()
+        {
+            string[] settings;
+            string table = "Innstillinger";
+            try
+            {
+                OpenDb(table);
+                int rows = myDataset.Tables[table].Rows.Count;
+                int columns = myDataset.Tables[table].Columns.Count;
+                settings = new string[columns];
+
+                for (int i = 0; i < rows; i++)
+                {
+                    settings[i] = myDataset.Tables[table].Rows[0].ItemArray[i].ToString();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                settings = new string[0];
+                settings[0] = "N/A";
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return settings;
+        }
+
     }
 }
