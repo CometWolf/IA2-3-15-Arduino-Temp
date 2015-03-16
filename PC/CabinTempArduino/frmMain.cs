@@ -31,7 +31,6 @@ namespace CabinTempArduino
         //END PROPERTIES
 
         //OBJECTS
-        PowerStatus batteryStatus;
         Database myDatabse = new Database("ArduinoTemperaturMåling.accdb");
         //END OBJECTS
 
@@ -75,8 +74,18 @@ namespace CabinTempArduino
         private void tmrBattery_Tick(object sender, EventArgs e)
         {
             prbBatteryStatus.Value = Convert.ToInt32(SystemInformation.PowerStatus.BatteryLifePercent);
-            lblStatus.Text = Convert.ToString(SystemInformation.PowerStatus.BatteryChargeStatus);
-            //Legge inn feilmelding ved lite batteri.
+            lblStatus.Text = SystemInformation.PowerStatus.BatteryChargeStatus.ToString();
+
+            //Endre farge avhengig av prosent.
+
+            if(SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Low")
+            {
+                //Legg inn Email sending.
+            }
+            else if (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Low, Critical")
+            {
+                //Legg inn Email sending.
+            }
         }
     }
 }
