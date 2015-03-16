@@ -8,7 +8,7 @@
   public:
     float upperLimit;
     boolean active;
-    Furnace(float upperLimit) : Relay(byte pin);
+    Furnace(float lowerLimit = 20, float upperLimit = 25) : Relay(byte pin);
     void update();
   };
 

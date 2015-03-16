@@ -1,6 +1,6 @@
 #include "Furnace.h"
 //Constructor
-Furnace::Furnace(float upperLimit = 25,float lowerLimit = 20) : Relay(byte pin) {
+Furnace::Furnace(float lowerLimit, float lowerLimit) : Relay(byte pin) {
   this->upperLimit = upperLimit;
   this->lowerLimit = lowerLimit;
   active = true;

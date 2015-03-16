@@ -15,14 +15,15 @@ void PC::send(String message) {
   Serial.print(message);
 }
 
-String PC::receive(char endCharacter = "\n") { //Receive incoming serial transmission, ending on the specified character.
+
+String PC::receive(char endCharacter[0]) { //Receive incoming serial transmission, ending on the specified character.
   String message = "";
   char character;
   if (Serial.available()) { //Return empty string if no incoming serial communication.
     while (true) { //Read session begins.
       if (Serial.available()) { //Store incoming characters in the message string, if any.
         character = Serial.read();
-        if (character == endCharacter) {//End read session on endCharacter.
+        if (character == endCharacter[0]) {//End read session on endCharacter.
           break;
         }
         message.concat(character);
