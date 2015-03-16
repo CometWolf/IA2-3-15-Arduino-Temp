@@ -8,6 +8,6 @@ public:
   PC();
   void begin(int baudrate);
   void send(String message);
-  String receive();
+  String receive(char endCharacter);
 };
 #endif
