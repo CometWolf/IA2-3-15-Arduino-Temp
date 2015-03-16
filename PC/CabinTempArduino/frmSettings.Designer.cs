@@ -34,7 +34,11 @@
             this.rbtSeconds = new System.Windows.Forms.RadioButton();
             this.txtCustomInterval = new System.Windows.Forms.TextBox();
             this.cboPreset = new System.Windows.Forms.ComboBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cboComPort = new System.Windows.Forms.ComboBox();
+            this.btnComPort = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -106,11 +110,40 @@
             this.cboPreset.Text = "Preset";
             this.cboPreset.SelectedIndexChanged += new System.EventHandler(this.cboPreset_SelectedIndexChanged);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.btnComPort);
+            this.groupBox2.Controls.Add(this.cboComPort);
+            this.groupBox2.Location = new System.Drawing.Point(12, 113);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(223, 54);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "COM Port";
+            // 
+            // cboComPort
+            // 
+            this.cboComPort.FormattingEnabled = true;
+            this.cboComPort.Location = new System.Drawing.Point(6, 19);
+            this.cboComPort.Name = "cboComPort";
+            this.cboComPort.Size = new System.Drawing.Size(121, 21);
+            this.cboComPort.TabIndex = 0;
+            // 
+            // btnComPort
+            // 
+            this.btnComPort.Location = new System.Drawing.Point(133, 19);
+            this.btnComPort.Name = "btnComPort";
+            this.btnComPort.Size = new System.Drawing.Size(81, 23);
+            this.btnComPort.TabIndex = 1;
+            this.btnComPort.Text = "Set COM Port";
+            this.btnComPort.UseVisualStyleBackColor = true;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(250, 122);
+            this.ClientSize = new System.Drawing.Size(250, 178);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmSettings";
@@ -118,6 +151,7 @@
             this.Text = "Settings";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -130,5 +164,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.RadioButton rbtMinutes;
         private System.Windows.Forms.RadioButton rbtSeconds;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button btnComPort;
+        private System.Windows.Forms.ComboBox cboComPort;
     }
 }

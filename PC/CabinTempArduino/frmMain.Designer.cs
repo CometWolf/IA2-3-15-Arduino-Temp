@@ -58,6 +58,7 @@
             this.tabGraph = new System.Windows.Forms.TabPage();
             this.chartFetchedValues = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.totGraph = new System.Windows.Forms.ToolTip(this.components);
+            this.spComPort = new System.IO.Ports.SerialPort(this.components);
             this.grbBatteryStatus.SuspendLayout();
             this.grbFetchingValues.SuspendLayout();
             this.grbEdit.SuspendLayout();
@@ -122,6 +123,7 @@
             resources.ApplyResources(this.btnFetch, "btnFetch");
             this.btnFetch.Name = "btnFetch";
             this.btnFetch.UseVisualStyleBackColor = true;
+            this.btnFetch.Click += new System.EventHandler(this.btnFetch_Click);
             // 
             // lblFetchForLast
             // 
@@ -304,6 +306,7 @@
         private System.Windows.Forms.TabPage tabGraph;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartFetchedValues;
         private System.Windows.Forms.ToolTip totGraph;
+        private System.IO.Ports.SerialPort spComPort;
     }
 }
 

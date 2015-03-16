@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO.Ports;
 
 namespace CabinTempArduino
 {
@@ -20,6 +21,14 @@ namespace CabinTempArduino
             rbtSeconds.Enabled = false;
             rbtMinutes.Enabled = false;
             //END GUI
+
+            frmMain main = new frmMain();
+
+            string[] serialPortNames = SerialPort.GetPortNames();
+            foreach (string Port in serialPortNames)
+            {
+                cboComPort.Items.Add(Port);
+            }
         }
 
         private void cboPreset_SelectedIndexChanged(object sender, EventArgs e)
