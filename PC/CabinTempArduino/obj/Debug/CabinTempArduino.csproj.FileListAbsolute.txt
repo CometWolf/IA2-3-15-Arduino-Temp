@@ -48,3 +48,6 @@ C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\PC\CabinTempArduino\obj\D
 C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\PC\CabinTempArduino\obj\Debug\CabinTempArduino.frmSettings.resources
 C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\PC\CabinTempArduino\obj\Debug\CabinTempArduino.frmSubscribers.resources
 C:\Users\Martin\Documents\GitHub\IA2-3-15-Arduino-Temp\PC\CabinTempArduino\obj\Debug\CabinTempArduino.csproj.GenerateResource.Cache
+C:\Users\Gustav\Documents\Visual Studio 2013\Projects\IA2-3-15-Arduino-Temp\PC\CabinTempArduino\bin\Debug\CabinTempArduino.exe.config
+C:\Users\Gustav\Documents\Visual Studio 2013\Projects\IA2-3-15-Arduino-Temp\PC\CabinTempArduino\obj\Debug\CabinTempArduino.exe
+C:\Users\Gustav\Documents\Visual Studio 2013\Projects\IA2-3-15-Arduino-Temp\PC\CabinTempArduino\obj\Debug\CabinTempArduino.pdb
