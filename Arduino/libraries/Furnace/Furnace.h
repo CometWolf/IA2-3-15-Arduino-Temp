@@ -9,9 +9,7 @@
     float upperLimit;
     boolean active;
     Furnace(float upperLimit) : Relay(byte pin);
-    void update;
-  private:
-    byte pin;
+    void update();
   };
 
 #endif

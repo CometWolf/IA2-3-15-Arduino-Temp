@@ -46,6 +46,28 @@ namespace CabinTempArduino
             }
         }
         /// <summary>
+        /// Runs any given query
+        /// </summary>
+        /// <param name="query">Query to run</param>
+        public void RunQuery(string query)
+        {
+            try
+            {
+                myAccessConnection.Open();
+                myAccessCommand = new OleDbCommand(query, myAccessConnection);
+                myAccessCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+        }
+        /// <summary>
         /// Opens a connection to the database
         /// and reads the values i table "table" to a dataset
         /// </summary>

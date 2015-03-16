@@ -241,6 +241,10 @@ namespace CabinTempArduino
                 myAccessConnection.Close();
             }
         }
+        /// <summary>
+        /// Gets all registered temperatures in TemperaturLogg
+        /// </summary>
+        /// <returns>Temperature table values as string</returns>
         public string[,] GetTemperature()
         {
             string[,] temperature;
@@ -274,5 +278,71 @@ namespace CabinTempArduino
             }
             return temperature;
         }
+        /// <summary>
+        /// Updates a single cell in tablesettings
+        /// </summary>
+        /// <param name="newSetting">New setting</param>
+        /// <param name="columnName">name of column or type of setting</param>
+        /// <param name="settingNr">The set of settings to change</param>
+        public void UpdateSetting(string newSetting, string columnName,int settingNr)
+        {
+            string table = "Innstillinger";
+
+            try
+            {
+
+                OpenDb(table);
+
+                myDataset.AcceptChanges();
+
+                myDataset.Tables[table].Rows[settingNr][columnName] = newSetting;
+
+                CloseDb(table);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+        }
+        /// <summary>
+        /// Gets settings from Innstillinger
+        /// </summary>
+        /// <param name="settingNr">Set of settings to get</param>
+        /// <returns>Settings</returns>
+        public string[] GetSettings(int settingNr)
+        {
+            string[] settings;
+            string table = "Innstillinger";
+            try
+            {
+                OpenDb(table);
+                int rows = myDataset.Tables[table].Rows.Count;
+                int columns = myDataset.Tables[table].Columns.Count;
+                settings = new string[columns];
+
+                for (int i = 0; i < rows; i++)
+                {
+                    settings[i] = myDataset.Tables[table].Rows[settingNr].ItemArray[i].ToString();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                settings = new string[0];
+                settings[0] = "N/A";
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return settings;
+        }
+
     }
 }
