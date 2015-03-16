@@ -17,7 +17,7 @@ namespace CabinTempArduino
         const string programMailPassword = "arduino2015";             // Prog. mail passord - konstant
         static bool mailSent = false;
         
-        public E_Post(string epostMottager, string epostTema, string epostMelding)
+        public E_post(string epostMottager, string epostTema, string epostMelding)
             // Classe konstruktør med parametere
         {
             reciverMail = epostMottager;
