@@ -128,6 +128,7 @@
             this.cboComPort.Name = "cboComPort";
             this.cboComPort.Size = new System.Drawing.Size(121, 21);
             this.cboComPort.TabIndex = 0;
+            this.cboComPort.Text = "Ports";
             // 
             // btnComPort
             // 
@@ -137,6 +138,7 @@
             this.btnComPort.TabIndex = 1;
             this.btnComPort.Text = "Set COM Port";
             this.btnComPort.UseVisualStyleBackColor = true;
+            this.btnComPort.Click += new System.EventHandler(this.btnComPort_Click);
             // 
             // frmSettings
             // 

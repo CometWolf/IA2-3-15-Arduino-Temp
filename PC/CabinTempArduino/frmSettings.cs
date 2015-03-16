@@ -22,13 +22,14 @@ namespace CabinTempArduino
             rbtMinutes.Enabled = false;
             //END GUI
 
-            frmMain main = new frmMain();
+            //Valid ports
 
             string[] serialPortNames = SerialPort.GetPortNames();
-            foreach (string Port in serialPortNames)
+            foreach (string port in serialPortNames)
             {
-                cboComPort.Items.Add(Port);
+                cboComPort.Items.Add(port);
             }
+            //END Valid ports
         }
 
         private void cboPreset_SelectedIndexChanged(object sender, EventArgs e)
@@ -55,6 +56,15 @@ namespace CabinTempArduino
             if (txtCustomInterval.Text == "Custom interval")
                 txtCustomInterval.Text = "";
             //END GUI
+        }
+
+        private void btnComPort_Click(object sender, EventArgs e)
+        {
+            if(cboComPort.Text != "Ports")
+            {
+                frmMain main = new frmMain();
+                main.ComPort = cboComPort.Text;
+            }
         }
     }
 }
