@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database.cs" />
+    <Compile Include="E_post.cs" />
     <Compile Include="frmChart.cs">
       <SubType>Form</SubType>
     </Compile>
