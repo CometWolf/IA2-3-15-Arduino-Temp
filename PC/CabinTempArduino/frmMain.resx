@@ -198,7 +198,7 @@
     <value>11, 363</value>
   </data>
   <data name="grbBatteryStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>465, 51</value>
+    <value>488, 51</value>
   </data>
   <data name="grbBatteryStatus.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -226,6 +226,10 @@
   </data>
   <data name="textBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="textBox1.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
   </data>
   <data name="&gt;&gt;textBox1.Name" xml:space="preserve">
     <value>textBox1</value>
@@ -270,7 +274,7 @@
     <value>3, 3</value>
   </data>
   <data name="rtbDatabaseValues.Size" type="System.Drawing.Size, System.Drawing">
-    <value>327, 300</value>
+    <value>350, 300</value>
   </data>
   <data name="rtbDatabaseValues.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -578,28 +582,28 @@
   <data name="&gt;&gt;grbFetchingValues.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="btnSettings.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 19</value>
   </data>
-  <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="btnSettings.Size" type="System.Drawing.Size, System.Drawing">
     <value>101, 23</value>
   </data>
-  <data name="button1.TabIndex" type="System.Int32, mscorlib">
+  <data name="btnSettings.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
   </data>
-  <data name="button1.Text" xml:space="preserve">
+  <data name="btnSettings.Text" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="&gt;&gt;button1.Name" xml:space="preserve">
-    <value>button1</value>
+  <data name="&gt;&gt;btnSettings.Name" xml:space="preserve">
+    <value>btnSettings</value>
   </data>
-  <data name="&gt;&gt;button1.Type" xml:space="preserve">
+  <data name="&gt;&gt;btnSettings.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;button1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;btnSettings.Parent" xml:space="preserve">
     <value>grbEdit</value>
   </data>
-  <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;btnSettings.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="grbEdit.Location" type="System.Drawing.Point, System.Drawing">
@@ -629,12 +633,11 @@
   <data name="tabTable.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tabTable.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabTable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>336, 306</value>
+    <value>359, 306</value>
   </data>
   <data name="tabTable.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -706,7 +709,7 @@
     <value>132, 25</value>
   </data>
   <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>344, 332</value>
+    <value>367, 332</value>
   </data>
   <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
@@ -729,6 +732,9 @@
   <metadata name="spComPort.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>117, 17</value>
   </metadata>
+  <metadata name="tmrBattery.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>229, 17</value>
+  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -736,7 +742,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>486, 425</value>
+    <value>511, 425</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -6924,6 +6930,12 @@
   </data>
   <data name="&gt;&gt;spComPort.Type" xml:space="preserve">
     <value>System.IO.Ports.SerialPort, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tmrBattery.Name" xml:space="preserve">
+    <value>tmrBattery</value>
+  </data>
+  <data name="&gt;&gt;tmrBattery.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>frmMain</value>

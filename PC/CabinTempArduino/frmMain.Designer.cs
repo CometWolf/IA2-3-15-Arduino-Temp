@@ -51,7 +51,7 @@
             this.cboAnnotation = new System.Windows.Forms.ComboBox();
             this.chbError = new System.Windows.Forms.CheckBox();
             this.chbTemperature = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnSettings = new System.Windows.Forms.Button();
             this.grbEdit = new System.Windows.Forms.GroupBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabTable = new System.Windows.Forms.TabPage();
@@ -59,6 +59,7 @@
             this.chartFetchedValues = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.totGraph = new System.Windows.Forms.ToolTip(this.components);
             this.spComPort = new System.IO.Ports.SerialPort(this.components);
+            this.tmrBattery = new System.Windows.Forms.Timer(this.components);
             this.grbBatteryStatus.SuspendLayout();
             this.grbFetchingValues.SuspendLayout();
             this.grbEdit.SuspendLayout();
@@ -90,6 +91,7 @@
             // prbBatteryStatus
             // 
             resources.ApplyResources(this.prbBatteryStatus, "prbBatteryStatus");
+            this.prbBatteryStatus.Maximum = 1;
             this.prbBatteryStatus.Name = "prbBatteryStatus";
             // 
             // textBox1
@@ -136,7 +138,7 @@
             resources.ApplyResources(this.btnLimits, "btnLimits");
             this.btnLimits.Name = "btnLimits";
             this.btnLimits.UseVisualStyleBackColor = true;
-            this.btnLimits.Click += new System.EventHandler(this.button1_Click);
+            this.btnLimits.Click += new System.EventHandler(this.btnLimits_Click);
             // 
             // btnSubscribers
             // 
@@ -186,17 +188,17 @@
             this.chbTemperature.Name = "chbTemperature";
             this.chbTemperature.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnSettings
             // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            resources.ApplyResources(this.btnSettings, "btnSettings");
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click_1);
             // 
             // grbEdit
             // 
             this.grbEdit.Controls.Add(this.btnLimits);
-            this.grbEdit.Controls.Add(this.button1);
+            this.grbEdit.Controls.Add(this.btnSettings);
             this.grbEdit.Controls.Add(this.btnSubscribers);
             resources.ApplyResources(this.grbEdit, "grbEdit");
             this.grbEdit.Name = "grbEdit";
@@ -252,6 +254,11 @@
             this.totGraph.InitialDelay = 500;
             this.totGraph.ReshowDelay = 10000;
             // 
+            // tmrBattery
+            // 
+            this.tmrBattery.Enabled = true;
+            this.tmrBattery.Tick += new System.EventHandler(this.tmrBattery_Tick);
+            // 
             // frmMain
             // 
             resources.ApplyResources(this, "$this");
@@ -300,7 +307,7 @@
         private System.Windows.Forms.ComboBox cboAnnotation;
         private System.Windows.Forms.CheckBox chbError;
         private System.Windows.Forms.CheckBox chbTemperature;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.GroupBox grbEdit;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabTable;
@@ -308,6 +315,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chartFetchedValues;
         private System.Windows.Forms.ToolTip totGraph;
         private System.IO.Ports.SerialPort spComPort;
+        private System.Windows.Forms.Timer tmrBattery;
     }
 }
 

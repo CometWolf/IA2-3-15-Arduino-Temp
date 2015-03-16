@@ -30,7 +30,12 @@ namespace CabinTempArduino
         }
         //END PROPERTIES
 
-        private void button1_Click(object sender, EventArgs e)
+        //OBJECTS
+        PowerStatus batteryStatus;
+        Database myDatabse = new Database("ArduinoTemperaturMåling.accdb");
+        //END OBJECTS
+
+        private void btnLimits_Click(object sender, EventArgs e)
         {
             //GUI
             frmLimits limitForm = new frmLimits();
@@ -46,7 +51,7 @@ namespace CabinTempArduino
             //END GUI
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void btnSettings_Click_1(object sender, EventArgs e)
         {
             //GUI
             frmSettings settingsForm = new frmSettings();
@@ -65,6 +70,13 @@ namespace CabinTempArduino
         private void btnFetch_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void tmrBattery_Tick(object sender, EventArgs e)
+        {
+            prbBatteryStatus.Value = Convert.ToInt32(SystemInformation.PowerStatus.BatteryLifePercent);
+            lblStatus.Text = Convert.ToString(SystemInformation.PowerStatus.BatteryChargeStatus);
+            //Legge inn feilmelding ved lite batteri.
         }
     }
 }

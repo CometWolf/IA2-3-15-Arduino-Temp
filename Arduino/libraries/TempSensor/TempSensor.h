@@ -1,13 +1,13 @@
-#ifndef TempSensor
+#ifndef TempSensor_h
 #include "Arduino.h"
-#define TempSensor
+#define TempSensor_h
 
 
 class TempSensor
 {
   private:
 	  byte pin;
-	  float factor;
+	  float resolution;
   public:
 	  float getTemp();
 	  TempSensor(int pin, int maxValue, int minValue);
