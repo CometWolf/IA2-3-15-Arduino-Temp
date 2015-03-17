@@ -1,5 +1,5 @@
-#ifndef Furnace
-#define Furnace
+#ifndef Furnace_h
+#define Furnace_h
 
 #include "Arduino.h"
 #include "Relay.h"
