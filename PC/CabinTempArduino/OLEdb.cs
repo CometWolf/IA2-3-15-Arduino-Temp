@@ -69,12 +69,25 @@ namespace CabinTempArduino
         }
         /// <summary>
         /// Opens a connection to the database
-        /// and reads the values i table "table" to a dataset
+        /// and reads the values in table "table" to a dataset
         /// </summary>
         /// <param name="table">Table to read</param>
         protected static void OpenDb(string table)
         {
             myAccessCommand.CommandText = "SELECT * FROM " + table;
+            myDataset = new DataSet();
+            myAccessConnection.Open();
+            myDataAdapter.Fill(myDataset, table);
+        }
+        /// <summary>
+        /// Opens a connection to the database
+        /// and reads the chosen values in table "table" to a dataset
+        /// </summary>
+        /// <param name="table">Table to read</param>
+        /// <param name="value">Values to select as SQL</param>
+        protected static void OpenDb(string table, string value)
+        {
+            myAccessCommand.CommandText = string.Format("SELECT {0} FROM {1}", value, table);
             myDataset = new DataSet();
             myAccessConnection.Open();
             myDataAdapter.Fill(myDataset, table);

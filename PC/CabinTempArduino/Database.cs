@@ -207,6 +207,46 @@ namespace CabinTempArduino
             return alarms;
         }
         /// <summary>
+        /// Gets alarms in 'Feilmeldingslogg'
+        /// </summary>
+        /// <param name="values">Values to get as SQL syntax</param>
+        /// <returns>
+        /// Dynamic string array of all values in 'Feilmeldingslogg'
+        /// </returns>
+        public string[,] GetAlarm(string values)
+        {
+            string[,] alarms;
+            string table = "Feilmeldingslogg";
+            try
+            {
+                OpenDb(table, values);
+                int rows = myDataset.Tables[table].Rows.Count;
+                int columns = myDataset.Tables[table].Columns.Count;
+                alarms = new string[rows, columns];
+
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        alarms[i, j] = myDataset.Tables[table].Rows[i].ItemArray[j].ToString();
+                    }
+                }
+                CloseDb(table);
+            }
+            catch (Exception ex)
+            {
+                alarms = new string[0, 0];
+                alarms[0, 0] = "N/A";
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return alarms;
+        }
+        /// <summary>
         /// Adds a row to TemperaturLogg
         /// </summary>
         /// <param name="date"></param>
@@ -278,6 +318,45 @@ namespace CabinTempArduino
             }
             return temperature;
         }
+        /// <summary>
+        /// Gets registered temperatures in TemperaturLogg
+        /// </summary>
+        /// <param name="value">Values to get as SQL syntax</param>
+        /// <returns>Temperature table values as string</returns>
+        public string[,] GetTemperature(string value)
+        {
+            string[,] temperature;
+            string table = "Feilmeldingslogg";
+            try
+            {
+                OpenDb(table, value);
+                int rows = myDataset.Tables[table].Rows.Count;
+                int columns = myDataset.Tables[table].Columns.Count;
+                temperature = new string[rows, columns];
+
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        temperature[i, j] = myDataset.Tables[table].Rows[i].ItemArray[j].ToString();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                temperature = new string[0, 0];
+                temperature[0, 0] = "N/A";
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return temperature;
+        }
+
         /// <summary>
         /// Updates a single cell in tablesettings
         /// </summary>
