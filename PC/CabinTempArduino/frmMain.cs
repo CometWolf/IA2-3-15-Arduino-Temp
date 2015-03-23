@@ -8,18 +8,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
+using System.Runtime.InteropServices;
 
 namespace CabinTempArduino
 {
     public partial class frmMain : Form
     {
+        
+        //Disable Visual Styles
+        [DllImport("uxtheme", ExactSpelling = true, CharSet = CharSet.Unicode)]
+        public extern static Int32 SetWindowTheme(IntPtr hWnd,
+                      String textSubAppName, String textSubIdList);
+
+        //Source: http://stackoverflow.com/questions/3893622/windows-98-style-progress-bar 
+
+        //END Disable Visual Styles
         public frmMain()
         {
             InitializeComponent();
-
-            //GUI
+            SetWindowTheme(prbBatteryStatus.Handle, "", ""); //Disable Visual Styles ProgressBar
+            
+            //ToolTips
             totGraph.SetToolTip(chartFetchedValues, "Click to enlarge");
-            //END GUI
+            //END ToolTips
         }
 
         //PROPERTIES
@@ -71,15 +82,24 @@ namespace CabinTempArduino
 
         }
 
-        private void tmrBattery_Tick(object sender, EventArgs e)
+        private void tmrBatteryStatus_Tick(object sender, EventArgs e)
         {
-            prbBatteryStatus.Value = Convert.ToInt32(SystemInformation.PowerStatus.BatteryLifePercent);
+            prbBatteryStatus.Value = Convert.ToInt32(SystemInformation.PowerStatus.BatteryLifePercent*100);
             lblStatus.Text = SystemInformation.PowerStatus.BatteryChargeStatus.ToString();
 
-            //Endre farge avhengig av prosent.
 
-            if(SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Low")
+
+            if (prbBatteryStatus.Value <= 50)
+                prbBatteryStatus.ForeColor = Color.Yellow;
+
+            if(SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "0")
             {
+                lblStatus.Text = "Normal";
+            }
+            else if(SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Low")
+            {
+                prbBatteryStatus.ForeColor = Color.Red;
+
                 //Legg inn Email sending.
             }
             else if (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Low, Critical")

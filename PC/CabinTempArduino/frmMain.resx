@@ -468,6 +468,66 @@
   <data name="&gt;&gt;lblWhatToFetch.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="&gt;&gt;cboAnnotation.Name" xml:space="preserve">
+    <value>cboAnnotation</value>
+  </data>
+  <data name="&gt;&gt;cboAnnotation.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboAnnotation.Parent" xml:space="preserve">
+    <value>grbFetchingValues</value>
+  </data>
+  <data name="&gt;&gt;cboAnnotation.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;chbError.Name" xml:space="preserve">
+    <value>chbError</value>
+  </data>
+  <data name="&gt;&gt;chbError.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chbError.Parent" xml:space="preserve">
+    <value>grbFetchingValues</value>
+  </data>
+  <data name="&gt;&gt;chbError.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;chbTemperature.Name" xml:space="preserve">
+    <value>chbTemperature</value>
+  </data>
+  <data name="&gt;&gt;chbTemperature.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chbTemperature.Parent" xml:space="preserve">
+    <value>grbFetchingValues</value>
+  </data>
+  <data name="&gt;&gt;chbTemperature.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="grbFetchingValues.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 61</value>
+  </data>
+  <data name="grbFetchingValues.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 183</value>
+  </data>
+  <data name="grbFetchingValues.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="grbFetchingValues.Text" xml:space="preserve">
+    <value>Fetching values</value>
+  </data>
+  <data name="&gt;&gt;grbFetchingValues.Name" xml:space="preserve">
+    <value>grbFetchingValues</value>
+  </data>
+  <data name="&gt;&gt;grbFetchingValues.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grbFetchingValues.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;grbFetchingValues.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="cboAnnotation.Items" xml:space="preserve">
     <value>Entries</value>
   </data>
@@ -558,30 +618,6 @@
   <data name="&gt;&gt;chbTemperature.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="grbFetchingValues.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 61</value>
-  </data>
-  <data name="grbFetchingValues.Size" type="System.Drawing.Size, System.Drawing">
-    <value>114, 183</value>
-  </data>
-  <data name="grbFetchingValues.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
-  </data>
-  <data name="grbFetchingValues.Text" xml:space="preserve">
-    <value>Fetching values</value>
-  </data>
-  <data name="&gt;&gt;grbFetchingValues.Name" xml:space="preserve">
-    <value>grbFetchingValues</value>
-  </data>
-  <data name="&gt;&gt;grbFetchingValues.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grbFetchingValues.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;grbFetchingValues.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
   <data name="btnSettings.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 19</value>
   </data>
@@ -630,21 +666,6 @@
   <data name="&gt;&gt;grbEdit.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="tabTable.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
-  <data name="tabTable.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tabTable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>359, 306</value>
-  </data>
-  <data name="tabTable.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="tabTable.Text" xml:space="preserve">
-    <value>Table</value>
-  </data>
   <data name="&gt;&gt;tabTable.Name" xml:space="preserve">
     <value>tabTable</value>
   </data>
@@ -656,42 +677,6 @@
   </data>
   <data name="&gt;&gt;tabTable.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="chartFetchedValues.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="chartFetchedValues.Size" type="System.Drawing.Size, System.Drawing">
-    <value>330, 300</value>
-  </data>
-  <data name="chartFetchedValues.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
-  <data name="&gt;&gt;chartFetchedValues.Name" xml:space="preserve">
-    <value>chartFetchedValues</value>
-  </data>
-  <data name="&gt;&gt;chartFetchedValues.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataVisualization.Charting.Chart, System.Windows.Forms.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</value>
-  </data>
-  <data name="&gt;&gt;chartFetchedValues.Parent" xml:space="preserve">
-    <value>tabGraph</value>
-  </data>
-  <data name="&gt;&gt;chartFetchedValues.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tabGraph.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
-  <data name="tabGraph.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tabGraph.Size" type="System.Drawing.Size, System.Drawing">
-    <value>336, 306</value>
-  </data>
-  <data name="tabGraph.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="tabGraph.Text" xml:space="preserve">
-    <value>Graph</value>
   </data>
   <data name="&gt;&gt;tabGraph.Name" xml:space="preserve">
     <value>tabGraph</value>
@@ -726,13 +711,100 @@
   <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="tabTable.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabTable.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabTable.Size" type="System.Drawing.Size, System.Drawing">
+    <value>359, 306</value>
+  </data>
+  <data name="tabTable.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tabTable.Text" xml:space="preserve">
+    <value>Table</value>
+  </data>
+  <data name="&gt;&gt;tabTable.Name" xml:space="preserve">
+    <value>tabTable</value>
+  </data>
+  <data name="&gt;&gt;tabTable.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabTable.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabTable.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;chartFetchedValues.Name" xml:space="preserve">
+    <value>chartFetchedValues</value>
+  </data>
+  <data name="&gt;&gt;chartFetchedValues.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataVisualization.Charting.Chart, System.Windows.Forms.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</value>
+  </data>
+  <data name="&gt;&gt;chartFetchedValues.Parent" xml:space="preserve">
+    <value>tabGraph</value>
+  </data>
+  <data name="&gt;&gt;chartFetchedValues.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tabGraph.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabGraph.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabGraph.Size" type="System.Drawing.Size, System.Drawing">
+    <value>359, 306</value>
+  </data>
+  <data name="tabGraph.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tabGraph.Text" xml:space="preserve">
+    <value>Graph</value>
+  </data>
+  <data name="&gt;&gt;tabGraph.Name" xml:space="preserve">
+    <value>tabGraph</value>
+  </data>
+  <data name="&gt;&gt;tabGraph.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabGraph.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabGraph.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="chartFetchedValues.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="chartFetchedValues.Size" type="System.Drawing.Size, System.Drawing">
+    <value>330, 300</value>
+  </data>
+  <data name="chartFetchedValues.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;chartFetchedValues.Name" xml:space="preserve">
+    <value>chartFetchedValues</value>
+  </data>
+  <data name="&gt;&gt;chartFetchedValues.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataVisualization.Charting.Chart, System.Windows.Forms.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</value>
+  </data>
+  <data name="&gt;&gt;chartFetchedValues.Parent" xml:space="preserve">
+    <value>tabGraph</value>
+  </data>
+  <data name="&gt;&gt;chartFetchedValues.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <metadata name="totGraph.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
   <metadata name="spComPort.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>117, 17</value>
   </metadata>
-  <metadata name="tmrBattery.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="tmrBatteryStatus.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>229, 17</value>
   </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -6931,10 +7003,10 @@
   <data name="&gt;&gt;spComPort.Type" xml:space="preserve">
     <value>System.IO.Ports.SerialPort, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tmrBattery.Name" xml:space="preserve">
-    <value>tmrBattery</value>
+  <data name="&gt;&gt;tmrBatteryStatus.Name" xml:space="preserve">
+    <value>tmrBatteryStatus</value>
   </data>
-  <data name="&gt;&gt;tmrBattery.Type" xml:space="preserve">
+  <data name="&gt;&gt;tmrBatteryStatus.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
