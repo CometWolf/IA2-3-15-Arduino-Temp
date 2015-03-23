@@ -89,6 +89,7 @@ namespace CabinTempArduino
         }
         #endregion
 
+        #region Methods
         public bool CheckAlarm()
         {
             //if ((Receive() == "ALARM_UPPER")||(Receive() == "ALARM_LOWER"))
@@ -110,8 +111,7 @@ namespace CabinTempArduino
             //    }
             //}
             return tempValue;
-           
+        #endregion
         }
-
     }
 }
