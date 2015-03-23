@@ -74,7 +74,7 @@ namespace CabinTempArduino
         /// <param name="table">Table to read</param>
         protected static void OpenDb(string table)
         {
-            myAccessCommand.CommandText = "SELECT * FROM " + table;
+            myAccessCommand.CommandText = string.Format("SELECT * FROM {0}", table);
             myDatatable = new DataTable();
             myAccessConnection.Open();
             myDataAdapter.Fill(myDatatable);
@@ -90,7 +90,14 @@ namespace CabinTempArduino
             myAccessCommand.CommandText = string.Format("SELECT {0} FROM {1}", value, table);
             myDatatable = new DataTable();
             myAccessConnection.Open();
-            myDataAdapter.Fill(myDatatable, table);
+            myDataAdapter.Fill(myDatatable);
+        }
+        protected static void OpenDbMan(string selectQuery)
+        {
+            myAccessCommand.CommandText = selectQuery;
+            myDatatable = new DataTable();
+            myAccessConnection.Open();
+            myDataAdapter.Fill(myDatatable);
         }
         /// <summary>
         /// Commits the values in dataset to the database

@@ -65,10 +65,22 @@ namespace CabinTempArduino
             chart.Show();
             //END GUI
         }
-
+        Random rand = new Random();
         private void btnFetch_Click(object sender, EventArgs e)
         {
-            string[,] alarms = myDatabase.GetAlarm();
+            rtbDatabaseValues.Clear();
+
+            for (int i = 0; i < 10; i++)
+            {
+                
+            myDatabase.LogTemperature(DateTime.Now.Date.ToString(), DateTime.Now.TimeOfDay.ToString(), rand.Next(-100, 100).ToString());
+            }
+            string[,] alarms = myDatabase.GetTemperature();
+
+            foreach (string x in alarms)
+            {
+                rtbDatabaseValues.AppendText(x + "\r\n");
+            }
         }
 
         private void tmrBattery_Tick(object sender, EventArgs e)

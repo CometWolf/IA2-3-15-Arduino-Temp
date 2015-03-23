@@ -176,7 +176,7 @@ namespace CabinTempArduino
         public string[,] GetAlarm()
         {
             string[,] alarms;
-            string table = "TemperaturLogg";
+            string table = "FeilmeldingsLogg";
             try
             {
                 OpenDb(table);
@@ -288,7 +288,7 @@ namespace CabinTempArduino
         public string[,] GetTemperature()
         {
             string[,] temperature;
-            string table = "Feilmeldingslogg";
+            string table = "Temperaturlogg";
             try
             {
                 OpenDb(table);
@@ -326,7 +326,7 @@ namespace CabinTempArduino
         public string[,] GetTemperature(string value)
         {
             string[,] temperature;
-            string table = "Feilmeldingslogg";
+            string table = "Temperaturlogg";
             try
             {
                 OpenDb(table, value);
