@@ -41,8 +41,10 @@ namespace CabinTempArduino
         }
         //END PROPERTIES
 
+
         //OBJECTS
         Database myDatabase = new Database("ArduinoTemperaturMåling.accdb");
+        E_post mail = new E_post();
         //END OBJECTS
 
         private void btnLimits_Click(object sender, EventArgs e)
@@ -99,8 +101,6 @@ namespace CabinTempArduino
             prbBatteryStatus.Value = Convert.ToInt32(SystemInformation.PowerStatus.BatteryLifePercent*100);
             lblStatus.Text = SystemInformation.PowerStatus.BatteryChargeStatus.ToString();
 
-
-
             if (prbBatteryStatus.Value <= 50)
                 prbBatteryStatus.ForeColor = Color.Yellow;
 
@@ -112,10 +112,22 @@ namespace CabinTempArduino
             {
                 prbBatteryStatus.ForeColor = Color.Red;
 
-                //Legg inn Email sending.
+                //Legg inn Email sending
             }
-            else if (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Low, Critical")
+            else if (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Critical")
             {
+                bool blink = false;
+
+                if (blink == false)
+                {
+                    prbBatteryStatus.ForeColor = Color.White;
+                    blink = true;
+                }
+                else if (blink)
+                {
+                    prbBatteryStatus.ForeColor = Color.Red;
+                    blink = false;
+                }
                 //Legg inn Email sending.
             }
         }
