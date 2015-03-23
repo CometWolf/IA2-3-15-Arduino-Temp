@@ -13,28 +13,29 @@ namespace CabinTempArduino
         static string reciverMail;
         static string mailSubject;
         static string mailText;
-        const string programMail = "IA2.3.2015@gmail.com";      // Programmets mailadresse - konstant 
-        const string programMailPassword = "arduino2015";       // Prog. mail passord - konstant
+        static string programMail = "IA2.3.2015@gmail.com";      // Programmets mailadresse - konstant 
+        static string programMailPassword = "arduino2015";       // Prog. mail passord - konstant
         static bool mailSent = false;
-        
-        public E_post(string epostMottager, string epostTema, string epostMelding)
-            // Classe konstruktør med parametere
-        {
-            reciverMail = epostMottager;
-            mailSubject = epostTema;
-            mailText = epostMelding;
-        }
-        
-        public bool Send()                                      
+
+        static MailAddress to;
+        static MailAddress from;
+        static MailMessage message;
+        static SmtpClient smtpclient;
+
+        public bool Send(string epostMottaker, string epostTema, string epostMelding)                                      
             // Metode for å sende mail med mottageradresse, emne og hovedtekst som parametere
         {
-            MailAddress to = new MailAddress(reciverMail);      // Mailadresse objekt for mottager
-            MailAddress from = new MailAddress(programMail);          // Mailadresse objekt for avsender
-            MailMessage message = new MailMessage(from, to);    // Mail objekt, men avsender og mottager som parametere
+            reciverMail = epostMottaker;
+            mailSubject = epostTema;
+            mailText = epostMelding;
+
+            to = new MailAddress(reciverMail);                  // Mailadresse objekt for mottager
+            from = new MailAddress(programMail);                // Mailadresse objekt for avsender
+            message = new MailMessage(from, to);                // Mail objekt, med avsender og mottager som parametere
             message.Subject = mailSubject;                      // Legger inn tema i mailobjektet
             message.Body = mailText;                            // Legger inn hovedteksten i mailobjektet 
 
-            SmtpClient smtpclient = new SmtpClient();           // SMTP innstillinger for Gmail
+            smtpclient = new SmtpClient();                      // SMTP innstillinger for Gmail
             smtpclient.Host = "smtp.gmail.com";
             smtpclient.Port = 587;
             smtpclient.EnableSsl = true;
@@ -51,7 +52,7 @@ namespace CabinTempArduino
             get
             {
                 return reciverMail;
-                
+
             }
             set
             {
@@ -77,7 +78,7 @@ namespace CabinTempArduino
             }
             set
             {
-                mailText = value;
+                MailText = value;
             }
         }
         public string ProgramMail
@@ -102,6 +103,16 @@ namespace CabinTempArduino
                 ProgramMailPassword = value;
             }
         }
-
+        public bool MailSent
+        {
+            get
+            {
+                return mailSent;
+            }
+            set
+            {
+                MailSent = value;
+            }
+        }
     }
 }
