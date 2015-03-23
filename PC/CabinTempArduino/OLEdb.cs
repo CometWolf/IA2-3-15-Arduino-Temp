@@ -14,7 +14,7 @@ namespace CabinTempArduino
         protected static OleDbCommand myAccessCommand;
         protected static OleDbDataAdapter myDataAdapter;
         protected static OleDbCommandBuilder myCommandBuilder;
-        protected static DataSet myDataset;
+        protected static DataTable myDatatable;
         static string connectionString;
         /// <summary>
         /// Initializes an instance of the OLEDB class
@@ -36,7 +36,7 @@ namespace CabinTempArduino
 
                 myDataAdapter = new OleDbDataAdapter(myAccessCommand);
 
-                myDataset = new DataSet();
+                myDatatable = new DataTable();
 
             }
             catch (Exception ex)
@@ -75,9 +75,9 @@ namespace CabinTempArduino
         protected static void OpenDb(string table)
         {
             myAccessCommand.CommandText = "SELECT * FROM " + table;
-            myDataset = new DataSet();
+            myDatatable = new DataTable();
             myAccessConnection.Open();
-            myDataAdapter.Fill(myDataset, table);
+            myDataAdapter.Fill(myDatatable);
         }
         /// <summary>
         /// Opens a connection to the database
@@ -88,9 +88,9 @@ namespace CabinTempArduino
         protected static void OpenDb(string table, string value)
         {
             myAccessCommand.CommandText = string.Format("SELECT {0} FROM {1}", value, table);
-            myDataset = new DataSet();
+            myDatatable = new DataTable();
             myAccessConnection.Open();
-            myDataAdapter.Fill(myDataset, table);
+            myDataAdapter.Fill(myDatatable, table);
         }
         /// <summary>
         /// Commits the values in dataset to the database
@@ -105,7 +105,7 @@ namespace CabinTempArduino
 
             myDataAdapter.UpdateCommand = myCommandBuilder.GetUpdateCommand();
 
-            myDataAdapter.Update(myDataset.Tables[table]);
+            myDataAdapter.Update(myDatatable);
             myAccessConnection.Close();
         }
         

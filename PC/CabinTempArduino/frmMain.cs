@@ -31,7 +31,7 @@ namespace CabinTempArduino
         //END PROPERTIES
 
         //OBJECTS
-        Database myDatabse = new Database("ArduinoTemperaturMåling.accdb");
+        Database myDatabase = new Database("ArduinoTemperaturMåling.accdb");
         //END OBJECTS
 
         private void btnLimits_Click(object sender, EventArgs e)
@@ -68,7 +68,7 @@ namespace CabinTempArduino
 
         private void btnFetch_Click(object sender, EventArgs e)
         {
-
+            string[,] alarms = myDatabase.GetAlarm();
         }
 
         private void tmrBattery_Tick(object sender, EventArgs e)
