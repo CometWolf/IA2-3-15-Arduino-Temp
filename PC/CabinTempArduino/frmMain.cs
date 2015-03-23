@@ -42,7 +42,7 @@ namespace CabinTempArduino
         //END PROPERTIES
 
         //OBJECTS
-        Database myDatabse = new Database("ArduinoTemperaturMåling.accdb");
+        Database myDatabase = new Database("ArduinoTemperaturMåling.accdb");
         //END OBJECTS
 
         private void btnLimits_Click(object sender, EventArgs e)
@@ -76,10 +76,22 @@ namespace CabinTempArduino
             chart.Show();
             //END GUI
         }
-
+        Random rand = new Random();
         private void btnFetch_Click(object sender, EventArgs e)
         {
+            rtbDatabaseValues.Clear();
 
+            for (int i = 0; i < 10; i++)
+            {
+                
+            myDatabase.LogTemperature(DateTime.Now.Date.ToString(), DateTime.Now.TimeOfDay.ToString(), rand.Next(-100, 100).ToString());
+            }
+            string[,] alarms = myDatabase.GetTemperature();
+
+            foreach (string x in alarms)
+            {
+                rtbDatabaseValues.AppendText(x + "\r\n");
+            }
         }
 
         private void tmrBatteryStatus_Tick(object sender, EventArgs e)
