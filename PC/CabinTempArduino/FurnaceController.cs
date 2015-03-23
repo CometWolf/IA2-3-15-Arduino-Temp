@@ -25,7 +25,6 @@ namespace CabinTempArduino
         private double tempValue;
         private bool furnaceActive;
         private bool alarm;
-        private string 
         #endregion
             
         #region Properties
