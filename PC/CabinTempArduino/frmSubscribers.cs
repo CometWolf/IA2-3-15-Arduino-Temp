@@ -19,8 +19,7 @@ namespace CabinTempArduino
             //GUI
             if (cboSelectSubscriber.Text == "Select subscriber")
             {
-                txtFirstName.ReadOnly = true; txtSurName.ReadOnly = true; txtEmail.ReadOnly = true; txtConfirmEmail.ReadOnly = true;
-                txtPhone.ReadOnly = true; txtPassword.ReadOnly = true; txtConfirmPassword.ReadOnly = true; txtUsername.ReadOnly = true;
+                TextBoxesReadOnlyTrue();
                 btnDelete.Enabled = false; btnSubmit.Enabled = false;
             }
 
@@ -28,10 +27,8 @@ namespace CabinTempArduino
             //END GUI
             for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
             {
-                cboSelectSubscriber.Items.Add(subscribers[i, 2] + subscribers[i, 1]);
+                cboSelectSubscriber.Items.Add(subscribers[i, 3]);
             }
-            
-
         }
 
         //Objects
@@ -43,27 +40,36 @@ namespace CabinTempArduino
         //END Variables
         private void cboSelectSubscriber_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string[,] subscribers = myDatabase.GetSubscribers();
-
+            subscribers = myDatabase.GetSubscribers();
             // GUI
             if (cboSelectSubscriber.Text != "New")
                 btnSubmit.Text = "Submit changes";
 
             if (cboSelectSubscriber.Text == "New")
             {
-                txtFirstName.ReadOnly = false; txtSurName.ReadOnly = false; txtEmail.ReadOnly = false; txtConfirmEmail.ReadOnly = false;
-                txtPhone.ReadOnly = false; txtPassword.ReadOnly = false; txtConfirmPassword.ReadOnly = false; txtUsername.ReadOnly = false;
+                TextBoxesReadOnlyFalse();
+
                 btnDelete.Enabled = false; btnSubmit.Enabled = true;
                 btnSubmit.Text = "Submit";
+
+                ClearAllTextBoxes();
             }
-            //else if(cboSelectSubscriber.Text == myDatabse.getSubscribers[Array.FindIndex(subscribers),1)
-            else
+            else if (cboSelectSubscriber.Text != "new" && cboSelectSubscriber.Text == myDatabase.searchUsername(cboSelectSubscriber.Text, subscribers))
             {
-                txtFirstName.ReadOnly = false; txtSurName.ReadOnly = false; txtEmail.ReadOnly = false; txtConfirmEmail.ReadOnly = false;
-                txtPhone.ReadOnly = false; txtPassword.ReadOnly = false; txtConfirmPassword.ReadOnly = false; txtUsername.ReadOnly = false;
+                TextBoxesReadOnlyFalse();
                 btnDelete.Enabled = true; btnSubmit.Enabled = true;
+
+                int index = myDatabase.getIndex(cboSelectSubscriber.Text, subscribers);
+                txtSurName.Text = subscribers[index, 1];
+                txtFirstName.Text = subscribers[index, 2];
+                txtUsername.Text = subscribers[index, 3];
+                txtEmail.Text = subscribers[index, 5];
+                txtConfirmEmail.Text = subscribers[index, 5];
+                txtPhone.Text = subscribers[index, 6];
             }
             //END GUI
+
+
         }
 
         private void btnSubmit_Click(object sender, EventArgs e)
@@ -89,19 +95,72 @@ namespace CabinTempArduino
                     && txtPhone.Text != "" && txtUsername.Text != "")
                 {
                     myDatabase.AddSubscriber(txtSurName.Text, txtFirstName.Text, txtUsername.Text, password, txtEmail.Text, txtPhone.Text);
-                    txtFirstName.Clear(); txtSurName.Clear(); txtEmail.Clear(); txtConfirmEmail.Clear();
-                    txtPhone.Clear(); txtPassword.Clear(); txtConfirmPassword.Clear(); txtUsername.Clear();
+                    ClearAllTextBoxes();
                     MessageBox.Show("Subscriber successfully added.");
-
-                    subscribers = myDatabase.GetSubscribers();
-                    cboSelectSubscriber.Items.Clear();
-                    for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
-                    {
-                        cboSelectSubscriber.Items.Add(subscribers[i, 4]);
-                    }
                 }
                 else
                     MessageBox.Show("Fill all textboxes.");
+            }
+            else if (cboSelectSubscriber.Text == myDatabase.searchUsername(cboSelectSubscriber.Text,subscribers))
+            {
+                int index = myDatabase.getIndex(cboSelectSubscriber.Text, subscribers);
+                //Legg til update av brukere her.
+            }
+
+            subscribers = myDatabase.GetSubscribers();
+            cboSelectSubscriber.Items.Clear();
+            cboSelectSubscriber.Items.Add("New");
+            for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+            {
+                cboSelectSubscriber.Items.Add(subscribers[i, 3]);
+            }
+            cboSelectSubscriber.Text = "New";
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if(cboSelectSubscriber.Text == myDatabase.searchUsername(cboSelectSubscriber.Text,subscribers))
+            {
+                int index = myDatabase.getIndex(cboSelectSubscriber.Text, subscribers);
+                myDatabase.DeleteSubscriber(index);
+            }
+
+            subscribers = myDatabase.GetSubscribers();
+            cboSelectSubscriber.Items.Clear();
+            cboSelectSubscriber.Items.Add("New");
+            for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+            {
+                cboSelectSubscriber.Items.Add(subscribers[i, 3]);
+            }
+            
+
+            ClearAllTextBoxes();
+            cboSelectSubscriber.Text = "New";
+            MessageBox.Show("User successfully deleted!");
+        }
+
+        private void TextBoxesReadOnlyTrue()
+        {
+            foreach (Control x in this.Controls)
+            {
+                if (x is TextBox)
+                    ((TextBox)x).ReadOnly = true;
+            }
+        }
+        private void TextBoxesReadOnlyFalse()
+        {
+            foreach (Control x in this.Controls)
+            {
+                if (x is TextBox)
+                    ((TextBox)x).ReadOnly = false;
+            }
+        }
+        private void ClearAllTextBoxes()
+        {
+            foreach (Control x in this.Controls)
+            {
+                if (x is TextBox)
+                    ((TextBox)x).Clear();
             }
         }
     }
