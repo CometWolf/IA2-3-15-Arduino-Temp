@@ -422,6 +422,54 @@ namespace CabinTempArduino
             }
             return settings;
         }
+        /// <summary>
+        /// Search Functions
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="searchArray"></param>
+        /// <returns></returns>
+        public string searchUsername(string username, string[,] searchArray)
+        {
+            int index = 0;
+                for (int i = 0; i <= searchArray.GetUpperBound(0); i++)
+                {
+                    if (username == searchArray[i, 3])
+                        goto exit;
+                    else
+                        index++;
+                }
+
+                exit:
+            return searchArray[index, 3];
+        }
+        public int getUserID(string username, string[,] indexArray)
+        {
+            int index = 0;
+            for (int i = 0; i <= indexArray.GetUpperBound(0); i++)
+            {
+                if (username == indexArray[i, 3])
+                    goto exit;
+                else
+                    index++;
+            }
+
+        exit:
+            return Convert.ToInt32(indexArray[index, 0]);
+        }
+        public int getIndex(string username, string[,] indexArray)
+        {
+            int index = 0;
+            for (int i = 0; i <= indexArray.GetUpperBound(0); i++)
+            {
+                if (username == indexArray[i, 3])
+                    goto exit;
+                else
+                    index++;
+            }
+
+        exit:
+            return index;
+        }
 
     }
 }

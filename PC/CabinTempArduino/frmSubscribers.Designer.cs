@@ -69,8 +69,7 @@
             // 
             this.cboSelectSubscriber.FormattingEnabled = true;
             this.cboSelectSubscriber.Items.AddRange(new object[] {
-            "New",
-            "Test"});
+            "New"});
             this.cboSelectSubscriber.Location = new System.Drawing.Point(12, 12);
             this.cboSelectSubscriber.Name = "cboSelectSubscriber";
             this.cboSelectSubscriber.Size = new System.Drawing.Size(206, 21);
@@ -178,6 +177,7 @@
             this.btnDelete.TabIndex = 11;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // txtConfirmEmail
             // 
