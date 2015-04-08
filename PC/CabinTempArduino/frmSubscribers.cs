@@ -97,6 +97,15 @@ namespace CabinTempArduino
                     myDatabase.AddSubscriber(txtSurName.Text, txtFirstName.Text, txtUsername.Text, password, txtEmail.Text, txtPhone.Text);
                     ClearAllTextBoxes();
                     MessageBox.Show("Subscriber successfully added.");
+
+                    subscribers = myDatabase.GetSubscribers();
+                    cboSelectSubscriber.Items.Clear();
+                    cboSelectSubscriber.Items.Add("New");
+                    for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+                    {
+                        cboSelectSubscriber.Items.Add(subscribers[i, 3]);
+                    }
+                    cboSelectSubscriber.Text = "New";
                 }
                 else
                     MessageBox.Show("Fill all textboxes.");
@@ -106,15 +115,6 @@ namespace CabinTempArduino
                 int index = myDatabase.getIndex(cboSelectSubscriber.Text);
                 //Legg til update av brukere her.
             }
-
-            subscribers = myDatabase.GetSubscribers();
-            cboSelectSubscriber.Items.Clear();
-            cboSelectSubscriber.Items.Add("New");
-            for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
-            {
-                cboSelectSubscriber.Items.Add(subscribers[i, 3]);
-            }
-            cboSelectSubscriber.Text = "New";
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
