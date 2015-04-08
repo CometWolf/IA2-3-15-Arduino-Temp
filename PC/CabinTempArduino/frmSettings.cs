@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO.Ports;
 
 namespace CabinTempArduino
 {
@@ -20,6 +21,15 @@ namespace CabinTempArduino
             rbtSeconds.Enabled = false;
             rbtMinutes.Enabled = false;
             //END GUI
+
+            //Valid ports
+
+            string[] serialPortNames = SerialPort.GetPortNames();
+            foreach (string port in serialPortNames)
+            {
+                cboComPort.Items.Add(port);
+            }
+            //END Valid ports
         }
 
         private void cboPreset_SelectedIndexChanged(object sender, EventArgs e)
@@ -46,6 +56,15 @@ namespace CabinTempArduino
             if (txtCustomInterval.Text == "Custom interval")
                 txtCustomInterval.Text = "";
             //END GUI
+        }
+
+        private void btnComPort_Click(object sender, EventArgs e)
+        {
+            if(cboComPort.Text != "Ports")
+            {
+                frmMain main = new frmMain();
+                main.ComPort = cboComPort.Text;
+            }
         }
     }
 }

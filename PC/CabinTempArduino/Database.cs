@@ -38,7 +38,7 @@ namespace CabinTempArduino
 
                 OpenDb(table);
 
-                DataRow row = myDataset.Tables[table].NewRow();
+                DataRow row = myDatatable.NewRow();
 
                 row["Etternavn"] = surName;
                 row["Fornavn"] = firstName;
@@ -47,8 +47,8 @@ namespace CabinTempArduino
                 row["E-post"] = email;
                 row["Telefon"] = phone;
 
-                myDataset.AcceptChanges();
-                myDataset.Tables[table].Rows.Add(row);
+                myDatatable.AcceptChanges();
+                myDatatable.Rows.Add(row);
 
                 CloseDb(table);
             }
@@ -73,7 +73,7 @@ namespace CabinTempArduino
 
                 OpenDb(table);
 
-                myDataset.Tables[table].Rows[userID].Delete();
+                myDatatable.Rows[userID].Delete();
 
                 CloseDb(table);
 
@@ -102,8 +102,8 @@ namespace CabinTempArduino
             {
                 OpenDb(table);
 
-                int rows = myDataset.Tables[table].Rows.Count;
-                int columns = myDataset.Tables[table].Columns.Count;
+                int rows = myDatatable.Rows.Count;
+                int columns = myDatatable.Columns.Count;
 
                 subscribers = new string[rows, columns];
 
@@ -111,7 +111,7 @@ namespace CabinTempArduino
                 {
                     for (int j = 0; j < columns; j++)
                     {
-                        subscribers[i, j] = myDataset.Tables[table].Rows[i].ItemArray[j].ToString();
+                        subscribers[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
                     }
                 }
             }
@@ -145,7 +145,7 @@ namespace CabinTempArduino
 
                 OpenDb(table);
 
-                DataRow row = myDataset.Tables[table].NewRow();
+                DataRow row = myDatatable.NewRow();
 
                 row["Dato"] = date;
                 row["Tid"] = time;
@@ -153,8 +153,8 @@ namespace CabinTempArduino
                 row["AlarmID"] = alarmID;
                 row["Temperatur"] = temp;
 
-                myDataset.AcceptChanges();
-                myDataset.Tables[table].Rows.Add(row);
+                myDatatable.AcceptChanges();
+                myDatatable.Rows.Add(row);
 
                 CloseDb(table);
             }
@@ -176,19 +176,59 @@ namespace CabinTempArduino
         public string[,] GetAlarm()
         {
             string[,] alarms;
-            string table = "Feilmeldingslogg";
+            string table = "FeilmeldingsLogg";
             try
             {
                 OpenDb(table);
-                int rows = myDataset.Tables[table].Rows.Count;
-                int columns = myDataset.Tables[table].Columns.Count;
+                int rows = myDatatable.Rows.Count;
+                int columns = myDatatable.Columns.Count;
                 alarms = new string[rows, columns];
 
                 for (int i = 0; i < rows; i++)
                 {
                     for (int j = 0; j < columns; j++)
                     {
-                        alarms[i, j] = myDataset.Tables[table].Rows[i].ItemArray[j].ToString();                        
+                        alarms[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();                        
+                    }
+                }
+                CloseDb(table);
+            }
+            catch (Exception ex)
+            {
+                alarms = new string[0, 0];
+                alarms[0, 0] = "N/A";
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return alarms;
+        }
+        /// <summary>
+        /// Gets alarms in 'Feilmeldingslogg'
+        /// </summary>
+        /// <param name="values">Values to get as SQL syntax</param>
+        /// <returns>
+        /// Dynamic string array of all values in 'Feilmeldingslogg'
+        /// </returns>
+        public string[,] GetAlarm(string values)
+        {
+            string[,] alarms;
+            string table = "Feilmeldingslogg";
+            try
+            {
+                OpenDb(table, values);
+                int rows = myDatatable.Rows.Count;
+                int columns = myDatatable.Columns.Count;
+                alarms = new string[rows, columns];
+
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        alarms[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
                     }
                 }
                 CloseDb(table);
@@ -221,14 +261,14 @@ namespace CabinTempArduino
 
                 OpenDb(table);
 
-                DataRow row = myDataset.Tables[table].NewRow();
+                DataRow row = myDatatable.NewRow();
 
                 row["Dato"] = date;
                 row["Tid"] = time;
                 row["Temperatur"] = temp;
 
-                myDataset.AcceptChanges();
-                myDataset.Tables[table].Rows.Add(row);
+                myDatatable.AcceptChanges();
+                myDatatable.Rows.Add(row);
 
                 CloseDb(table);
             }
@@ -248,19 +288,19 @@ namespace CabinTempArduino
         public string[,] GetTemperature()
         {
             string[,] temperature;
-            string table = "Feilmeldingslogg";
+            string table = "Temperaturlogg";
             try
             {
                 OpenDb(table);
-                int rows = myDataset.Tables[table].Rows.Count;
-                int columns = myDataset.Tables[table].Columns.Count;
+                int rows = myDatatable.Rows.Count;
+                int columns = myDatatable.Columns.Count;
                 temperature = new string[rows, columns];
 
                 for (int i = 0; i < rows; i++)
                 {
                     for (int j = 0; j < columns; j++)
                     {
-                        temperature[i, j] = myDataset.Tables[table].Rows[i].ItemArray[j].ToString();
+                        temperature[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
                     }
                 }
 
@@ -279,6 +319,45 @@ namespace CabinTempArduino
             return temperature;
         }
         /// <summary>
+        /// Gets registered temperatures in TemperaturLogg
+        /// </summary>
+        /// <param name="value">Values to get as SQL syntax</param>
+        /// <returns>Temperature table values as string</returns>
+        public string[,] GetTemperature(string value)
+        {
+            string[,] temperature;
+            string table = "Temperaturlogg";
+            try
+            {
+                OpenDb(table, value);
+                int rows = myDatatable.Rows.Count;
+                int columns = myDatatable.Columns.Count;
+                temperature = new string[rows, columns];
+
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        temperature[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                temperature = new string[0, 0];
+                temperature[0, 0] = "N/A";
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return temperature;
+        }
+
+        /// <summary>
         /// Updates a single cell in tablesettings
         /// </summary>
         /// <param name="newSetting">New setting</param>
@@ -293,9 +372,9 @@ namespace CabinTempArduino
 
                 OpenDb(table);
 
-                myDataset.AcceptChanges();
+                myDatatable.AcceptChanges();
 
-                myDataset.Tables[table].Rows[settingNr][columnName] = newSetting;
+                myDatatable.Rows[settingNr][columnName] = newSetting;
 
                 CloseDb(table);
             }
@@ -320,13 +399,13 @@ namespace CabinTempArduino
             try
             {
                 OpenDb(table);
-                int rows = myDataset.Tables[table].Rows.Count;
-                int columns = myDataset.Tables[table].Columns.Count;
+                int rows = myDatatable.Rows.Count;
+                int columns = myDatatable.Columns.Count;
                 settings = new string[columns];
 
                 for (int i = 0; i < rows; i++)
                 {
-                    settings[i] = myDataset.Tables[table].Rows[settingNr].ItemArray[i].ToString();
+                    settings[i] = myDatatable.Rows[settingNr].ItemArray[i].ToString();
                 }
 
             }

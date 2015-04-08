@@ -1,5 +1,5 @@
-#ifndef Furnace
-#define Furnace
+#ifndef Furnace_h
+#define Furnace_h
 
 #include "Arduino.h"
 #include "Relay.h"
@@ -9,9 +9,7 @@
     float upperLimit;
     boolean active;
     Furnace(float upperLimit) : Relay(byte pin);
-    void update;
-  private:
-    byte pin;
+    void update();
   };
 
 #endif
