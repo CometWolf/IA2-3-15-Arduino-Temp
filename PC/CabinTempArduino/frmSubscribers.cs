@@ -43,6 +43,8 @@ namespace CabinTempArduino
         //END Variables
         private void cboSelectSubscriber_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string[,] subscribers = myDatabase.GetSubscribers();
+
             // GUI
             if (cboSelectSubscriber.Text != "New")
                 btnSubmit.Text = "Submit changes";
@@ -54,6 +56,7 @@ namespace CabinTempArduino
                 btnDelete.Enabled = false; btnSubmit.Enabled = true;
                 btnSubmit.Text = "Submit";
             }
+            //else if(cboSelectSubscriber.Text == myDatabse.getSubscribers[Array.FindIndex(subscribers),1)
             else
             {
                 txtFirstName.ReadOnly = false; txtSurName.ReadOnly = false; txtEmail.ReadOnly = false; txtConfirmEmail.ReadOnly = false;
@@ -94,7 +97,7 @@ namespace CabinTempArduino
                     cboSelectSubscriber.Items.Clear();
                     for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
                     {
-                        cboSelectSubscriber.Items.Add(subscribers[i, 2] + subscribers[i, 1]);
+                        cboSelectSubscriber.Items.Add(subscribers[i, 4]);
                     }
                 }
                 else
