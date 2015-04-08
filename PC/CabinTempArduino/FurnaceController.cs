@@ -6,15 +6,25 @@ using System.Threading.Tasks;
 
 namespace CabinTempArduino
 {
-    class FurnaceController
+    class FurnaceController // : Arduino
     {
+        public FurnaceController(double alarmUp, double alarmLow, double furnaceUp, double furnaceLow)
+        {
+            alarmUpperLimit = alarmUp;
+            alarmLowerLimit = alarmLow;
+            furnaceUpperlimit = furnaceUp;
+            furnaceLowerLimit = furnaceLow; 
+        }
+
         #region Fields
         private double alarmLowerLimit;
         private double alarmUpperLimit;
         private double furnaceLowerLimit;
         private double furnaceUpperlimit;
-        private double temp;
+        private string temp = "";
+        private double tempValue;
         private bool furnaceActive;
+        private bool alarm;
         #endregion
             
         #region Properties
@@ -29,6 +39,20 @@ namespace CabinTempArduino
                 alarmLowerLimit = value;
             }
 
+        }
+        public bool Alarm
+        {
+            get
+            {
+                return alarm; 
+            }
+        }
+        public double TempValue
+        {
+            get
+            {
+                return tempValue;
+            }
         }
         public double AlaramUpperLimit
         {
@@ -63,19 +87,31 @@ namespace CabinTempArduino
                 furnaceUpperlimit = value;
             }
         }
-        public double Temp
-        {
-            get
-            {
-                return temp;
-            }
-            set
-            {
-                temp = value;
-            }
-        }
         #endregion
 
-
+        #region Methods
+        public bool CheckAlarm()
+        {
+            //if ((Receive() == "ALARM_UPPER")||(Receive() == "ALARM_LOWER"))
+            //{
+            //    alarm = true;
+            //}
+            return alarm;
+        }
+        public double GetTemp()
+        {
+            //if (Double.TryParse(Receive(), out tempValue))
+            //{
+            //}
+            //else
+            //{
+            //    if(temp != "")
+            //    {
+            //        tempValue = Convert.ToDouble(temp);
+            //    }
+            //}
+            return tempValue;
+        #endregion
+        }
     }
 }
