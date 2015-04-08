@@ -13,13 +13,16 @@ namespace CabinTempArduino
     /// </summary>
     class Database:OLEdb
     {
+        #region Initial
         /// Initializes an instance of the Database class
-      /// </summary>
-      /// <param name="DbPath">Path to Database</param>
+        /// </summary>
+        /// <param name="DbPath">Path to Database</param>
         public Database(string DbPath) : base(DbPath)
         {
             
         }
+        #endregion
+        #region Subscribers
         /// <summary>
         /// Adds a subscriber to BrukerInformasjon
         /// </summary>
@@ -128,6 +131,59 @@ namespace CabinTempArduino
             }
             return subscribers;
         }
+        /// <summary>
+        /// Search Functions
+        /// </summary>
+        /// <param name="username">Name to search for</param>
+        /// <param name="searchArray"></param>
+        /// <returns></returns>
+        public string SearchUsername(string username)
+        {
+            int index = 0;
+            string[,] subscribers = GetSubscribers();
+
+            for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+            {
+                if (username == subscribers[i, 3])
+                    goto exit;
+                else
+                    index++;
+            }
+
+        exit:
+        return subscribers[index,3];
+        }
+        public int getUserID(string username)
+        {
+            int index = 0;
+            string[,] subscribers = GetSubscribers();
+            for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+            {
+                if (username == subscribers[i, 3])
+                    goto exit;
+                else
+                    index++;
+            }
+
+        exit:
+            return Convert.ToInt32(subscribers[index, 0]);
+        }
+        public int getIndex(string username)
+        {
+            int index = 0;
+            string[,] subscribers = GetSubscribers(); 
+            for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+            {
+                if (username == subscribers[i, 3])
+                    goto exit;
+                else
+                    index++;
+            }
+
+        exit:
+            return index;
+        }
+        #endregion
         /// <summary>
         /// Adds an alarm to Feilmeldingslogg
         /// </summary>
@@ -422,54 +478,7 @@ namespace CabinTempArduino
             }
             return settings;
         }
-        /// <summary>
-        /// Search Functions
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="searchArray"></param>
-        /// <returns></returns>
-        public string searchUsername(string username, string[,] searchArray)
-        {
-            int index = 0;
-                for (int i = 0; i <= searchArray.GetUpperBound(0); i++)
-                {
-                    if (username == searchArray[i, 3])
-                        goto exit;
-                    else
-                        index++;
-                }
-
-                exit:
-            return searchArray[index, 3];
-        }
-        public int getUserID(string username, string[,] indexArray)
-        {
-            int index = 0;
-            for (int i = 0; i <= indexArray.GetUpperBound(0); i++)
-            {
-                if (username == indexArray[i, 3])
-                    goto exit;
-                else
-                    index++;
-            }
-
-        exit:
-            return Convert.ToInt32(indexArray[index, 0]);
-        }
-        public int getIndex(string username, string[,] indexArray)
-        {
-            int index = 0;
-            for (int i = 0; i <= indexArray.GetUpperBound(0); i++)
-            {
-                if (username == indexArray[i, 3])
-                    goto exit;
-                else
-                    index++;
-            }
-
-        exit:
-            return index;
-        }
+        
 
     }
 }
