@@ -184,6 +184,7 @@ namespace CabinTempArduino
             return index;
         }
         #endregion
+        #region Alarms
         /// <summary>
         /// Adds an alarm to Feilmeldingslogg
         /// </summary>
@@ -302,6 +303,8 @@ namespace CabinTempArduino
             }
             return alarms;
         }
+#endregion
+        #region Temperature
         /// <summary>
         /// Adds a row to TemperaturLogg
         /// </summary>
@@ -412,14 +415,15 @@ namespace CabinTempArduino
             }
             return temperature;
         }
-
+#endregion
+        #region Settings
         /// <summary>
         /// Updates a single cell in tablesettings
         /// </summary>
         /// <param name="newSetting">New setting</param>
-        /// <param name="columnName">name of column or type of setting</param>
+        /// <param name="column">name of column or type of setting</param>
         /// <param name="settingNr">The set of settings to change</param>
-        public void UpdateSetting(string newSetting, string columnName,int settingNr)
+        public void UpdateSetting(string newSetting, int column,int settingNr)
         {
             string table = "Innstillinger";
 
@@ -430,7 +434,7 @@ namespace CabinTempArduino
 
                 myDatatable.AcceptChanges();
 
-                myDatatable.Rows[settingNr][columnName] = newSetting;
+                myDatatable.Rows[settingNr][column] = newSetting;
 
                 CloseDb(table);
             }
@@ -459,9 +463,9 @@ namespace CabinTempArduino
                 int columns = myDatatable.Columns.Count;
                 settings = new string[columns];
 
-                for (int i = 0; i < rows; i++)
+                for (int i = 0; i < columns; i++)
                 {
-                    settings[i] = myDatatable.Rows[settingNr].ItemArray[i].ToString();
+                        settings[i] = myDatatable.Rows[settingNr].ItemArray[i].ToString();
                 }
 
             }
@@ -482,3 +486,4 @@ namespace CabinTempArduino
 
     }
 }
+        #endregion
