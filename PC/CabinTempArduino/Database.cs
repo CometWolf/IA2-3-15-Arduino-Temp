@@ -314,13 +314,18 @@ namespace CabinTempArduino
         public void LogTemperature(string date, string time, string temp)
         {
             string table = "TemperaturLogg";
-
+            DateTime timestamp = new DateTime();
+            timestamp = DateTime.Now;
             try
             {
 
                 OpenDb(table);
 
                 DataRow row = myDatatable.NewRow();
+
+                //row["Dato"] = timestamp.Date.ToString();
+                //row["Tid"] = timestamp.TimeOfDay.ToString();
+                //row["Temperatur"] = temp;
 
                 row["Dato"] = date;
                 row["Tid"] = time;
@@ -482,8 +487,7 @@ namespace CabinTempArduino
             }
             return settings;
         }
-        
+        #endregion
 
     }
 }
-        #endregion
