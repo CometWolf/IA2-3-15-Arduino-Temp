@@ -14,15 +14,15 @@ namespace CabinTempArduino
 {
     public partial class frmMain : Form
     {
-        
-        //Disable Visual Styles
+
+        #region Disable Visual Styles
         [DllImport("uxtheme", ExactSpelling = true, CharSet = CharSet.Unicode)]
         public extern static Int32 SetWindowTheme(IntPtr hWnd,
                       String textSubAppName, String textSubIdList);
 
         //Source: http://stackoverflow.com/questions/3893622/windows-98-style-progress-bar 
-
-        //END Disable Visual Styles
+        #endregion
+        #region Initial
         public frmMain()
         {
             InitializeComponent();
@@ -32,53 +32,47 @@ namespace CabinTempArduino
             totGraph.SetToolTip(chartFetchedValues, "Click to enlarge");
             //END ToolTips
         }
-
-        //PROPERTIES
+        #endregion
+        #region Properties
         public string ComPort
         {
             get { return spComPort.PortName; }
             set { spComPort.PortName = value; }
         }
-        //END PROPERTIES
-
-
-        //OBJECTS
+        #endregion
+        #region Objects
         Database myDatabase = new Database("ArduinoTemperaturMåling.accdb");
         E_post mail = new E_post();
-        //END OBJECTS
-
+        Random rand = new Random();
+        #endregion
+        #region Open Limits
         private void btnLimits_Click(object sender, EventArgs e)
         {
-            //GUI
             frmLimits limitForm = new frmLimits();
             limitForm.ShowDialog();
-            //END GUI
         }
-
+        #endregion
+        #region Subscribers
         private void btnSubscribers_Click(object sender, EventArgs e)
         {
-            //GUI
             frmSubscribers subscribersForm = new frmSubscribers();
             subscribersForm.ShowDialog();
-            //END GUI
         }
-
+        #endregion
+        #region Settings
         private void btnSettings_Click_1(object sender, EventArgs e)
         {
-            //GUI
             frmSettings settingsForm = new frmSettings();
             settingsForm.ShowDialog();
-            //END GUI
         }
-
+        #endregion
+        #region Enlarge chart
         private void chartFetchedValues_Click(object sender, EventArgs e)
         {
-            //GUI
             frmChart chart = new frmChart();
             chart.Show();
-            //END GUI
         }
-        Random rand = new Random();
+        #endregion
         private void btnFetch_Click(object sender, EventArgs e)
         {
             rtbDatabaseValues.Clear();

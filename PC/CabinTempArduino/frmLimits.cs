@@ -12,18 +12,19 @@ namespace CabinTempArduino
 {
     public partial class frmLimits : Form
     {
-        //OBJECTS
+        #region Objects
         Database myDatabase = new Database("ArduinoTemperaturMåling.accdb");
-        //END OBJECTS
+        #endregion
 
-        //VARIABLES
+        #region Variables
         string[] settings;
-        //END VARIABLES
+        #endregion
 
         public frmLimits()
         {
             InitializeComponent();
             txtValue.ReadOnly = true;
+            btnSetLimit.Enabled = false;
         }
 
         private void txtValue_Click(object sender, EventArgs e)
@@ -58,6 +59,7 @@ namespace CabinTempArduino
         private void cboLimitType_SelectedIndexChanged(object sender, EventArgs e)
         {
             txtValue.ReadOnly = false;
+            btnSetLimit.Enabled = true;
             settings = myDatabase.GetSettings(0);
 
             switch (cboLimitType.Text)

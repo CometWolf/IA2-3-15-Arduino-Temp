@@ -12,11 +12,11 @@ namespace CabinTempArduino
 {
     public partial class frmSubscribers : Form
     {
+        #region Initial
         public frmSubscribers()
         {
             InitializeComponent();
 
-            //GUI
             if (cboSelectSubscriber.Text == "Select subscriber")
             {
                 TextBoxesReadOnlyTrue();
@@ -24,24 +24,21 @@ namespace CabinTempArduino
             }
 
             subscribers = myDatabase.GetSubscribers();
-            //END GUI
             for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
             {
                 cboSelectSubscriber.Items.Add(subscribers[i, 3]);
             }
         }
-
-        //Objects
+        #endregion
+        #region Objects
         Database myDatabase = new Database("ArduinoTemperaturMåling.accdb");
-        //END Objects
-
-        //Variables
+        #endregion
+        #region Variables
         string[,] subscribers;
-        //END Variables
+        #endregion
         private void cboSelectSubscriber_SelectedIndexChanged(object sender, EventArgs e)
         {
             subscribers = myDatabase.GetSubscribers();
-            // GUI
             if (cboSelectSubscriber.Text != "New")
                 btnSubmit.Text = "Submit changes";
 
@@ -63,38 +60,27 @@ namespace CabinTempArduino
                 txtSurName.Text = subscribers[index, 1];
                 txtFirstName.Text = subscribers[index, 2];
                 txtUsername.Text = subscribers[index, 3];
+                txtPassword.Text = subscribers[index, 4];
+                txtConfirmPassword.Text = subscribers[index, 4];
                 txtEmail.Text = subscribers[index, 5];
                 txtConfirmEmail.Text = subscribers[index, 5];
                 txtPhone.Text = subscribers[index, 6];
             }
-            //END GUI
-
-
         }
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            string email = "";
-            string password = "";
-
             if (cboSelectSubscriber.Text == "New")
             {
-                if (txtEmail.Text == txtConfirmEmail.Text)
-                    email = txtEmail.Text;
-                else
-                    MessageBox.Show("Email is not matching.");
+                bool email = matchingValues(txtEmail.Text,txtConfirmEmail.Text,"emails");
+                bool password = matchingValues(txtPassword.Text, txtConfirmPassword.Text, "passwords");
 
-                if (txtPassword.Text == txtConfirmPassword.Text && txtPassword.TextLength >= 8)
-                {
-                    password = txtPassword.Text;
-                }
-                else
-                    MessageBox.Show("Password must be 8 character or longer.");
 
-                if (password == txtPassword.Text && email == txtEmail.Text && txtFirstName.Text != "" && txtSurName.Text != ""
-                    && txtPhone.Text != "" && txtUsername.Text != "")
+                if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
+                    && email && (txtEmail.Text != "") && (txtConfirmEmail.Text != "") && (txtPassword.Text != "") && (txtConfirmPassword.Text != "")
+                    && (txtPassword.Text.Length >= 8) && (txtConfirmPassword.Text.Length >= 8))
                 {
-                    myDatabase.AddSubscriber(txtSurName.Text, txtFirstName.Text, txtUsername.Text, password, txtEmail.Text, txtPhone.Text);
+                    myDatabase.AddSubscriber(txtSurName.Text, txtFirstName.Text, txtUsername.Text, txtPassword.Text, txtEmail.Text, txtPhone.Text);
                     ClearAllTextBoxes();
                     MessageBox.Show("Subscriber successfully added.");
 
@@ -106,6 +92,10 @@ namespace CabinTempArduino
                         cboSelectSubscriber.Items.Add(subscribers[i, 3]);
                     }
                     cboSelectSubscriber.Text = "New";
+                }
+                else if ((txtPassword.Text.Length <= 7) || (txtConfirmPassword.Text.Length <= 7))
+                {
+                    MessageBox.Show("Password must be 8 characters or longer");
                 }
                 else
                     MessageBox.Show("Fill all textboxes.");
@@ -138,7 +128,7 @@ namespace CabinTempArduino
             cboSelectSubscriber.Text = "New";
             MessageBox.Show("User successfully deleted!");
         }
-
+        #region Methods
         private void TextBoxesReadOnlyTrue()
         {
             foreach (Control x in this.Controls)
@@ -163,5 +153,22 @@ namespace CabinTempArduino
                     ((TextBox)x).Clear();
             }
         }
+        private bool matchingValues(string valueN1, string valueN2, string valueTypeTested)
+        {
+            bool matching = false;
+            try
+            {
+                if (valueN1 == valueN2)
+                    matching = true;
+                else
+                    throw new Exception("The " + valueTypeTested + " are not matching");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return matching;
+        }
+        #endregion
     }
 }
