@@ -54,12 +54,12 @@ namespace CabinTempArduino
 
                 ClearAllTextBoxes();
             }
-            else if (cboSelectSubscriber.Text != "new" && cboSelectSubscriber.Text == myDatabase.searchUsername(cboSelectSubscriber.Text, subscribers))
+            else if (cboSelectSubscriber.Text != "new" && cboSelectSubscriber.Text == myDatabase.SearchUsername(cboSelectSubscriber.Text))
             {
                 TextBoxesReadOnlyFalse();
                 btnDelete.Enabled = true; btnSubmit.Enabled = true;
 
-                int index = myDatabase.getIndex(cboSelectSubscriber.Text, subscribers);
+                int index = myDatabase.getIndex(cboSelectSubscriber.Text);
                 txtSurName.Text = subscribers[index, 1];
                 txtFirstName.Text = subscribers[index, 2];
                 txtUsername.Text = subscribers[index, 3];
@@ -97,31 +97,31 @@ namespace CabinTempArduino
                     myDatabase.AddSubscriber(txtSurName.Text, txtFirstName.Text, txtUsername.Text, password, txtEmail.Text, txtPhone.Text);
                     ClearAllTextBoxes();
                     MessageBox.Show("Subscriber successfully added.");
+
+                    subscribers = myDatabase.GetSubscribers();
+                    cboSelectSubscriber.Items.Clear();
+                    cboSelectSubscriber.Items.Add("New");
+                    for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+                    {
+                        cboSelectSubscriber.Items.Add(subscribers[i, 3]);
+                    }
+                    cboSelectSubscriber.Text = "New";
                 }
                 else
                     MessageBox.Show("Fill all textboxes.");
             }
-            else if (cboSelectSubscriber.Text == myDatabase.searchUsername(cboSelectSubscriber.Text,subscribers))
+            else if (cboSelectSubscriber.Text == myDatabase.SearchUsername(cboSelectSubscriber.Text))
             {
-                int index = myDatabase.getIndex(cboSelectSubscriber.Text, subscribers);
+                int index = myDatabase.getIndex(cboSelectSubscriber.Text);
                 //Legg til update av brukere her.
             }
-
-            subscribers = myDatabase.GetSubscribers();
-            cboSelectSubscriber.Items.Clear();
-            cboSelectSubscriber.Items.Add("New");
-            for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
-            {
-                cboSelectSubscriber.Items.Add(subscribers[i, 3]);
-            }
-            cboSelectSubscriber.Text = "New";
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if(cboSelectSubscriber.Text == myDatabase.searchUsername(cboSelectSubscriber.Text,subscribers))
+            if(cboSelectSubscriber.Text == myDatabase.SearchUsername(cboSelectSubscriber.Text))
             {
-                int index = myDatabase.getIndex(cboSelectSubscriber.Text, subscribers);
+                int index = myDatabase.getIndex(cboSelectSubscriber.Text);
                 myDatabase.DeleteSubscriber(index);
             }
 

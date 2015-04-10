@@ -13,13 +13,16 @@ namespace CabinTempArduino
     /// </summary>
     class Database:OLEdb
     {
+        #region Initial
         /// Initializes an instance of the Database class
-      /// </summary>
-      /// <param name="DbPath">Path to Database</param>
+        /// </summary>
+        /// <param name="DbPath">Path to Database</param>
         public Database(string DbPath) : base(DbPath)
         {
             
         }
+        #endregion
+        #region Subscribers
         /// <summary>
         /// Adds a subscriber to BrukerInformasjon
         /// </summary>
@@ -128,6 +131,60 @@ namespace CabinTempArduino
             }
             return subscribers;
         }
+        /// <summary>
+        /// Search Functions
+        /// </summary>
+        /// <param name="username">Name to search for</param>
+        /// <param name="searchArray"></param>
+        /// <returns></returns>
+        public string SearchUsername(string username)
+        {
+            int index = 0;
+            string[,] subscribers = GetSubscribers();
+
+            for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+            {
+                if (username == subscribers[i, 3])
+                    goto exit;
+                else
+                    index++;
+            }
+
+        exit:
+        return subscribers[index,3];
+        }
+        public int getUserID(string username)
+        {
+            int index = 0;
+            string[,] subscribers = GetSubscribers();
+            for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+            {
+                if (username == subscribers[i, 3])
+                    goto exit;
+                else
+                    index++;
+            }
+
+        exit:
+            return Convert.ToInt32(subscribers[index, 0]);
+        }
+        public int getIndex(string username)
+        {
+            int index = 0;
+            string[,] subscribers = GetSubscribers(); 
+            for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+            {
+                if (username == subscribers[i, 3])
+                    goto exit;
+                else
+                    index++;
+            }
+
+        exit:
+            return index;
+        }
+        #endregion
+        #region Alarms
         /// <summary>
         /// Adds an alarm to Feilmeldingslogg
         /// </summary>
@@ -246,6 +303,8 @@ namespace CabinTempArduino
             }
             return alarms;
         }
+#endregion
+        #region Temperature
         /// <summary>
         /// Adds a row to TemperaturLogg
         /// </summary>
@@ -255,13 +314,18 @@ namespace CabinTempArduino
         public void LogTemperature(string date, string time, string temp)
         {
             string table = "TemperaturLogg";
-
+            DateTime timestamp = new DateTime();
+            timestamp = DateTime.Now;
             try
             {
 
                 OpenDb(table);
 
                 DataRow row = myDatatable.NewRow();
+
+                //row["Dato"] = timestamp.Date.ToString();
+                //row["Tid"] = timestamp.TimeOfDay.ToString();
+                //row["Temperatur"] = temp;
 
                 row["Dato"] = date;
                 row["Tid"] = time;
@@ -356,14 +420,15 @@ namespace CabinTempArduino
             }
             return temperature;
         }
-
+#endregion
+        #region Settings
         /// <summary>
         /// Updates a single cell in tablesettings
         /// </summary>
         /// <param name="newSetting">New setting</param>
-        /// <param name="columnName">name of column or type of setting</param>
+        /// <param name="column">name of column or type of setting</param>
         /// <param name="settingNr">The set of settings to change</param>
-        public void UpdateSetting(string newSetting, string columnName,int settingNr)
+        public void UpdateSetting(string newSetting, int column,int settingNr)
         {
             string table = "Innstillinger";
 
@@ -374,7 +439,7 @@ namespace CabinTempArduino
 
                 myDatatable.AcceptChanges();
 
-                myDatatable.Rows[settingNr][columnName] = newSetting;
+                myDatatable.Rows[settingNr][column] = newSetting;
 
                 CloseDb(table);
             }
@@ -403,9 +468,9 @@ namespace CabinTempArduino
                 int columns = myDatatable.Columns.Count;
                 settings = new string[columns];
 
-                for (int i = 0; i < rows; i++)
+                for (int i = 0; i < columns; i++)
                 {
-                    settings[i] = myDatatable.Rows[settingNr].ItemArray[i].ToString();
+                        settings[i] = myDatatable.Rows[settingNr].ItemArray[i].ToString();
                 }
 
             }
@@ -422,54 +487,7 @@ namespace CabinTempArduino
             }
             return settings;
         }
-        /// <summary>
-        /// Search Functions
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="searchArray"></param>
-        /// <returns></returns>
-        public string searchUsername(string username, string[,] searchArray)
-        {
-            int index = 0;
-                for (int i = 0; i <= searchArray.GetUpperBound(0); i++)
-                {
-                    if (username == searchArray[i, 3])
-                        goto exit;
-                    else
-                        index++;
-                }
-
-                exit:
-            return searchArray[index, 3];
-        }
-        public int getUserID(string username, string[,] indexArray)
-        {
-            int index = 0;
-            for (int i = 0; i <= indexArray.GetUpperBound(0); i++)
-            {
-                if (username == indexArray[i, 3])
-                    goto exit;
-                else
-                    index++;
-            }
-
-        exit:
-            return Convert.ToInt32(indexArray[index, 0]);
-        }
-        public int getIndex(string username, string[,] indexArray)
-        {
-            int index = 0;
-            for (int i = 0; i <= indexArray.GetUpperBound(0); i++)
-            {
-                if (username == indexArray[i, 3])
-                    goto exit;
-                else
-                    index++;
-            }
-
-        exit:
-            return index;
-        }
+        #endregion
 
     }
 }

@@ -40,16 +40,16 @@ namespace CabinTempArduino
             switch(cboLimitType.Text)
             {
                 case "Lower limit":
-                    myDatabase.UpdateSetting(txtValue.Text, "Lav Alarmgrense", 0);
+                    myDatabase.UpdateSetting(txtValue.Text, 3, 0);
                     break;
                 case "Upper limit":
-                    myDatabase.UpdateSetting(txtValue.Text, "Høy Alarmgrense", 0);
+                    myDatabase.UpdateSetting(txtValue.Text, 2, 0);
                     break;
                 case "High alarm":
-                    myDatabase.UpdateSetting(txtValue.Text, "HøyHøy Alarmgrense", 0);
+                    myDatabase.UpdateSetting(txtValue.Text, 1, 0);
                     break;
                 case "Low alarm":
-                    myDatabase.UpdateSetting(txtValue.Text, "LavLav Alarmgrense", 0);
+                    myDatabase.UpdateSetting(txtValue.Text, 4, 0);
                     break;
             }
 

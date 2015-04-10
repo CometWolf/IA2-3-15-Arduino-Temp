@@ -78,6 +78,7 @@ namespace CabinTempArduino
             myDatatable = new DataTable();
             myAccessConnection.Open();
             myDataAdapter.Fill(myDatatable);
+            
         }
         /// <summary>
         /// Opens a connection to the database
