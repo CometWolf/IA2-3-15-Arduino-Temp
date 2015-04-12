@@ -5,7 +5,7 @@
 #include<stdlib.h>
 
 const byte tempPin = 9;
-const byte furnacePin = 12;
+const byte furnacePin = 8;
 
 float alarmUpperLimit;
 float alarmLowerLimit;
@@ -27,8 +27,8 @@ void setup()
   furnaceUpperLimit = (pc.receive('W')).toFloat();
   furnaceLowerLimit = (pc.receive('I')).toFloat();
    
-  TempSensor tempSensor(tempPin);
-  Furnace furnace(furnacePin, furnaceUpperLimit, furnaceLowerLimit);
+  TempSensor tempSensor(tempPin, alarmUpperLimit, alarmLowerLimit);
+  Furnace furnace(furnaceUpperLimit, furnaceLowerLimit, furnacePin);
   Display lcd(2,3,4,5);
   
   pc.begin(9600);
@@ -38,16 +38,16 @@ loop()
 {
   delay(1000);
   
-  tempValue = tempSensor.GetTemp();
+  tempValue = tempSensor.getTemp();
   
   dtostrf(tempValue, 4, 3, numChar);      //Used to convert tempValue's digits to chars and assigns them to an array.
   
-  for(int i = 0; i < sizeof(numChar); i++)    //putting the chars into a string. 
+  for(int i = 0; i < sizeof(numChar); i++)    //inserts the chars into a string. 
   {
 	  temp += numChar[i];
   }
   
-  lcd.write(temp); 		//Sends the temp string to the display
+  lcd.Write(temp); 		//Sends the temp string to the display
   Alarm(tempValue);		//Calls on alarm method
   furnace.update(tempValue); 	//Keeps the furnace updated on tempValue
   if(pc.receive == "temp")
