@@ -97,13 +97,40 @@ namespace CabinTempArduino
                     }
                     cboSelectSubscriber.Text = "New";
                 }
-                else
+                else if ((txtFirstName.Text == "") || (txtSurName.Text == "") || (txtPhone.Text == "") || (txtUsername.Text == "") || 
+                    (txtEmail.Text == "") || (txtConfirmEmail.Text == "") || (txtPassword.Text == "") || (txtConfirmPassword.Text == ""))
                     MessageBox.Show("Fill all textboxes.");
             }
             else if (cboSelectSubscriber.Text == myDatabase.SearchUsername(cboSelectSubscriber.Text))
             {
                 int index = myDatabase.getIndex(cboSelectSubscriber.Text);
-                //Legg til update av brukere her.
+
+                bool lengthPassword = false;
+                bool email = matchingValues(txtEmail.Text, txtConfirmEmail.Text, "emails");
+                bool password = matchingValues(txtPassword.Text, txtConfirmPassword.Text, "passwords");
+                if (password)
+                {
+                    lengthPassword = passwordLength(txtPassword.Text, txtConfirmPassword.Text);
+                }
+
+                if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
+                && email && (txtEmail.Text != "") && (txtConfirmEmail.Text != "") && (txtPassword.Text != "") && (txtConfirmPassword.Text != "")
+                && lengthPassword)
+                {
+                    myDatabase.UpdateSubscriber(index,txtSurName.Text, txtFirstName.Text, txtUsername.Text, txtPassword.Text, txtEmail.Text, txtPhone.Text);
+                    MessageBox.Show("Subscriber successfully changed.");
+
+                    subscribers = myDatabase.GetSubscribers();
+                    cboSelectSubscriber.Items.Clear();
+                    cboSelectSubscriber.Items.Add("New");
+                    for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+                    {
+                        cboSelectSubscriber.Items.Add(subscribers[i, 3]);
+                    }
+                }
+                else if ((txtFirstName.Text == "") || (txtSurName.Text == "") || (txtPhone.Text == "") || (txtUsername.Text == "") || 
+                    (txtEmail.Text == "") || (txtConfirmEmail.Text == "") || (txtPassword.Text == "") || (txtConfirmPassword.Text == ""))
+                    MessageBox.Show("Fill all textboxes.");
             }
         }
 

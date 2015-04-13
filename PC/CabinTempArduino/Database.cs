@@ -99,19 +99,19 @@ namespace CabinTempArduino
         /// </summary>
         /// <param name="id">Row to update</param>
         /// <param name="values">New values to row</param>
-        public void UpdateSubscriber(int id, string[] values)
+        public void UpdateSubscriber(int id, string surName, string firstName, string userName, string password, string email, string phone)
         {
             
             try
             {
                 OpenDb(subscriberTable);
 
-                myDatatable.Rows[id]["Etternavn"] = values[0];
-                myDatatable.Rows[id]["Fornavn"] = values[1];
-                myDatatable.Rows[id]["Brukernavn"] = values[2];
-                myDatatable.Rows[id]["Passord"] = values[3];
-                myDatatable.Rows[id]["E-post"] = values[4];
-                myDatatable.Rows[id]["Telefon"] = values[5];
+                myDatatable.Rows[id]["Etternavn"] = surName;
+                myDatatable.Rows[id]["Fornavn"] = firstName;
+                myDatatable.Rows[id]["Brukernavn"] = userName;
+                myDatatable.Rows[id]["Passord"] = password;
+                myDatatable.Rows[id]["E-post"] = email;
+                myDatatable.Rows[id]["Telefon"] = phone;
 
                 myDatatable.AcceptChanges();
 
