@@ -31,7 +31,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnInterval = new System.Windows.Forms.Button();
             this.rbtMinutes = new System.Windows.Forms.RadioButton();
-            this.rbtSeconds = new System.Windows.Forms.RadioButton();
+            this.rbtHours = new System.Windows.Forms.RadioButton();
             this.txtCustomInterval = new System.Windows.Forms.TextBox();
             this.cboPreset = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -45,7 +45,7 @@
             // 
             this.groupBox1.Controls.Add(this.btnInterval);
             this.groupBox1.Controls.Add(this.rbtMinutes);
-            this.groupBox1.Controls.Add(this.rbtSeconds);
+            this.groupBox1.Controls.Add(this.rbtHours);
             this.groupBox1.Controls.Add(this.txtCustomInterval);
             this.groupBox1.Controls.Add(this.cboPreset);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
@@ -63,6 +63,7 @@
             this.btnInterval.TabIndex = 3;
             this.btnInterval.Text = "Set interval";
             this.btnInterval.UseVisualStyleBackColor = true;
+            this.btnInterval.Click += new System.EventHandler(this.btnInterval_Click);
             // 
             // rbtMinutes
             // 
@@ -75,16 +76,16 @@
             this.rbtMinutes.Text = "Minutes";
             this.rbtMinutes.UseVisualStyleBackColor = true;
             // 
-            // rbtSeconds
+            // rbtHours
             // 
-            this.rbtSeconds.AutoSize = true;
-            this.rbtSeconds.Location = new System.Drawing.Point(133, 46);
-            this.rbtSeconds.Name = "rbtSeconds";
-            this.rbtSeconds.Size = new System.Drawing.Size(67, 17);
-            this.rbtSeconds.TabIndex = 2;
-            this.rbtSeconds.TabStop = true;
-            this.rbtSeconds.Text = "Seconds";
-            this.rbtSeconds.UseVisualStyleBackColor = true;
+            this.rbtHours.AutoSize = true;
+            this.rbtHours.Location = new System.Drawing.Point(133, 46);
+            this.rbtHours.Name = "rbtHours";
+            this.rbtHours.Size = new System.Drawing.Size(53, 17);
+            this.rbtHours.TabIndex = 2;
+            this.rbtHours.TabStop = true;
+            this.rbtHours.Text = "Hours";
+            this.rbtHours.UseVisualStyleBackColor = true;
             // 
             // txtCustomInterval
             // 
@@ -166,7 +167,7 @@
         private System.Windows.Forms.ComboBox cboPreset;
         private System.Windows.Forms.Button btnInterval;
         private System.Windows.Forms.RadioButton rbtMinutes;
-        private System.Windows.Forms.RadioButton rbtSeconds;
+        private System.Windows.Forms.RadioButton rbtHours;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnComPort;
         private System.Windows.Forms.ComboBox cboComPort;

@@ -99,7 +99,7 @@ namespace CabinTempArduino
         #region BatterySurvailence
         private void tmrBatteryStatus_Tick(object sender, EventArgs e)
         {
-            //prbBatteryStatus.Value = Convert.ToInt32(SystemInformation.PowerStatus.BatteryLifePercent*100);
+            prbBatteryStatus.Value = Convert.ToInt32(SystemInformation.PowerStatus.BatteryLifePercent*100);
             lblStatus.Text = SystemInformation.PowerStatus.BatteryChargeStatus.ToString();
 
             string[,] emails = myDatabase.GetSubscribers();
