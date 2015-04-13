@@ -1,6 +1,6 @@
 #include "Furnace.h"
 //Constructor
-Furnace::Furnace(float upperLimit = 25,float lowerLimit = 20) : Relay(byte pin) {
+Furnace::Furnace(double float = 25,double float = 20, byte pin = 1) : Relay(pin) {
   this->upperLimit = upperLimit;
   this->lowerLimit = lowerLimit;
   active = true;
@@ -13,7 +13,7 @@ void Furnace::update(float temp) { //Compares the given temperature to the upper
     active //furnace enabled
     && (
       temp < lowerLimit // temperature below lower limit
-      || state && temp <= upperLimit //temperature climbing towards upper limit
+      || getState() && temp <= upperLimit //temperature climbing towards upper limit
     )
   );
   setState(newState);

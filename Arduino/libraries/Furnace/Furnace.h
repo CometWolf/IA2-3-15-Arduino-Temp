@@ -6,10 +6,10 @@
 
   class Furnace : public Relay {
   public:
-    float upperLimit;
+    float upperLimit,lowerLimit;
     boolean active;
-    Furnace(float upperLimit) : Relay(byte pin);
-    void update();
+    Furnace(float upperLimit, float lowerLimit, byte pin);
+    void update(float temp);
   };
 
 #endif
