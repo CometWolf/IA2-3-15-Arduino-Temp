@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.grbBatteryStatus = new System.Windows.Forms.GroupBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblStatusStatic = new System.Windows.Forms.Label();
@@ -94,6 +94,7 @@
             resources.ApplyResources(this.prbBatteryStatus, "prbBatteryStatus");
             this.prbBatteryStatus.Name = "prbBatteryStatus";
             this.prbBatteryStatus.Step = 1;
+            this.prbBatteryStatus.Value = 100;
             // 
             // textBox1
             // 
@@ -173,9 +174,11 @@
             resources.GetString("cboAnnotation.Items"),
             resources.GetString("cboAnnotation.Items1"),
             resources.GetString("cboAnnotation.Items2"),
-            resources.GetString("cboAnnotation.Items3")});
+            resources.GetString("cboAnnotation.Items3"),
+            resources.GetString("cboAnnotation.Items4")});
             resources.ApplyResources(this.cboAnnotation, "cboAnnotation");
             this.cboAnnotation.Name = "cboAnnotation";
+            this.cboAnnotation.SelectedIndexChanged += new System.EventHandler(this.cboAnnotation_SelectedIndexChanged);
             // 
             // chbError
             // 
@@ -229,24 +232,24 @@
             // 
             // chartFetchedValues
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartFetchedValues.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            legend1.Position.Auto = false;
-            legend1.Position.Height = 4F;
-            legend1.Position.Width = 24.92401F;
-            legend1.Position.X = 44F;
-            legend1.Position.Y = 95F;
-            legend1.TitleAlignment = System.Drawing.StringAlignment.Near;
-            this.chartFetchedValues.Legends.Add(legend1);
+            chartArea5.Name = "ChartArea1";
+            this.chartFetchedValues.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            legend5.Position.Auto = false;
+            legend5.Position.Height = 4F;
+            legend5.Position.Width = 24.92401F;
+            legend5.Position.X = 44F;
+            legend5.Position.Y = 95F;
+            legend5.TitleAlignment = System.Drawing.StringAlignment.Near;
+            this.chartFetchedValues.Legends.Add(legend5);
             resources.ApplyResources(this.chartFetchedValues, "chartFetchedValues");
             this.chartFetchedValues.Name = "chartFetchedValues";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.LegendText = "#SERIESNAME";
-            series1.Name = "Temp.";
-            this.chartFetchedValues.Series.Add(series1);
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series5.Legend = "Legend1";
+            series5.LegendText = "#SERIESNAME";
+            series5.Name = "Temp.";
+            this.chartFetchedValues.Series.Add(series5);
             this.chartFetchedValues.Click += new System.EventHandler(this.chartFetchedValues_Click);
             // 
             // totGraph

@@ -74,11 +74,12 @@ namespace CabinTempArduino
             {
                 bool email = matchingValues(txtEmail.Text,txtConfirmEmail.Text,"emails");
                 bool password = matchingValues(txtPassword.Text, txtConfirmPassword.Text, "passwords");
-
+                bool lengthPassword = passwordLength(txtPassword.Text);
+                bool lengthConfirmPassword = passwordLength(txtConfirmPassword.Text);
 
                 if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
                     && email && (txtEmail.Text != "") && (txtConfirmEmail.Text != "") && (txtPassword.Text != "") && (txtConfirmPassword.Text != "")
-                    && (txtPassword.Text.Length >= 8) && (txtConfirmPassword.Text.Length >= 8))
+                    && lengthPassword && lengthConfirmPassword)
                 {
                     myDatabase.AddSubscriber(txtSurName.Text, txtFirstName.Text, txtUsername.Text, txtPassword.Text, txtEmail.Text, txtPhone.Text);
                     ClearAllTextBoxes();
@@ -92,10 +93,6 @@ namespace CabinTempArduino
                         cboSelectSubscriber.Items.Add(subscribers[i, 3]);
                     }
                     cboSelectSubscriber.Text = "New";
-                }
-                else if ((txtPassword.Text.Length <= 7) || (txtConfirmPassword.Text.Length <= 7))
-                {
-                    MessageBox.Show("Password must be 8 characters or longer");
                 }
                 else
                     MessageBox.Show("Fill all textboxes.");
@@ -168,6 +165,23 @@ namespace CabinTempArduino
                 MessageBox.Show(ex.Message);
             }
             return matching;
+        }
+
+        private bool passwordLength(string password)
+        {
+            bool length = false;
+            try
+            {
+                if (password.Length >7)
+                    length = true;
+                else
+                    throw new Exception("The password must be 8 characters or longer");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return length;
         }
         #endregion
     }

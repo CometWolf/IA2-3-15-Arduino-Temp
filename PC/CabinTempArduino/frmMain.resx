@@ -117,11 +117,71 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="&gt;&gt;lblStatus.Name" xml:space="preserve">
+    <value>lblStatus</value>
+  </data>
+  <data name="&gt;&gt;lblStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblStatus.Parent" xml:space="preserve">
+    <value>grbBatteryStatus</value>
+  </data>
+  <data name="&gt;&gt;lblStatus.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;lblStatusStatic.Name" xml:space="preserve">
+    <value>lblStatusStatic</value>
+  </data>
+  <data name="&gt;&gt;lblStatusStatic.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblStatusStatic.Parent" xml:space="preserve">
+    <value>grbBatteryStatus</value>
+  </data>
+  <data name="&gt;&gt;lblStatusStatic.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;prbBatteryStatus.Name" xml:space="preserve">
+    <value>prbBatteryStatus</value>
+  </data>
+  <data name="&gt;&gt;prbBatteryStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;prbBatteryStatus.Parent" xml:space="preserve">
+    <value>grbBatteryStatus</value>
+  </data>
+  <data name="&gt;&gt;prbBatteryStatus.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="grbBatteryStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 363</value>
+  </data>
+  <data name="grbBatteryStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>488, 51</value>
+  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="grbBatteryStatus.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="grbBatteryStatus.Text" xml:space="preserve">
+    <value>Battery Status</value>
+  </data>
+  <data name="&gt;&gt;grbBatteryStatus.Name" xml:space="preserve">
+    <value>grbBatteryStatus</value>
+  </data>
+  <data name="&gt;&gt;grbBatteryStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grbBatteryStatus.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;grbBatteryStatus.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
   <data name="lblStatus.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lblStatus.Location" type="System.Drawing.Point, System.Drawing">
     <value>390, 29</value>
   </data>
@@ -197,30 +257,6 @@
   </data>
   <data name="&gt;&gt;prbBatteryStatus.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="grbBatteryStatus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 363</value>
-  </data>
-  <data name="grbBatteryStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>488, 51</value>
-  </data>
-  <data name="grbBatteryStatus.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="grbBatteryStatus.Text" xml:space="preserve">
-    <value>Battery Status</value>
-  </data>
-  <data name="&gt;&gt;grbBatteryStatus.Name" xml:space="preserve">
-    <value>grbBatteryStatus</value>
-  </data>
-  <data name="&gt;&gt;grbBatteryStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grbBatteryStatus.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;grbBatteryStatus.ZOrder" xml:space="preserve">
-    <value>6</value>
   </data>
   <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 24</value>
@@ -483,6 +519,9 @@
   <data name="cboAnnotation.Items3" xml:space="preserve">
     <value>Year(s)</value>
   </data>
+  <data name="cboAnnotation.Items4" xml:space="preserve">
+    <value>Continous</value>
+  </data>
   <data name="cboAnnotation.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 64</value>
   </data>
@@ -633,6 +672,51 @@
   <data name="&gt;&gt;grbEdit.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="&gt;&gt;tabTable.Name" xml:space="preserve">
+    <value>tabTable</value>
+  </data>
+  <data name="&gt;&gt;tabTable.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabTable.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabTable.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tabGraph.Name" xml:space="preserve">
+    <value>tabGraph</value>
+  </data>
+  <data name="&gt;&gt;tabGraph.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabGraph.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabGraph.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>132, 25</value>
+  </data>
+  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>367, 332</value>
+  </data>
+  <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Name" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="tabTable.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
   </data>
@@ -659,15 +743,6 @@
   </data>
   <data name="&gt;&gt;tabTable.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="chartFetchedValues.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="chartFetchedValues.Size" type="System.Drawing.Size, System.Drawing">
-    <value>330, 300</value>
-  </data>
-  <data name="chartFetchedValues.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
   </data>
   <data name="&gt;&gt;chartFetchedValues.Name" xml:space="preserve">
     <value>chartFetchedValues</value>
@@ -708,25 +783,25 @@
   <data name="&gt;&gt;tabGraph.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>132, 25</value>
+  <data name="chartFetchedValues.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
   </data>
-  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>367, 332</value>
+  <data name="chartFetchedValues.Size" type="System.Drawing.Size, System.Drawing">
+    <value>330, 300</value>
   </data>
-  <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
+  <data name="chartFetchedValues.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
   </data>
-  <data name="&gt;&gt;tabControl1.Name" xml:space="preserve">
-    <value>tabControl1</value>
+  <data name="&gt;&gt;chartFetchedValues.Name" xml:space="preserve">
+    <value>chartFetchedValues</value>
   </data>
-  <data name="&gt;&gt;tabControl1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;chartFetchedValues.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataVisualization.Charting.Chart, System.Windows.Forms.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</value>
   </data>
-  <data name="&gt;&gt;tabControl1.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;chartFetchedValues.Parent" xml:space="preserve">
+    <value>tabGraph</value>
   </data>
-  <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;chartFetchedValues.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="totGraph.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -745,7 +820,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>511, 425</value>
+    <value>593, 425</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

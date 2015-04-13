@@ -22,7 +22,7 @@ namespace CabinTempArduino
         static MailMessage message;
         static SmtpClient smtpclient;
 
-        public bool Send(string epostMottaker, string epostTema, string epostMelding)                                      
+        public void Send(string epostMottaker, string epostTema, string epostMelding)                                      
             // Metode for å sende mail med mottageradresse, emne og hovedtekst som parametere
         {
             reciverMail = epostMottaker;
@@ -45,7 +45,7 @@ namespace CabinTempArduino
 
             smtpclient.Send(message);                           // Sender mail
             smtpclient.Dispose();                               // Avslutter oppkoblingen mot Gmail
-            return (mailSent = true);
+            //return (mailSent = true);
         }
         public string ReciverMail
         {

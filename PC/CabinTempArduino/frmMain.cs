@@ -14,6 +14,9 @@ namespace CabinTempArduino
 {
     public partial class frmMain : Form
     {
+        bool criticalCharge = true;
+        bool fiftyCharge = true;
+        bool charging = true;
 
         #region Disable Visual Styles
         [DllImport("uxtheme", ExactSpelling = true, CharSet = CharSet.Unicode)]
@@ -31,6 +34,17 @@ namespace CabinTempArduino
             //ToolTips
             totGraph.SetToolTip(chartFetchedValues, "Click to enlarge");
             //END ToolTips
+
+            //GUI
+            if (cboAnnotation.Text == "Annotation")
+            {
+                btnFetch.Enabled = false;
+                chbError.Enabled = false;
+                chbTemperature.Enabled = false;
+                txtFetchLast.ReadOnly = true;
+            }
+            //END GUI
+            
         }
         #endregion
         #region Properties
@@ -86,43 +100,86 @@ namespace CabinTempArduino
 
             foreach (string x in alarms)
             {
-                rtbDatabaseValues.AppendText(x + "\r\n");
+                rtbDatabaseValues.AppendText(x + "\t");
             }
         }
-
+        #region BatterySurvailence
         private void tmrBatteryStatus_Tick(object sender, EventArgs e)
         {
-            prbBatteryStatus.Value = Convert.ToInt32(SystemInformation.PowerStatus.BatteryLifePercent*100);
+            //prbBatteryStatus.Value = Convert.ToInt32(SystemInformation.PowerStatus.BatteryLifePercent*100);
             lblStatus.Text = SystemInformation.PowerStatus.BatteryChargeStatus.ToString();
 
+            string[,] emails = myDatabase.GetSubscribers();
+
+            //GUI
             if (prbBatteryStatus.Value <= 50)
                 prbBatteryStatus.ForeColor = Color.Yellow;
+            else if (prbBatteryStatus.Value <= 30)
+                prbBatteryStatus.ForeColor = Color.Red;
+            else
+                prbBatteryStatus.ForeColor = Color.Green;
 
-            if(SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "0")
+            if (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "0")
             {
                 lblStatus.Text = "Normal";
             }
-            else if(SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Low")
-            {
-                prbBatteryStatus.ForeColor = Color.Red;
+            //END GUI
 
-                //Legg inn Email sending
+            if (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Charging")
+                charging = true;
+            else if (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() != "Charging" && charging)
+            {
+                for (int i = 0; i <= emails.GetUpperBound(0); i++)
+                {
+                    mail.Send(emails[i, 5], "PC Lader ikke", "PCen lader ikke lenger. Enten er støpselet dratt ut eller laderen defekt.");
+                }
+                charging = false;
             }
-            else if (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Critical")
-            {
-                bool blink = false;
 
-                if (blink == false)
+            //50% charge
+            if (prbBatteryStatus.Value > 50)
+                fiftyCharge = true;
+            else if (prbBatteryStatus.Value <= 50 && fiftyCharge)
+            {
+                for (int i = 0; i <= emails.GetUpperBound(0); i++)
                 {
-                    prbBatteryStatus.ForeColor = Color.White;
-                    blink = true;
+                    mail.Send(emails[i, 5], "PC har under 50% batteri igjen", "PCen har under 50% batteri igjen.");
                 }
-                else if (blink)
+                fiftyCharge = false;
+            }
+            //END 50% charge
+
+            //CRITICAL
+            if (prbBatteryStatus.Value > 15)
+                criticalCharge = true;
+
+            else if (prbBatteryStatus.Value <= 15 && criticalCharge) //Critical
+            {
+                for (int i = 0; i <= emails.GetUpperBound(0); i++)
                 {
-                    prbBatteryStatus.ForeColor = Color.Red;
-                    blink = false;
+                    mail.Send(emails[i, 5], "[Kritisk] PC har under 15% batteri igjen", "PCen har under 15% batteri igjen.");
                 }
-                //Legg inn Email sending.
+                criticalCharge = false;
+            }
+            //END CRITICAL
+        }
+        #endregion BatterySurvailence
+
+        private void cboAnnotation_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboAnnotation.Text == "Continous")
+            {
+                btnFetch.Enabled = false;
+                chbError.Enabled = false;
+                chbTemperature.Enabled = false;
+                txtFetchLast.ReadOnly = true;
+            }
+            else
+            {
+                btnFetch.Enabled = true;
+                chbError.Enabled = true;
+                txtFetchLast.ReadOnly = false;
+                chbTemperature.Enabled = true;
             }
         }
     }
