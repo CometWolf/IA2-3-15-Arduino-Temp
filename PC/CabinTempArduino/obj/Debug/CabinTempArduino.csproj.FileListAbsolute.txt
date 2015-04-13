@@ -64,6 +64,3 @@ C:\Users\Jørund\Documents\GitHub\IA2-3-15-Arduino-Temp\PC\CabinTempArduino\obj\
 C:\Users\Jørund\Documents\GitHub\IA2-3-15-Arduino-Temp\PC\CabinTempArduino\obj\Debug\CabinTempArduino.frmSettings.resources
 C:\Users\Jørund\Documents\GitHub\IA2-3-15-Arduino-Temp\PC\CabinTempArduino\obj\Debug\CabinTempArduino.frmSubscribers.resources
 C:\Users\Jørund\Documents\GitHub\IA2-3-15-Arduino-Temp\PC\CabinTempArduino\obj\Debug\CabinTempArduino.csproj.GenerateResource.Cache
-C:\Users\pauli_000\Documents\GitHub\IA2-3-15-Arduino-Temp\PC\CabinTempArduino\bin\Debug\CabinTempArduino.exe.config
-C:\Users\pauli_000\Documents\GitHub\IA2-3-15-Arduino-Temp\PC\CabinTempArduino\obj\Debug\CabinTempArduino.exe
-C:\Users\pauli_000\Documents\GitHub\IA2-3-15-Arduino-Temp\PC\CabinTempArduino\obj\Debug\CabinTempArduino.pdb
