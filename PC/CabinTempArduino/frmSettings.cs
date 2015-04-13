@@ -13,12 +13,14 @@ namespace CabinTempArduino
 {
     public partial class frmSettings : Form
     {
+
+        Database settings = new Database("ArduinoTemperaturMåling.accdb");
         public frmSettings()
         {
             InitializeComponent();
             //GUI
             txtCustomInterval.Enabled = false;
-            rbtSeconds.Enabled = false;
+            rbtHours.Enabled = false;
             rbtMinutes.Enabled = false;
             btnInterval.Enabled = false;
             btnComPort.Enabled = false;
@@ -40,18 +42,43 @@ namespace CabinTempArduino
             if (cboPreset.Text != "Custom")
             { 
                 txtCustomInterval.Enabled = false;
-                rbtSeconds.Enabled = false;
+                rbtHours.Enabled = false;
                 rbtMinutes.Enabled = false;
                 btnInterval.Enabled = true;
             }
             else
             {
                 txtCustomInterval.Enabled = true;
-                rbtSeconds.Enabled = true;
+                rbtHours.Enabled = true;
                 rbtMinutes.Enabled = true;
                 btnInterval.Enabled = true;
             }
             //END GUI
+
+            if(cboPreset.Text == "60 minutes")
+            {
+                settings.UpdateSetting("60", 5, 0);
+            }
+            else if (cboPreset.Text == "30 minutes")
+            {
+                settings.UpdateSetting("30", 5, 0);
+            }
+            else if (cboPreset.Text == "15 minutes")
+            {
+                settings.UpdateSetting("15", 5, 0);
+            }
+            else if(cboPreset.Text == "Custom")
+            {
+                if (rbtHours.Checked)
+                {
+                    int value = 0;
+                    int.TryParse(txtCustomInterval.Text,out value);
+                    settings.UpdateSetting(Convert.ToString(value * 60), 5, 0);
+                }
+                else if (rbtMinutes.Checked)
+                    settings.UpdateSetting(txtCustomInterval.Text, 5, 0);
+            }
+
         }
 
         private void txtCustomInterval_Click(object sender, EventArgs e)
