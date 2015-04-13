@@ -113,6 +113,7 @@ namespace CabinTempArduino
                 myDatatable.Rows[id]["E-post"] = email;
                 myDatatable.Rows[id]["Telefon"] = phone;
 
+                //myDatatable.Rows[id].SetModified();
                 myDatatable.AcceptChanges();
 
                 CloseDb(subscriberTable);
