@@ -90,17 +90,10 @@ namespace CabinTempArduino
         private void btnFetch_Click(object sender, EventArgs e)
         {
             rtbDatabaseValues.Clear();
-
-            for (int i = 0; i < 10; i++)
+            
+            if(cboAnnotation.Text == "Entries")
             {
                 
-            myDatabase.LogTemperature(DateTime.Now.Date.ToString(), DateTime.Now.TimeOfDay.ToString(), rand.Next(-100, 100).ToString());
-            }
-            string[,] alarms = myDatabase.GetTemperature();
-
-            foreach (string x in alarms)
-            {
-                rtbDatabaseValues.AppendText(x + "\t");
             }
         }
         #region BatterySurvailence
@@ -181,6 +174,14 @@ namespace CabinTempArduino
                 txtFetchLast.ReadOnly = false;
                 chbTemperature.Enabled = true;
             }
+        }
+
+        private void tmrLogTemperature_Tick(object sender, EventArgs e)
+        {
+            if(Convert.ToInt32(DateTime.Now.ToString("mm")) == 23)
+            myDatabase.LogTemperature(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("hh:mm:ss"), Convert.ToString(rand.Next(0,101)));
+
+
         }
     }
 }

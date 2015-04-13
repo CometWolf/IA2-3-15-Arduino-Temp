@@ -20,6 +20,8 @@ namespace CabinTempArduino
             txtCustomInterval.Enabled = false;
             rbtSeconds.Enabled = false;
             rbtMinutes.Enabled = false;
+            btnInterval.Enabled = false;
+            btnComPort.Enabled = false;
             //END GUI
 
             //Valid ports
@@ -40,12 +42,14 @@ namespace CabinTempArduino
                 txtCustomInterval.Enabled = false;
                 rbtSeconds.Enabled = false;
                 rbtMinutes.Enabled = false;
+                btnInterval.Enabled = true;
             }
             else
             {
                 txtCustomInterval.Enabled = true;
                 rbtSeconds.Enabled = true;
                 rbtMinutes.Enabled = true;
+                btnInterval.Enabled = true;
             }
             //END GUI
         }
@@ -65,6 +69,14 @@ namespace CabinTempArduino
                 frmMain main = new frmMain();
                 main.ComPort = cboComPort.Text;
             }
+        }
+
+        private void cboComPort_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboComPort.Text == "Ports")
+                btnComPort.Enabled = false;
+            else
+            btnComPort.Enabled = true;
         }
     }
 }

@@ -507,6 +507,66 @@
   <data name="&gt;&gt;lblWhatToFetch.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="&gt;&gt;cboAnnotation.Name" xml:space="preserve">
+    <value>cboAnnotation</value>
+  </data>
+  <data name="&gt;&gt;cboAnnotation.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboAnnotation.Parent" xml:space="preserve">
+    <value>grbFetchingValues</value>
+  </data>
+  <data name="&gt;&gt;cboAnnotation.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;chbError.Name" xml:space="preserve">
+    <value>chbError</value>
+  </data>
+  <data name="&gt;&gt;chbError.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chbError.Parent" xml:space="preserve">
+    <value>grbFetchingValues</value>
+  </data>
+  <data name="&gt;&gt;chbError.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;chbTemperature.Name" xml:space="preserve">
+    <value>chbTemperature</value>
+  </data>
+  <data name="&gt;&gt;chbTemperature.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chbTemperature.Parent" xml:space="preserve">
+    <value>grbFetchingValues</value>
+  </data>
+  <data name="&gt;&gt;chbTemperature.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="grbFetchingValues.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 61</value>
+  </data>
+  <data name="grbFetchingValues.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 183</value>
+  </data>
+  <data name="grbFetchingValues.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="grbFetchingValues.Text" xml:space="preserve">
+    <value>Fetching values</value>
+  </data>
+  <data name="&gt;&gt;grbFetchingValues.Name" xml:space="preserve">
+    <value>grbFetchingValues</value>
+  </data>
+  <data name="&gt;&gt;grbFetchingValues.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grbFetchingValues.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;grbFetchingValues.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="cboAnnotation.Items" xml:space="preserve">
     <value>Entries</value>
   </data>
@@ -598,30 +658,6 @@
     <value>grbFetchingValues</value>
   </data>
   <data name="&gt;&gt;chbTemperature.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="grbFetchingValues.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 61</value>
-  </data>
-  <data name="grbFetchingValues.Size" type="System.Drawing.Size, System.Drawing">
-    <value>114, 183</value>
-  </data>
-  <data name="grbFetchingValues.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
-  </data>
-  <data name="grbFetchingValues.Text" xml:space="preserve">
-    <value>Fetching values</value>
-  </data>
-  <data name="&gt;&gt;grbFetchingValues.Name" xml:space="preserve">
-    <value>grbFetchingValues</value>
-  </data>
-  <data name="&gt;&gt;grbFetchingValues.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grbFetchingValues.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;grbFetchingValues.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="btnSettings.Location" type="System.Drawing.Point, System.Drawing">
@@ -812,6 +848,9 @@
   </metadata>
   <metadata name="tmrBatteryStatus.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>229, 17</value>
+  </metadata>
+  <metadata name="tmrLogTemperature.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>372, 17</value>
   </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -7013,6 +7052,12 @@
     <value>tmrBatteryStatus</value>
   </data>
   <data name="&gt;&gt;tmrBatteryStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tmrLogTemperature.Name" xml:space="preserve">
+    <value>tmrLogTemperature</value>
+  </data>
+  <data name="&gt;&gt;tmrLogTemperature.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.grbBatteryStatus = new System.Windows.Forms.GroupBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblStatusStatic = new System.Windows.Forms.Label();
@@ -60,6 +60,7 @@
             this.totGraph = new System.Windows.Forms.ToolTip(this.components);
             this.spComPort = new System.IO.Ports.SerialPort(this.components);
             this.tmrBatteryStatus = new System.Windows.Forms.Timer(this.components);
+            this.tmrLogTemperature = new System.Windows.Forms.Timer(this.components);
             this.grbBatteryStatus.SuspendLayout();
             this.grbFetchingValues.SuspendLayout();
             this.grbEdit.SuspendLayout();
@@ -232,24 +233,24 @@
             // 
             // chartFetchedValues
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chartFetchedValues.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            legend5.Position.Auto = false;
-            legend5.Position.Height = 4F;
-            legend5.Position.Width = 24.92401F;
-            legend5.Position.X = 44F;
-            legend5.Position.Y = 95F;
-            legend5.TitleAlignment = System.Drawing.StringAlignment.Near;
-            this.chartFetchedValues.Legends.Add(legend5);
+            chartArea2.Name = "ChartArea1";
+            this.chartFetchedValues.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            legend2.Position.Auto = false;
+            legend2.Position.Height = 4F;
+            legend2.Position.Width = 24.92401F;
+            legend2.Position.X = 44F;
+            legend2.Position.Y = 95F;
+            legend2.TitleAlignment = System.Drawing.StringAlignment.Near;
+            this.chartFetchedValues.Legends.Add(legend2);
             resources.ApplyResources(this.chartFetchedValues, "chartFetchedValues");
             this.chartFetchedValues.Name = "chartFetchedValues";
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series5.Legend = "Legend1";
-            series5.LegendText = "#SERIESNAME";
-            series5.Name = "Temp.";
-            this.chartFetchedValues.Series.Add(series5);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.LegendText = "#SERIESNAME";
+            series2.Name = "Temp.";
+            this.chartFetchedValues.Series.Add(series2);
             this.chartFetchedValues.Click += new System.EventHandler(this.chartFetchedValues_Click);
             // 
             // totGraph
@@ -262,6 +263,12 @@
             // 
             this.tmrBatteryStatus.Enabled = true;
             this.tmrBatteryStatus.Tick += new System.EventHandler(this.tmrBatteryStatus_Tick);
+            // 
+            // tmrLogTemperature
+            // 
+            this.tmrLogTemperature.Enabled = true;
+            this.tmrLogTemperature.Interval = 1000;
+            this.tmrLogTemperature.Tick += new System.EventHandler(this.tmrLogTemperature_Tick);
             // 
             // frmMain
             // 
@@ -320,6 +327,7 @@
         private System.Windows.Forms.ToolTip totGraph;
         private System.IO.Ports.SerialPort spComPort;
         private System.Windows.Forms.Timer tmrBatteryStatus;
+        private System.Windows.Forms.Timer tmrLogTemperature;
     }
 }
 

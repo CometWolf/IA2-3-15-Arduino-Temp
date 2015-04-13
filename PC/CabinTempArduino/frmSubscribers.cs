@@ -72,14 +72,17 @@ namespace CabinTempArduino
         {
             if (cboSelectSubscriber.Text == "New")
             {
+                bool lengthPassword = false;
                 bool email = matchingValues(txtEmail.Text,txtConfirmEmail.Text,"emails");
                 bool password = matchingValues(txtPassword.Text, txtConfirmPassword.Text, "passwords");
-                bool lengthPassword = passwordLength(txtPassword.Text);
-                bool lengthConfirmPassword = passwordLength(txtConfirmPassword.Text);
+                if (password)
+                {
+                    lengthPassword = passwordLength(txtPassword.Text, txtConfirmPassword.Text);
+                }
 
                 if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
                     && email && (txtEmail.Text != "") && (txtConfirmEmail.Text != "") && (txtPassword.Text != "") && (txtConfirmPassword.Text != "")
-                    && lengthPassword && lengthConfirmPassword)
+                    && lengthPassword)
                 {
                     myDatabase.AddSubscriber(txtSurName.Text, txtFirstName.Text, txtUsername.Text, txtPassword.Text, txtEmail.Text, txtPhone.Text);
                     ClearAllTextBoxes();
@@ -167,12 +170,12 @@ namespace CabinTempArduino
             return matching;
         }
 
-        private bool passwordLength(string password)
+        private bool passwordLength(string password, string confirmPassword)
         {
             bool length = false;
             try
             {
-                if (password.Length >7)
+                if (password.Length >7 && confirmPassword.Length >7)
                     length = true;
                 else
                     throw new Exception("The password must be 8 characters or longer");
