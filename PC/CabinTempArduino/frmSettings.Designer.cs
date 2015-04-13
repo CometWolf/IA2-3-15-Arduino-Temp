@@ -29,21 +29,21 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnInterval = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.rbtMinutes = new System.Windows.Forms.RadioButton();
             this.rbtHours = new System.Windows.Forms.RadioButton();
             this.txtCustomInterval = new System.Windows.Forms.TextBox();
             this.cboPreset = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnComPort = new System.Windows.Forms.Button();
             this.cboComPort = new System.Windows.Forms.ComboBox();
+            this.btnComPort = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btnInterval);
+            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.rbtMinutes);
             this.groupBox1.Controls.Add(this.rbtHours);
             this.groupBox1.Controls.Add(this.txtCustomInterval);
@@ -55,14 +55,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Log interval";
             // 
-            // btnInterval
+            // button1
             // 
-            this.btnInterval.Location = new System.Drawing.Point(6, 46);
-            this.btnInterval.Name = "btnInterval";
-            this.btnInterval.Size = new System.Drawing.Size(121, 40);
-            this.btnInterval.TabIndex = 3;
-            this.btnInterval.Text = "Set interval";
-            this.btnInterval.UseVisualStyleBackColor = true;
+            this.button1.Location = new System.Drawing.Point(6, 46);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(121, 40);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Set interval";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // rbtMinutes
             // 
@@ -121,6 +121,15 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "COM Port";
             // 
+            // cboComPort
+            // 
+            this.cboComPort.FormattingEnabled = true;
+            this.cboComPort.Location = new System.Drawing.Point(6, 19);
+            this.cboComPort.Name = "cboComPort";
+            this.cboComPort.Size = new System.Drawing.Size(121, 21);
+            this.cboComPort.TabIndex = 0;
+            this.cboComPort.Text = "Ports";
+            // 
             // btnComPort
             // 
             this.btnComPort.Location = new System.Drawing.Point(133, 19);
@@ -130,16 +139,6 @@
             this.btnComPort.Text = "Set COM Port";
             this.btnComPort.UseVisualStyleBackColor = true;
             this.btnComPort.Click += new System.EventHandler(this.btnComPort_Click);
-            // 
-            // cboComPort
-            // 
-            this.cboComPort.FormattingEnabled = true;
-            this.cboComPort.Location = new System.Drawing.Point(6, 19);
-            this.cboComPort.Name = "cboComPort";
-            this.cboComPort.Size = new System.Drawing.Size(121, 21);
-            this.cboComPort.TabIndex = 0;
-            this.cboComPort.Text = "Ports";
-            this.cboComPort.SelectedIndexChanged += new System.EventHandler(this.cboComPort_SelectedIndexChanged);
             // 
             // frmSettings
             // 
@@ -164,7 +163,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txtCustomInterval;
         private System.Windows.Forms.ComboBox cboPreset;
-        private System.Windows.Forms.Button btnInterval;
+        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.RadioButton rbtMinutes;
         private System.Windows.Forms.RadioButton rbtHours;
         private System.Windows.Forms.GroupBox groupBox2;

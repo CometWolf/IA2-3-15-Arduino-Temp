@@ -13,22 +13,13 @@ namespace CabinTempArduino
     /// </summary>
     class Database:OLEdb
     {
-        #region Initial
-        // Tables to use
-        string subscriberTable = "BrukerInformasjon";
-        string alarmTable = "Feilmeldingslogg";
-        string tempTable = "TemperaturLogg";
-        string settingsTable = "Innstillinger";
-        /// <summary>
         /// Initializes an instance of the Database class
-        /// </summary>
-        /// <param name="DbPath">Path to Database</param>
+      /// </summary>
+      /// <param name="DbPath">Path to Database</param>
         public Database(string DbPath) : base(DbPath)
         {
             
         }
-        #endregion
-        #region Subscribers
         /// <summary>
         /// Adds a subscriber to BrukerInformasjon
         /// </summary>
@@ -40,10 +31,12 @@ namespace CabinTempArduino
         /// <param name="phone"></param>
         public void AddSubscriber(string surName, string firstName, string userName, string password, string email, string phone)
         {
+            string table = "BrukerInformasjon";
+
             try
             {
 
-                OpenDb(subscriberTable);
+                OpenDb(table);
 
                 DataRow row = myDatatable.NewRow();
 
@@ -57,7 +50,7 @@ namespace CabinTempArduino
                 myDatatable.AcceptChanges();
                 myDatatable.Rows.Add(row);
 
-                CloseDb(subscriberTable);
+                CloseDb(table);
             }
             catch (Exception ex)
             {
@@ -74,14 +67,15 @@ namespace CabinTempArduino
         /// <param name="userID">Row to delete</param>
         public void DeleteSubscriber(int userID)
         {
+            string table="Brukerinformasjon";
             try
             {
 
-                OpenDb(subscriberTable);
+                OpenDb(table);
 
                 myDatatable.Rows[userID].Delete();
 
-                CloseDb(subscriberTable);
+                CloseDb(table);
 
             }
             catch (Exception ex)
@@ -95,36 +89,6 @@ namespace CabinTempArduino
             }
         }
         /// <summary>
-        /// Updates selected row with new values
-        /// </summary>
-        /// <param name="id">Row to update</param>
-        /// <param name="values">New values to row</param>
-        public void UpdateSubscriber(int id, string surName, string firstName, string userName, string password, string email, string phone)
-        {
-            
-            try
-            {
-                OpenDb(subscriberTable);
-
-                myDatatable.Rows[id]["Etternavn"] = surName;
-                myDatatable.Rows[id]["Fornavn"] = firstName;
-                myDatatable.Rows[id]["Brukernavn"] = userName;
-                myDatatable.Rows[id]["Passord"] = password;
-                myDatatable.Rows[id]["E-post"] = email;
-                myDatatable.Rows[id]["Telefon"] = phone;
-
-                myDatatable.AcceptChanges();
-
-                CloseDb(subscriberTable);
-
-            }
-            catch (Exception ex)
-            {
-                
-                throw ex;
-            }
-        }
-        /// <summary>
         /// Gets all subscribers in 'BrukerInformasjon'
         /// </summary>
         /// <returns>
@@ -133,9 +97,10 @@ namespace CabinTempArduino
         public string[,] GetSubscribers()
         {
             string[,] subscribers;
+            string table = "BrukerInformasjon";
             try
             {
-                OpenDb(subscriberTable);
+                OpenDb(table);
 
                 int rows = myDatatable.Rows.Count;
                 int columns = myDatatable.Columns.Count;
@@ -164,59 +129,6 @@ namespace CabinTempArduino
             return subscribers;
         }
         /// <summary>
-        /// Search Functions
-        /// </summary>
-        /// <param name="username">Name to search for</param>
-        /// <returns></returns>
-        public string SearchUsername(string username)
-        {
-            int index = 0;
-            string[,] subscribers = GetSubscribers();
-
-            for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
-            {
-                if (username == subscribers[i, 3])
-                    goto exit;
-                else
-                    index++;
-            }
-
-        exit:
-        return subscribers[index,3];
-        }
-        public int getUserID(string username)
-        {
-            int index = 0;
-            string[,] subscribers = GetSubscribers();
-            for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
-            {
-                if (username == subscribers[i, 3])
-                    goto exit;
-                else
-                    index++;
-            }
-
-        exit:
-            return Convert.ToInt32(subscribers[index, 0]);
-        }
-        public int getIndex(string username)
-        {
-            int index = 0;
-            string[,] subscribers = GetSubscribers(); 
-            for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
-            {
-                if (username == subscribers[i, 3])
-                    goto exit;
-                else
-                    index++;
-            }
-
-        exit:
-            return index;
-        }
-        #endregion
-        #region Alarms
-        /// <summary>
         /// Adds an alarm to Feilmeldingslogg
         /// </summary>
         /// <param name="date"></param>
@@ -226,10 +138,12 @@ namespace CabinTempArduino
         /// <param name="temp"></param>
         public void LogAlarm(string date, string time, string message, string alarmID, string temp)
         {
+            string table = "Feilmeldingslogg";
+
             try
             {
 
-                OpenDb(alarmTable);
+                OpenDb(table);
 
                 DataRow row = myDatatable.NewRow();
 
@@ -242,7 +156,7 @@ namespace CabinTempArduino
                 myDatatable.AcceptChanges();
                 myDatatable.Rows.Add(row);
 
-                CloseDb(alarmTable);
+                CloseDb(table);
             }
             catch (Exception ex)
             {
@@ -262,9 +176,10 @@ namespace CabinTempArduino
         public string[,] GetAlarm()
         {
             string[,] alarms;
+            string table = "FeilmeldingsLogg";
             try
             {
-                OpenDb(alarmTable);
+                OpenDb(table);
                 int rows = myDatatable.Rows.Count;
                 int columns = myDatatable.Columns.Count;
                 alarms = new string[rows, columns];
@@ -276,7 +191,7 @@ namespace CabinTempArduino
                         alarms[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();                        
                     }
                 }
-                CloseDb(alarmTable);
+                CloseDb(table);
             }
             catch (Exception ex)
             {
@@ -301,9 +216,10 @@ namespace CabinTempArduino
         public string[,] GetAlarm(string values)
         {
             string[,] alarms;
+            string table = "Feilmeldingslogg";
             try
             {
-                OpenDb(alarmTable, values);
+                OpenDb(table, values);
                 int rows = myDatatable.Rows.Count;
                 int columns = myDatatable.Columns.Count;
                 alarms = new string[rows, columns];
@@ -315,7 +231,7 @@ namespace CabinTempArduino
                         alarms[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
                     }
                 }
-                CloseDb(alarmTable);
+                CloseDb(table);
             }
             catch (Exception ex)
             {
@@ -330,8 +246,6 @@ namespace CabinTempArduino
             }
             return alarms;
         }
-#endregion
-        #region Temperature
         /// <summary>
         /// Adds a row to TemperaturLogg
         /// </summary>
@@ -340,18 +254,14 @@ namespace CabinTempArduino
         /// <param name="temp"></param>
         public void LogTemperature(string date, string time, string temp)
         {
-            DateTime timestamp = new DateTime();
-            timestamp = DateTime.Now;
+            string table = "TemperaturLogg";
+
             try
             {
 
-                OpenDb(tempTable);
+                OpenDb(table);
 
                 DataRow row = myDatatable.NewRow();
-
-                //row["Dato"] = timestamp.Date.ToString();
-                //row["Tid"] = timestamp.TimeOfDay.ToString();
-                //row["Temperatur"] = temp;
 
                 row["Dato"] = date;
                 row["Tid"] = time;
@@ -360,7 +270,7 @@ namespace CabinTempArduino
                 myDatatable.AcceptChanges();
                 myDatatable.Rows.Add(row);
 
-                CloseDb(tempTable);
+                CloseDb(table);
             }
             catch (Exception ex)
             {
@@ -378,9 +288,10 @@ namespace CabinTempArduino
         public string[,] GetTemperature()
         {
             string[,] temperature;
+            string table = "Temperaturlogg";
             try
             {
-                OpenDb(tempTable);
+                OpenDb(table);
                 int rows = myDatatable.Rows.Count;
                 int columns = myDatatable.Columns.Count;
                 temperature = new string[rows, columns];
@@ -415,9 +326,10 @@ namespace CabinTempArduino
         public string[,] GetTemperature(string value)
         {
             string[,] temperature;
+            string table = "Temperaturlogg";
             try
             {
-                OpenDb(tempTable, value);
+                OpenDb(table, value);
                 int rows = myDatatable.Rows.Count;
                 int columns = myDatatable.Columns.Count;
                 temperature = new string[rows, columns];
@@ -444,27 +356,27 @@ namespace CabinTempArduino
             }
             return temperature;
         }
-#endregion
-        #region Settings
+
         /// <summary>
         /// Updates a single cell in tablesettings
         /// </summary>
         /// <param name="newSetting">New setting</param>
-        /// <param name="column">name of column or type of setting</param>
+        /// <param name="columnName">name of column or type of setting</param>
         /// <param name="settingNr">The set of settings to change</param>
-        public void UpdateSetting(string newSetting, int column,int settingNr)
+        public void UpdateSetting(string newSetting, string columnName,int settingNr)
         {
+            string table = "Innstillinger";
 
             try
             {
 
-                OpenDb(settingsTable);
+                OpenDb(table);
 
                 myDatatable.AcceptChanges();
 
-                myDatatable.Rows[settingNr][column] = newSetting;
+                myDatatable.Rows[settingNr][columnName] = newSetting;
 
-                CloseDb(settingsTable);
+                CloseDb(table);
             }
             catch (Exception ex)
             {
@@ -483,16 +395,17 @@ namespace CabinTempArduino
         public string[] GetSettings(int settingNr)
         {
             string[] settings;
+            string table = "Innstillinger";
             try
             {
-                OpenDb(settingsTable);
+                OpenDb(table);
                 int rows = myDatatable.Rows.Count;
                 int columns = myDatatable.Columns.Count;
                 settings = new string[columns];
 
-                for (int i = 0; i < columns; i++)
+                for (int i = 0; i < rows; i++)
                 {
-                        settings[i] = myDatatable.Rows[settingNr].ItemArray[i].ToString();
+                    settings[i] = myDatatable.Rows[settingNr].ItemArray[i].ToString();
                 }
 
             }
@@ -509,7 +422,6 @@ namespace CabinTempArduino
             }
             return settings;
         }
-        #endregion
 
     }
 }

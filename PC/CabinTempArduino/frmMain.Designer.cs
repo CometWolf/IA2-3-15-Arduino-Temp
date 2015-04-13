@@ -60,7 +60,6 @@
             this.totGraph = new System.Windows.Forms.ToolTip(this.components);
             this.spComPort = new System.IO.Ports.SerialPort(this.components);
             this.tmrBatteryStatus = new System.Windows.Forms.Timer(this.components);
-            this.tmrLogTemperature = new System.Windows.Forms.Timer(this.components);
             this.grbBatteryStatus.SuspendLayout();
             this.grbFetchingValues.SuspendLayout();
             this.grbEdit.SuspendLayout();
@@ -95,7 +94,6 @@
             resources.ApplyResources(this.prbBatteryStatus, "prbBatteryStatus");
             this.prbBatteryStatus.Name = "prbBatteryStatus";
             this.prbBatteryStatus.Step = 1;
-            this.prbBatteryStatus.Value = 100;
             // 
             // textBox1
             // 
@@ -175,11 +173,9 @@
             resources.GetString("cboAnnotation.Items"),
             resources.GetString("cboAnnotation.Items1"),
             resources.GetString("cboAnnotation.Items2"),
-            resources.GetString("cboAnnotation.Items3"),
-            resources.GetString("cboAnnotation.Items4")});
+            resources.GetString("cboAnnotation.Items3")});
             resources.ApplyResources(this.cboAnnotation, "cboAnnotation");
             this.cboAnnotation.Name = "cboAnnotation";
-            this.cboAnnotation.SelectedIndexChanged += new System.EventHandler(this.cboAnnotation_SelectedIndexChanged);
             // 
             // chbError
             // 
@@ -264,12 +260,6 @@
             this.tmrBatteryStatus.Enabled = true;
             this.tmrBatteryStatus.Tick += new System.EventHandler(this.tmrBatteryStatus_Tick);
             // 
-            // tmrLogTemperature
-            // 
-            this.tmrLogTemperature.Enabled = true;
-            this.tmrLogTemperature.Interval = 1000;
-            this.tmrLogTemperature.Tick += new System.EventHandler(this.tmrLogTemperature_Tick);
-            // 
             // frmMain
             // 
             resources.ApplyResources(this, "$this");
@@ -327,7 +317,6 @@
         private System.Windows.Forms.ToolTip totGraph;
         private System.IO.Ports.SerialPort spComPort;
         private System.Windows.Forms.Timer tmrBatteryStatus;
-        private System.Windows.Forms.Timer tmrLogTemperature;
     }
 }
 

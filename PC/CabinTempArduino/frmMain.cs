@@ -14,18 +14,15 @@ namespace CabinTempArduino
 {
     public partial class frmMain : Form
     {
-        bool criticalCharge = true;
-        bool fiftyCharge = true;
-        bool charging = true;
-
-        #region Disable Visual Styles
+        
+        //Disable Visual Styles
         [DllImport("uxtheme", ExactSpelling = true, CharSet = CharSet.Unicode)]
         public extern static Int32 SetWindowTheme(IntPtr hWnd,
                       String textSubAppName, String textSubIdList);
 
         //Source: http://stackoverflow.com/questions/3893622/windows-98-style-progress-bar 
-        #endregion
-        #region Initial
+
+        //END Disable Visual Styles
         public frmMain()
         {
             InitializeComponent();
@@ -34,154 +31,93 @@ namespace CabinTempArduino
             //ToolTips
             totGraph.SetToolTip(chartFetchedValues, "Click to enlarge");
             //END ToolTips
-
-            //GUI
-            if (cboAnnotation.Text == "Annotation")
-            {
-                btnFetch.Enabled = false;
-                chbError.Enabled = false;
-                chbTemperature.Enabled = false;
-                txtFetchLast.ReadOnly = true;
-            }
-            //END GUI
-            
         }
-        #endregion
-        #region Properties
+
+        //PROPERTIES
         public string ComPort
         {
             get { return spComPort.PortName; }
             set { spComPort.PortName = value; }
         }
-        #endregion
-        #region Objects
+        //END PROPERTIES
+
+        //OBJECTS
         Database myDatabase = new Database("ArduinoTemperaturMåling.accdb");
-        E_post mail = new E_post();
-        Random rand = new Random();
-        #endregion
-        #region Open Limits
+        //END OBJECTS
+
         private void btnLimits_Click(object sender, EventArgs e)
         {
+            //GUI
             frmLimits limitForm = new frmLimits();
             limitForm.ShowDialog();
+            //END GUI
         }
-        #endregion
-        #region Subscribers
+
         private void btnSubscribers_Click(object sender, EventArgs e)
         {
+            //GUI
             frmSubscribers subscribersForm = new frmSubscribers();
             subscribersForm.ShowDialog();
+            //END GUI
         }
-        #endregion
-        #region Settings
+
         private void btnSettings_Click_1(object sender, EventArgs e)
         {
+            //GUI
             frmSettings settingsForm = new frmSettings();
             settingsForm.ShowDialog();
+            //END GUI
         }
-        #endregion
-        #region Enlarge chart
+
         private void chartFetchedValues_Click(object sender, EventArgs e)
         {
+            //GUI
             frmChart chart = new frmChart();
             chart.Show();
+            //END GUI
         }
-        #endregion
+        Random rand = new Random();
         private void btnFetch_Click(object sender, EventArgs e)
         {
             rtbDatabaseValues.Clear();
-            
-            if(cboAnnotation.Text == "Entries")
+
+            for (int i = 0; i < 10; i++)
             {
                 
+            myDatabase.LogTemperature(DateTime.Now.Date.ToString(), DateTime.Now.TimeOfDay.ToString(), rand.Next(-100, 100).ToString());
+            }
+            string[,] alarms = myDatabase.GetTemperature();
+
+            foreach (string x in alarms)
+            {
+                rtbDatabaseValues.AppendText(x + "\r\n");
             }
         }
-        #region BatterySurvailence
+
         private void tmrBatteryStatus_Tick(object sender, EventArgs e)
         {
-            //prbBatteryStatus.Value = Convert.ToInt32(SystemInformation.PowerStatus.BatteryLifePercent*100);
+            prbBatteryStatus.Value = Convert.ToInt32(SystemInformation.PowerStatus.BatteryLifePercent*100);
             lblStatus.Text = SystemInformation.PowerStatus.BatteryChargeStatus.ToString();
 
-            string[,] emails = myDatabase.GetSubscribers();
 
-            //GUI
+
             if (prbBatteryStatus.Value <= 50)
                 prbBatteryStatus.ForeColor = Color.Yellow;
-            else if (prbBatteryStatus.Value <= 30)
-                prbBatteryStatus.ForeColor = Color.Red;
-            else
-                prbBatteryStatus.ForeColor = Color.Green;
 
-            if (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "0")
+            if(SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "0")
             {
                 lblStatus.Text = "Normal";
             }
-            //END GUI
-
-            if (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Charging")
-                charging = true;
-            else if (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() != "Charging" && charging)
+            else if(SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Low")
             {
-                for (int i = 0; i <= emails.GetUpperBound(0); i++)
-                {
-                    mail.Send(emails[i, 5], "PC Lader ikke", "PCen lader ikke lenger. Enten er støpselet dratt ut eller laderen defekt.");
-                }
-                charging = false;
-            }
+                prbBatteryStatus.ForeColor = Color.Red;
 
-            //50% charge
-            if (prbBatteryStatus.Value > 50)
-                fiftyCharge = true;
-            else if (prbBatteryStatus.Value <= 50 && fiftyCharge)
+                //Legg inn Email sending.
+            }
+            else if (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Low, Critical")
             {
-                for (int i = 0; i <= emails.GetUpperBound(0); i++)
-                {
-                    mail.Send(emails[i, 5], "PC har under 50% batteri igjen", "PCen har under 50% batteri igjen.");
-                }
-                fiftyCharge = false;
+                //Legg inn Email sending.
             }
-            //END 50% charge
-
-            //CRITICAL
-            if (prbBatteryStatus.Value > 15)
-                criticalCharge = true;
-
-            else if (prbBatteryStatus.Value <= 15 && criticalCharge) //Critical
-            {
-                for (int i = 0; i <= emails.GetUpperBound(0); i++)
-                {
-                    mail.Send(emails[i, 5], "[Kritisk] PC har under 15% batteri igjen", "PCen har under 15% batteri igjen.");
-                }
-                criticalCharge = false;
-            }
-            //END CRITICAL
-        }
-        #endregion BatterySurvailence
-
-        private void cboAnnotation_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cboAnnotation.Text == "Continous")
-            {
-                btnFetch.Enabled = false;
-                chbError.Enabled = false;
-                chbTemperature.Enabled = false;
-                txtFetchLast.ReadOnly = true;
-            }
-            else
-            {
-                btnFetch.Enabled = true;
-                chbError.Enabled = true;
-                txtFetchLast.ReadOnly = false;
-                chbTemperature.Enabled = true;
-            }
-        }
-
-        private void tmrLogTemperature_Tick(object sender, EventArgs e)
-        {
-            if(Convert.ToInt32(DateTime.Now.ToString("mm")) == 23)
-            myDatabase.LogTemperature(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("hh:mm:ss"), Convert.ToString(rand.Next(0,101)));
-
-
         }
     }
 }

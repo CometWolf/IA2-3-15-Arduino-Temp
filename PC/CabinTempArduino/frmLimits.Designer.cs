@@ -46,7 +46,6 @@
             this.cboLimitType.Size = new System.Drawing.Size(77, 21);
             this.cboLimitType.TabIndex = 0;
             this.cboLimitType.Text = "Limit type";
-            this.cboLimitType.SelectedIndexChanged += new System.EventHandler(this.cboLimitType_SelectedIndexChanged);
             // 
             // txtValue
             // 
@@ -65,11 +64,9 @@
             this.btnSetLimit.TabIndex = 2;
             this.btnSetLimit.Text = "Set limit";
             this.btnSetLimit.UseVisualStyleBackColor = true;
-            this.btnSetLimit.Click += new System.EventHandler(this.btnSetLimit_Click);
             // 
             // frmLimits
             // 
-            this.AcceptButton = this.btnSetLimit;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(162, 69);
