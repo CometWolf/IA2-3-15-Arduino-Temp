@@ -96,14 +96,24 @@ namespace CabinTempArduino
             }
             else if (cboPreset.Text == "Custom")
             {
-                if (rbtHours.Checked)
+                int value = 0;
+
+                if (rbtHours.Checked || rbtMinutes.Checked)
                 {
-                    int value = 0;
-                    int.TryParse(txtCustomInterval.Text, out value);
-                    settings.UpdateSetting(Convert.ToString(value * 60), 5, 0);
+                    if (!int.TryParse(txtCustomInterval.Text, out value) || txtCustomInterval.Text == "0")
+                    {
+                        MessageBox.Show("Do not use decimal numbers or zero.");
+                    }
+                    else
+                    {
+                        if (rbtHours.Checked)
+                            settings.UpdateSetting(Convert.ToString(value * 60), 5, 0);
+                        else if (rbtMinutes.Checked)
+                            settings.UpdateSetting(txtCustomInterval.Text, 5, 0);
+                    }
                 }
-                else if (rbtMinutes.Checked)
-                    settings.UpdateSetting(txtCustomInterval.Text, 5, 0);
+                else
+                    MessageBox.Show("Check off 'Hours' og 'Minutes'.");
             }
         }
     }
