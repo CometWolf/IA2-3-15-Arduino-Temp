@@ -48,12 +48,6 @@
     <Compile Include="Arduino.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="E_post.cs" />
-    <Compile Include="frmChart.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmChart.Designer.cs">
-      <DependentUpon>frmChart.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmLimits.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,9 +76,6 @@
     <Compile Include="frmSubscribers.Designer.cs">
       <DependentUpon>frmSubscribers.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="frmChart.resx">
-      <DependentUpon>frmChart.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmLimits.resx">
       <DependentUpon>frmLimits.cs</DependentUpon>
     </EmbeddedResource>

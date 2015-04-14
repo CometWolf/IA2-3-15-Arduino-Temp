@@ -28,6 +28,7 @@ namespace CabinTempArduino
         int loggedMinute = 0;
         string nextMinutes = "";
         string nextHours = "";
+        int oldInterval;
         #endregion
 
         #endregion
@@ -43,17 +44,12 @@ namespace CabinTempArduino
         {
             InitializeComponent();
             SetWindowTheme(prbBatteryStatus.Handle, "", ""); //Disable Visual Styles ProgressBar
-
-            //ToolTips
-            totGraph.SetToolTip(chartFetchedValues, "Click to enlarge");
-            //END ToolTips
-
             //GUI
             if (cboAnnotation.Text == "Annotation")
             {
                 btnFetch.Enabled = false;
-                chbError.Enabled = false;
-                chbTemperature.Enabled = false;
+                rbtError.Enabled = false;
+                rbtTemperature.Enabled = false;
                 txtFetchLast.ReadOnly = true;
             }
             //END GUI
@@ -91,13 +87,6 @@ namespace CabinTempArduino
         {
             frmSettings settingsForm = new frmSettings();
             settingsForm.ShowDialog();
-        }
-        #endregion
-        #region Enlarge chart
-        private void chartFetchedValues_Click(object sender, EventArgs e)
-        {
-            frmChart chart = new frmChart();
-            chart.Show();
         }
         #endregion
         private void btnFetch_Click(object sender, EventArgs e)
@@ -176,133 +165,145 @@ namespace CabinTempArduino
         {
             if (cboAnnotation.Text == "Continous")
             {
-                btnFetch.Enabled = false;
-                chbError.Enabled = false;
-                chbTemperature.Enabled = false;
+                rbtError.Enabled = false;
+                rbtTemperature.Enabled = false;
                 txtFetchLast.ReadOnly = true;
+                btnFetch.Text = "Start";
             }
             else
             {
                 btnFetch.Enabled = true;
-                chbError.Enabled = true;
+                rbtError.Enabled = true;
                 txtFetchLast.ReadOnly = false;
-                chbTemperature.Enabled = true;
+                rbtTemperature.Enabled = true;
+                btnFetch.Text = "Fetch values";
             }
         }
         #region TemperatureLogging
         private void tmrLogTemperature_Tick(object sender, EventArgs e)
         {
-            string[] settings = myDatabase.GetSettings(0);
-            int interval = Convert.ToInt32(settings[5]);
-
-
-            if (interval == 15)
+            try
             {
-                if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15 && logged != true)
-                {
-                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
-                    logged = true;
-                }
-                else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30 && logged != true)
-                {
-                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
-                    logged = true;
-                }
-                else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 45 && logged != true)
-                {
-                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
-                    logged = true;
-                }
-                else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
-                {
-                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
-                    logged = true;
-                }
-                else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 16) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) ||
-                    (Convert.ToInt32(DateTime.Now.ToString("mm")) == 46) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 01))
-                    logged = false;
+                string[] settings = myDatabase.GetSettings(0);
+                int interval = Convert.ToInt32(settings[5]);
 
+
+                if (interval == 15)
+                {
+                    if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15 && logged != true)
+                    {
+                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
+                        logged = true;
+                    }
+                    else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30 && logged != true)
+                    {
+                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
+                        logged = true;
+                    }
+                    else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 45 && logged != true)
+                    {
+                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
+                        logged = true;
+                    }
+                    else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
+                    {
+                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
+                        logged = true;
+                    }
+                    else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 16) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) ||
+                        (Convert.ToInt32(DateTime.Now.ToString("mm")) == 46) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 01))
+                        logged = false;
+
+                }
+                else if (interval == 30)
+                {
+                    if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
+                    {
+                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
+                        logged = true;
+                    }
+                    else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30 && logged != true)
+                    {
+                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
+                        logged = true;
+                    }
+                    else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 01) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31))
+                        logged = false;
+                }
+                else if (interval == 60)
+                {
+                    if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
+                    {
+                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
+                        logged = true;
+                    }
+                    else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 01)
+                        logged = false;
+                }
+                else
+                {
+                    int hours = interval / 60;
+                    int minutes = interval % 60;
+
+                    int hoursNow = Convert.ToInt32(DateTime.Now.ToString("HH"));
+                    int minutesNow = Convert.ToInt32(DateTime.Now.ToString("mm"));
+
+                    if (oldInterval != interval)
+                        nextLog = "";
+
+                    if (nextLog == "")
+                    {
+                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
+
+                        nextHours = Convert.ToString(hoursNow + hours);
+                        nextMinutes = Convert.ToString(minutesNow + minutes);
+
+                        if (Convert.ToInt32(nextHours) >= 24)
+                            nextHours = (Convert.ToInt32(nextHours) % 24).ToString();
+                        if (Convert.ToInt32(nextMinutes) >= 60)
+                            nextMinutes = (Convert.ToInt32(nextMinutes) % 60).ToString();
+                        if (nextHours.Length == 1)
+                            nextHours = "0" + nextHours;
+                        if (nextMinutes.Length == 1)
+                            nextMinutes = "0" + nextMinutes;
+
+                        nextLog = nextHours + ":" + nextMinutes;
+                        loggedMinute = minutesNow;
+
+                        oldInterval = interval;
+                        logged = true;
+                    }
+
+                    else if (DateTime.Now.ToString("HH:mm") == nextLog && logged != true)
+                    {
+                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
+
+                        nextHours = Convert.ToString(hoursNow + hours);
+                        nextMinutes = Convert.ToString(minutesNow + minutes);
+
+                        if (Convert.ToInt32(nextHours) >= 24)
+                            nextHours = (Convert.ToInt32(nextHours) % 24).ToString();
+                        if (Convert.ToInt32(nextMinutes) >= 60)
+                            nextMinutes = (Convert.ToInt32(nextMinutes) % 60).ToString();
+                        if (nextHours.Length == 1)
+                            nextHours = "0" + nextHours;
+                        if (nextMinutes.Length == 1)
+                            nextMinutes = "0" + nextMinutes;
+
+                        nextLog = nextHours + ":" + nextMinutes;
+                        loggedMinute = minutesNow;
+
+                        logged = true;
+                    }
+                    else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == (loggedMinute + 1))
+                    {
+                        logged = false;
+                    }
+                }
             }
-            else if (interval == 30)
+            catch(Exception ex)
             {
-                if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
-                {
-                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
-                    logged = true;
-                }
-                else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30 && logged != true)
-                {
-                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
-                    logged = true;
-                }
-                else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 01) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31))
-                    logged = false;
-            }
-            else if (interval == 60)
-            {
-                if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
-                {
-                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
-                    logged = true;
-                }
-                else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 01)
-                    logged = false;
-            }
-            else
-            {
-                int hours = interval / 60;
-                int minutes = interval % 60;
-
-                int hoursNow = Convert.ToInt32(DateTime.Now.ToString("HH"));
-                int minutesNow = Convert.ToInt32(DateTime.Now.ToString("mm"));
-
-                if(nextLog == "")
-                {
-                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
-
-                    nextHours = Convert.ToString(hoursNow + hours);
-                    nextMinutes = Convert.ToString(minutesNow + minutes);
-
-                    if (Convert.ToInt32(nextHours) >= 24)
-                        nextHours = (Convert.ToInt32(nextHours) % 24).ToString();
-                    if (Convert.ToInt32(nextMinutes) >= 60)
-                        nextMinutes = (Convert.ToInt32(nextMinutes) % 60).ToString();
-                    if (nextHours.Length == 1)
-                        nextHours = "0" + nextHours;
-                    if (nextMinutes.Length == 1)
-                        nextMinutes = "0" + nextMinutes;
-
-                    nextLog = nextHours + ":" + nextMinutes;
-                    loggedMinute = minutesNow;
-
-                    logged = true;
-                }
-
-                else if(DateTime.Now.ToString("HH:mm") == nextLog && logged != true)
-                {
-                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
-
-                    nextHours = Convert.ToString(hoursNow + hours);
-                    nextMinutes = Convert.ToString(minutesNow + minutes);
-
-                    if (Convert.ToInt32(nextHours) >= 24)
-                        nextHours = (Convert.ToInt32(nextHours) % 24).ToString();
-                    if (Convert.ToInt32(nextMinutes) >= 60)
-                        nextMinutes = (Convert.ToInt32(nextMinutes) % 60).ToString();
-                    if (nextHours.Length == 1)
-                        nextHours = "0" + nextHours;
-                    if (nextMinutes.Length == 1)
-                        nextMinutes = "0" + nextMinutes;
-
-                    nextLog = nextHours + ":" + nextMinutes;
-                    loggedMinute = minutesNow;
-
-                    logged = true;
-                }
-                else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == (loggedMinute + 1))
-                {
-                    logged = false;
-                }
+                MessageBox.Show(ex.Message);
             }
         }
         #endregion

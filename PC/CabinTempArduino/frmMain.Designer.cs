@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.grbBatteryStatus = new System.Windows.Forms.GroupBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblStatusStatic = new System.Windows.Forms.Label();
@@ -48,16 +48,15 @@
             this.btnSubscribers = new System.Windows.Forms.Button();
             this.lblWhatToFetch = new System.Windows.Forms.Label();
             this.grbFetchingValues = new System.Windows.Forms.GroupBox();
+            this.rbtError = new System.Windows.Forms.RadioButton();
+            this.rbtTemperature = new System.Windows.Forms.RadioButton();
             this.cboAnnotation = new System.Windows.Forms.ComboBox();
-            this.chbError = new System.Windows.Forms.CheckBox();
-            this.chbTemperature = new System.Windows.Forms.CheckBox();
             this.btnSettings = new System.Windows.Forms.Button();
             this.grbEdit = new System.Windows.Forms.GroupBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabTable = new System.Windows.Forms.TabPage();
             this.tabGraph = new System.Windows.Forms.TabPage();
             this.chartFetchedValues = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.totGraph = new System.Windows.Forms.ToolTip(this.components);
             this.spComPort = new System.IO.Ports.SerialPort(this.components);
             this.tmrBatteryStatus = new System.Windows.Forms.Timer(this.components);
             this.tmrLogTemperature = new System.Windows.Forms.Timer(this.components);
@@ -72,10 +71,10 @@
             // 
             // grbBatteryStatus
             // 
+            resources.ApplyResources(this.grbBatteryStatus, "grbBatteryStatus");
             this.grbBatteryStatus.Controls.Add(this.lblStatus);
             this.grbBatteryStatus.Controls.Add(this.lblStatusStatic);
             this.grbBatteryStatus.Controls.Add(this.prbBatteryStatus);
-            resources.ApplyResources(this.grbBatteryStatus, "grbBatteryStatus");
             this.grbBatteryStatus.Name = "grbBatteryStatus";
             this.grbBatteryStatus.TabStop = false;
             // 
@@ -91,10 +90,11 @@
             // 
             // prbBatteryStatus
             // 
-            this.prbBatteryStatus.BackColor = System.Drawing.Color.White;
             resources.ApplyResources(this.prbBatteryStatus, "prbBatteryStatus");
+            this.prbBatteryStatus.BackColor = System.Drawing.Color.White;
             this.prbBatteryStatus.Name = "prbBatteryStatus";
             this.prbBatteryStatus.Step = 1;
+            this.prbBatteryStatus.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.prbBatteryStatus.Value = 100;
             // 
             // textBox1
@@ -157,9 +157,9 @@
             // 
             // grbFetchingValues
             // 
+            this.grbFetchingValues.Controls.Add(this.rbtError);
+            this.grbFetchingValues.Controls.Add(this.rbtTemperature);
             this.grbFetchingValues.Controls.Add(this.cboAnnotation);
-            this.grbFetchingValues.Controls.Add(this.chbError);
-            this.grbFetchingValues.Controls.Add(this.chbTemperature);
             this.grbFetchingValues.Controls.Add(this.txtFetchLast);
             this.grbFetchingValues.Controls.Add(this.lblWhatToFetch);
             this.grbFetchingValues.Controls.Add(this.btnFetch);
@@ -167,6 +167,20 @@
             resources.ApplyResources(this.grbFetchingValues, "grbFetchingValues");
             this.grbFetchingValues.Name = "grbFetchingValues";
             this.grbFetchingValues.TabStop = false;
+            // 
+            // rbtError
+            // 
+            resources.ApplyResources(this.rbtError, "rbtError");
+            this.rbtError.Name = "rbtError";
+            this.rbtError.TabStop = true;
+            this.rbtError.UseVisualStyleBackColor = true;
+            // 
+            // rbtTemperature
+            // 
+            resources.ApplyResources(this.rbtTemperature, "rbtTemperature");
+            this.rbtTemperature.Name = "rbtTemperature";
+            this.rbtTemperature.TabStop = true;
+            this.rbtTemperature.UseVisualStyleBackColor = true;
             // 
             // cboAnnotation
             // 
@@ -180,18 +194,6 @@
             resources.ApplyResources(this.cboAnnotation, "cboAnnotation");
             this.cboAnnotation.Name = "cboAnnotation";
             this.cboAnnotation.SelectedIndexChanged += new System.EventHandler(this.cboAnnotation_SelectedIndexChanged);
-            // 
-            // chbError
-            // 
-            resources.ApplyResources(this.chbError, "chbError");
-            this.chbError.Name = "chbError";
-            this.chbError.UseVisualStyleBackColor = true;
-            // 
-            // chbTemperature
-            // 
-            resources.ApplyResources(this.chbTemperature, "chbTemperature");
-            this.chbTemperature.Name = "chbTemperature";
-            this.chbTemperature.UseVisualStyleBackColor = true;
             // 
             // btnSettings
             // 
@@ -211,9 +213,9 @@
             // 
             // tabControl1
             // 
+            resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Controls.Add(this.tabTable);
             this.tabControl1.Controls.Add(this.tabGraph);
-            resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             // 
@@ -233,31 +235,24 @@
             // 
             // chartFetchedValues
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartFetchedValues.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            legend2.Position.Auto = false;
-            legend2.Position.Height = 4F;
-            legend2.Position.Width = 24.92401F;
-            legend2.Position.X = 44F;
-            legend2.Position.Y = 95F;
-            legend2.TitleAlignment = System.Drawing.StringAlignment.Near;
-            this.chartFetchedValues.Legends.Add(legend2);
             resources.ApplyResources(this.chartFetchedValues, "chartFetchedValues");
+            chartArea1.Name = "ChartArea1";
+            this.chartFetchedValues.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            legend1.Position.Auto = false;
+            legend1.Position.Height = 4F;
+            legend1.Position.Width = 24.92401F;
+            legend1.Position.X = 44F;
+            legend1.Position.Y = 95F;
+            legend1.TitleAlignment = System.Drawing.StringAlignment.Near;
+            this.chartFetchedValues.Legends.Add(legend1);
             this.chartFetchedValues.Name = "chartFetchedValues";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.LegendText = "#SERIESNAME";
-            series2.Name = "Temp.";
-            this.chartFetchedValues.Series.Add(series2);
-            this.chartFetchedValues.Click += new System.EventHandler(this.chartFetchedValues_Click);
-            // 
-            // totGraph
-            // 
-            this.totGraph.AutoPopDelay = 3000;
-            this.totGraph.InitialDelay = 500;
-            this.totGraph.ReshowDelay = 10000;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.LegendText = "#SERIESNAME";
+            series1.Name = "Temp.";
+            this.chartFetchedValues.Series.Add(series1);
             // 
             // tmrBatteryStatus
             // 
@@ -281,8 +276,6 @@
             this.Controls.Add(this.lblCurrentTemp);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.grbBatteryStatus);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
             this.Name = "frmMain";
             this.grbBatteryStatus.ResumeLayout(false);
             this.grbBatteryStatus.PerformLayout();
@@ -316,18 +309,17 @@
         private System.Windows.Forms.Label lblWhatToFetch;
         private System.Windows.Forms.GroupBox grbFetchingValues;
         private System.Windows.Forms.ComboBox cboAnnotation;
-        private System.Windows.Forms.CheckBox chbError;
-        private System.Windows.Forms.CheckBox chbTemperature;
         private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.GroupBox grbEdit;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabTable;
         private System.Windows.Forms.TabPage tabGraph;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartFetchedValues;
-        private System.Windows.Forms.ToolTip totGraph;
         private System.IO.Ports.SerialPort spComPort;
         private System.Windows.Forms.Timer tmrBatteryStatus;
         private System.Windows.Forms.Timer tmrLogTemperature;
+        private System.Windows.Forms.RadioButton rbtError;
+        private System.Windows.Forms.RadioButton rbtTemperature;
     }
 }
 

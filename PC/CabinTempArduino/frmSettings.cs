@@ -71,6 +71,7 @@ namespace CabinTempArduino
                 {
                     frmMain main = new frmMain();
                     main.ComPort = cboComPort.Text;
+                    settings.UpdateSetting(cboComPort.Text, 6, 0);
                     MessageBox.Show("Port successfully changed");
                 }
             }
@@ -110,7 +111,6 @@ namespace CabinTempArduino
                 else if (cboPreset.Text == "Custom")
                 {
                     int value = 0;
-
                     if (rbtHours.Checked || rbtMinutes.Checked)
                     {
                         if (!int.TryParse(txtCustomInterval.Text, out value) || txtCustomInterval.Text == "0")
@@ -120,10 +120,25 @@ namespace CabinTempArduino
                         else
                         {
                             if (rbtHours.Checked)
-                                settings.UpdateSetting(Convert.ToString(value * 60), 5, 0);
+                            {
+                                if (value > 24)
+                                    MessageBox.Show("Do not go above 24 hours.");
+                                else
+                                {
+                                    settings.UpdateSetting(Convert.ToString(value * 60), 5, 0);
+                                    MessageBox.Show("Interval successfully set changes.");
+                                }
+                            }
                             else if (rbtMinutes.Checked)
-                                settings.UpdateSetting(txtCustomInterval.Text, 5, 0);
-                            MessageBox.Show("Interval successfully set changes");
+                            {
+                                if (value > 1440)
+                                    MessageBox.Show("Do not go above 24 hours.");
+                                else
+                                {
+                                    settings.UpdateSetting(txtCustomInterval.Text, 5, 0);
+                                    MessageBox.Show("Interval successfully set changes.");
+                                }
+                            }
                         }
                     }
                     else
