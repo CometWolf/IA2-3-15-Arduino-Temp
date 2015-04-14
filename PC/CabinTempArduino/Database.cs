@@ -372,7 +372,7 @@ namespace CabinTempArduino
         /// <param name="date"></param>
         /// <param name="time"></param>
         /// <param name="temp"></param>
-        public void LogTemperature(string date, string time, string temp)
+        public void LogTemperature(string temp)
         {
             DateTime timestamp = new DateTime();
             timestamp = DateTime.Now;
@@ -383,12 +383,8 @@ namespace CabinTempArduino
 
                 DataRow row = myDatatable.NewRow();
 
-                //row["Dato"] = timestamp.Date.ToString();
-                //row["Tid"] = timestamp.TimeOfDay.ToString();
-                //row["Temperatur"] = temp;
-
-                row["Dato"] = date;
-                row["Tid"] = time;
+                row["Dato"] = timestamp.ToString("dd:MM:yyyy");
+                row["Tid"] = timestamp.ToString("HH:mm:ss");
                 row["Temperatur"] = temp;
 
                 myDatatable.AcceptChanges();
