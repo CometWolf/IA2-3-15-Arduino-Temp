@@ -106,17 +106,10 @@ namespace CabinTempArduino
             {
                 OpenDb(subscriberTable);
 
-                myDatatable.Rows[id]["Etternavn"] = surName;
-                myDatatable.Rows[id]["Fornavn"] = firstName;
-                myDatatable.Rows[id]["Brukernavn"] = userName;
-                myDatatable.Rows[id]["Passord"] = password;
-                myDatatable.Rows[id]["E-post"] = email;
-                myDatatable.Rows[id]["Telefon"] = phone;
+                string updateQuery = string.Format(("UPDATE {0} SET [Etternavn]='{1}', [Fornavn]='{2}', [Brukernavn]='{3}', [Passord]='{4}', [E-post]='{4}', [Telefon]='{5}' WHERE [BrukerId]={6}")
+                                            ,subscriberTable,surName,firstName,userName,password,email,phone,id);
 
-                //myDatatable.Rows[id].SetModified();
-                myDatatable.AcceptChanges();
-
-                CloseDb(subscriberTable);
+                CloseDbMan(updateQuery);
 
             }
             catch (Exception ex)
@@ -220,13 +213,13 @@ namespace CabinTempArduino
         /// <summary>
         /// Adds an alarm to Feilmeldingslogg
         /// </summary>
-        /// <param name="date"></param>
-        /// <param name="time"></param>
         /// <param name="message"></param>
         /// <param name="alarmID"></param>
         /// <param name="temp"></param>
-        public void LogAlarm(string date, string time, string message, string alarmID, string temp)
+        public void LogAlarm(string message, string alarmID, string temp)
         {
+            DateTime timestamp = new DateTime();
+            timestamp = DateTime.Now;
             try
             {
 
@@ -234,8 +227,8 @@ namespace CabinTempArduino
 
                 DataRow row = myDatatable.NewRow();
 
-                row["Dato"] = date;
-                row["Tid"] = time;
+                row["Dato"] = timestamp.ToString("dd:MM:yyyy");
+                row["Tid"] = timestamp.ToString("HH:mm:ss");
                 row["Feilmelding"] = message;
                 row["AlarmID"] = alarmID;
                 row["Temperatur"] = temp;
@@ -369,8 +362,6 @@ namespace CabinTempArduino
         /// <summary>
         /// Adds a row to TemperaturLogg
         /// </summary>
-        /// <param name="date"></param>
-        /// <param name="time"></param>
         /// <param name="temp"></param>
         public void LogTemperature(string temp)
         {
@@ -383,7 +374,7 @@ namespace CabinTempArduino
 
                 DataRow row = myDatatable.NewRow();
 
-                row["Dato"] = timestamp.ToString("dd:MM:yyyy");
+                row["Dato"] = timestamp.ToString("dd.MM.yyyy");
                 row["Tid"] = timestamp.ToString("HH:mm:ss");
                 row["Temperatur"] = temp;
 

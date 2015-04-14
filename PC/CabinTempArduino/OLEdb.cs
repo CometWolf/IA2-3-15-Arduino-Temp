@@ -12,6 +12,7 @@ namespace CabinTempArduino
     {
         protected static OleDbConnection myAccessConnection;
         protected static OleDbCommand myAccessCommand;
+        protected static OleDbCommand myCommand;
         protected static OleDbDataAdapter myDataAdapter;
         protected static OleDbCommandBuilder myCommandBuilder;
         protected static DataTable myDatatable;
@@ -116,6 +117,15 @@ namespace CabinTempArduino
             myDataAdapter.Update(myDatatable);
             myAccessConnection.Close();
         }
-        
+        protected static void CloseDbMan(string updateCommand)
+        {
+            //myDataAdapter.UpdateCommand.CommandType = CommandType.Text;
+            //myDataAdapter.UpdateCommand.CommandText = updateCommand;
+
+            myCommand = new OleDbCommand(updateCommand, myAccessConnection);
+            myCommand.ExecuteNonQuery();
+
+            myAccessConnection.Close();
+        }
     }
 }
