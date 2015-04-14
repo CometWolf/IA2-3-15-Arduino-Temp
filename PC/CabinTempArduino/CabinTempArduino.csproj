@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arduino.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="E_post.cs" />
     <Compile Include="frmChart.cs">
