@@ -15,15 +15,21 @@ namespace CabinTempArduino
     public partial class frmMain : Form
     {
         #region Variables
+
+        #region Battery
         bool criticalCharge = true;
         bool fiftyCharge = true;
         bool charging = true;
         bool logged = false;
+        #endregion
 
+        #region TempLog
         string nextLog = "";
         int loggedMinute = 0;
         string nextMinutes = "";
         string nextHours = "";
+        #endregion
+
         #endregion
         #region Disable Visual Styles
         [DllImport("uxtheme", ExactSpelling = true, CharSet = CharSet.Unicode)]
@@ -183,7 +189,7 @@ namespace CabinTempArduino
                 chbTemperature.Enabled = true;
             }
         }
-
+        #region TemperatureLogging
         private void tmrLogTemperature_Tick(object sender, EventArgs e)
         {
             string[] settings = myDatabase.GetSettings(0);
@@ -299,5 +305,6 @@ namespace CabinTempArduino
                 }
             }
         }
+        #endregion
     }
 }

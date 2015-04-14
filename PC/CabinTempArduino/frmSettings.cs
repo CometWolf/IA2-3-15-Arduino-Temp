@@ -65,10 +65,18 @@ namespace CabinTempArduino
 
         private void btnComPort_Click(object sender, EventArgs e)
         {
-            if(cboComPort.Text != "Ports")
+            try
             {
-                frmMain main = new frmMain();
-                main.ComPort = cboComPort.Text;
+                if (cboComPort.Text != "Ports")
+                {
+                    frmMain main = new frmMain();
+                    main.ComPort = cboComPort.Text;
+                    MessageBox.Show("Port successfully changed");
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -82,38 +90,49 @@ namespace CabinTempArduino
 
         private void btnInterval_Click(object sender, EventArgs e)
         {
-            if (cboPreset.Text == "60 minutes")
+            try
             {
-                settings.UpdateSetting("60", 5, 0);
-            }
-            else if (cboPreset.Text == "30 minutes")
-            {
-                settings.UpdateSetting("30", 5, 0);
-            }
-            else if (cboPreset.Text == "15 minutes")
-            {
-                settings.UpdateSetting("15", 5, 0);
-            }
-            else if (cboPreset.Text == "Custom")
-            {
-                int value = 0;
-
-                if (rbtHours.Checked || rbtMinutes.Checked)
+                if (cboPreset.Text == "60 minutes")
                 {
-                    if (!int.TryParse(txtCustomInterval.Text, out value) || txtCustomInterval.Text == "0")
+                    settings.UpdateSetting("60", 5, 0);
+                    MessageBox.Show("Interval successfully changes.");
+                }
+                else if (cboPreset.Text == "30 minutes")
+                {
+                    settings.UpdateSetting("30", 5, 0);
+                    MessageBox.Show("Interval successfully changes.");
+                }
+                else if (cboPreset.Text == "15 minutes")
+                {
+                    settings.UpdateSetting("15", 5, 0);
+                    MessageBox.Show("Interval successfully changes.");
+                }
+                else if (cboPreset.Text == "Custom")
+                {
+                    int value = 0;
+
+                    if (rbtHours.Checked || rbtMinutes.Checked)
                     {
-                        MessageBox.Show("Do not use decimal numbers or zero.");
+                        if (!int.TryParse(txtCustomInterval.Text, out value) || txtCustomInterval.Text == "0")
+                        {
+                            MessageBox.Show("Do not use decimal numbers or zero.");
+                        }
+                        else
+                        {
+                            if (rbtHours.Checked)
+                                settings.UpdateSetting(Convert.ToString(value * 60), 5, 0);
+                            else if (rbtMinutes.Checked)
+                                settings.UpdateSetting(txtCustomInterval.Text, 5, 0);
+                            MessageBox.Show("Interval successfully set changes");
+                        }
                     }
                     else
-                    {
-                        if (rbtHours.Checked)
-                            settings.UpdateSetting(Convert.ToString(value * 60), 5, 0);
-                        else if (rbtMinutes.Checked)
-                            settings.UpdateSetting(txtCustomInterval.Text, 5, 0);
-                    }
+                        MessageBox.Show("Check off 'Hours' og 'Minutes'.");
                 }
-                else
-                    MessageBox.Show("Check off 'Hours' og 'Minutes'.");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

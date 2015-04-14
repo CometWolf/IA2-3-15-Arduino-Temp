@@ -84,6 +84,6 @@ namespace CabinTempArduino
             return alarmUpper;
             
         }
-        }
     }
 }
+
