@@ -194,22 +194,22 @@ namespace CabinTempArduino
             {
                 if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15 && logged != true)
                 {
-                    myDatabase.LogTemperature(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH:mm:ss"), Convert.ToString(rand.Next(0, 101)));
+                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
                     logged = true;
                 }
                 else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30 && logged != true)
                 {
-                    myDatabase.LogTemperature(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH:mm:ss"), Convert.ToString(rand.Next(0, 101)));
+                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
                     logged = true;
                 }
                 else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 45 && logged != true)
                 {
-                    myDatabase.LogTemperature(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH:mm:ss"), Convert.ToString(rand.Next(0, 101)));
+                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
                     logged = true;
                 }
                 else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
                 {
-                    myDatabase.LogTemperature(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH:mm:ss"), Convert.ToString(rand.Next(0, 101)));
+                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
                     logged = true;
                 }
                 else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 16) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) ||
@@ -221,12 +221,12 @@ namespace CabinTempArduino
             {
                 if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
                 {
-                    myDatabase.LogTemperature(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH:mm:ss"), Convert.ToString(rand.Next(0, 101)));
+                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
                     logged = true;
                 }
                 else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30 && logged != true)
                 {
-                    myDatabase.LogTemperature(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH:mm:ss"), Convert.ToString(rand.Next(0, 101)));
+                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
                     logged = true;
                 }
                 else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 01) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31))
@@ -236,7 +236,7 @@ namespace CabinTempArduino
             {
                 if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
                 {
-                    myDatabase.LogTemperature(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH:mm:ss"), Convert.ToString(rand.Next(0, 101)));
+                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
                     logged = true;
                 }
                 else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 01)
@@ -252,7 +252,7 @@ namespace CabinTempArduino
 
                 if(nextLog == "")
                 {
-                    myDatabase.LogTemperature(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH:mm:ss"), Convert.ToString(rand.Next(0, 101)));
+                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
 
                     nextHours = Convert.ToString(hoursNow + hours);
                     nextMinutes = Convert.ToString(minutesNow + minutes);
@@ -274,7 +274,7 @@ namespace CabinTempArduino
 
                 else if(DateTime.Now.ToString("HH:mm") == nextLog && logged != true)
                 {
-                    myDatabase.LogTemperature(DateTime.Now.ToString("dd.MM.yyyy"), DateTime.Now.ToString("HH:mm:ss"), Convert.ToString(rand.Next(0, 101)));
+                    myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
 
                     nextHours = Convert.ToString(hoursNow + hours);
                     nextMinutes = Convert.ToString(minutesNow + minutes);
