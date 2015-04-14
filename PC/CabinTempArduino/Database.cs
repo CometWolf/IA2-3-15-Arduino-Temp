@@ -106,7 +106,7 @@ namespace CabinTempArduino
             {
                 OpenDb(subscriberTable);
 
-                string updateQuery = string.Format(("UPDATE {0} SET [Etternavn]='{1}', [Fornavn]='{2}', [Brukernavn]='{3}', [Passord]='{4}', [E-post]='{4}', [Telefon]='{5}' WHERE [BrukerId]={6}")
+                string updateQuery = string.Format(("UPDATE {0} SET [Etternavn]='{1}', [Fornavn]='{2}', [Brukernavn]='{3}', [Passord]='{4}', [E-post]='{5}', [Telefon]='{6}' WHERE [BrukerId]={7}")
                                             ,subscriberTable,surName,firstName,userName,password,email,phone,id);
 
                 CloseDbMan(updateQuery);

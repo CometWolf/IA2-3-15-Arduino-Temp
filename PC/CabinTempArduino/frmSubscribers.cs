@@ -103,7 +103,7 @@ namespace CabinTempArduino
             }
             else if (cboSelectSubscriber.Text == myDatabase.SearchUsername(cboSelectSubscriber.Text))
             {
-                int index = myDatabase.getIndex(cboSelectSubscriber.Text);
+                int index = myDatabase.getUserID(cboSelectSubscriber.Text);
 
                 bool lengthPassword = false;
                 bool email = matchingValues(txtEmail.Text, txtConfirmEmail.Text, "emails");
