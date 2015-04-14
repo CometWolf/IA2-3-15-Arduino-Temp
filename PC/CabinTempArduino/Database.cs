@@ -292,6 +292,39 @@ namespace CabinTempArduino
             }
             return alarms;
         }
+        public string[,] GetAlarmLast(int entities)
+        {
+            string[,] alarms;
+            try
+            {
+                string connectionstring = String.Format(("SELECT TOP {1} * FROM {0} ORDER BY {2} DESC, {3} DESC"), alarmTable, entities, "Dato", "Tid");
+                OpenDbMan(connectionstring);
+                int rows = myDatatable.Rows.Count;
+                int columns = myDatatable.Columns.Count;
+                alarms = new string[rows, columns];
+
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        alarms[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
+                    }
+                }
+                CloseDb(alarmTable);
+            }
+            catch (Exception ex)
+            {
+                alarms = new string[0, 0];
+                alarms[0, 0] = "N/A";
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return alarms;
+        }
         /// <summary>
         /// Gets alarms in 'Feilmeldingslogg'
         /// </summary>
