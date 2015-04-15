@@ -29,6 +29,8 @@ namespace CabinTempArduino
         string nextMinutes = "";
         string nextHours = "";
         int oldInterval;
+        bool continous = false;
+        bool custom;
         #endregion
 
         #endregion
@@ -61,6 +63,10 @@ namespace CabinTempArduino
         {
             get { return spComPort.PortName; }
             set { spComPort.PortName = value; }
+        }
+        public bool Custom
+        {
+            set { custom = value; }
         }
         #endregion
         #region Objects
@@ -96,6 +102,33 @@ namespace CabinTempArduino
             if (cboAnnotation.Text == "Entries")
             {
 
+            }
+            else if (cboAnnotation.Text == "Day(s)")
+            {
+
+            }
+            else if(cboAnnotation.Text == "Month(s)")
+            {
+
+            }
+            else if(cboAnnotation.Text == "Year(s)")
+            {
+
+            }
+            else if(cboAnnotation.Text == "Continous")
+            {
+                if (btnFetch.Text == "Start")
+                {
+                    continous = true;
+                    btnFetch.Text = "Stop";
+                    cboAnnotation.Enabled = false;
+                }
+                else if (btnFetch.Text == "Stop")
+                {
+                    continous = false;
+                    btnFetch.Text = "Start";
+                    cboAnnotation.Enabled = true;
+                }
             }
         }
         #region BatterySurvailence
@@ -169,6 +202,7 @@ namespace CabinTempArduino
                 rbtTemperature.Enabled = false;
                 txtFetchLast.ReadOnly = true;
                 btnFetch.Text = "Start";
+                btnFetch.Enabled = true;
             }
             else
             {
@@ -187,28 +221,23 @@ namespace CabinTempArduino
                 string[] settings = myDatabase.GetSettings(0);
                 int interval = Convert.ToInt32(settings[5]);
 
-
                 if (interval == 15)
                 {
                     if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15 && logged != true)
                     {
-                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
-                        logged = true;
+                        temperatureLogging();
                     }
                     else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30 && logged != true)
                     {
-                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
-                        logged = true;
+                        temperatureLogging();
                     }
                     else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 45 && logged != true)
                     {
-                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
-                        logged = true;
+                        temperatureLogging();
                     }
                     else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
                     {
-                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
-                        logged = true;
+                        temperatureLogging();
                     }
                     else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 16) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) ||
                         (Convert.ToInt32(DateTime.Now.ToString("mm")) == 46) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 01))
@@ -219,13 +248,11 @@ namespace CabinTempArduino
                 {
                     if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
                     {
-                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
-                        logged = true;
+                        temperatureLogging();
                     }
                     else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30 && logged != true)
                     {
-                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
-                        logged = true;
+                        temperatureLogging();
                     }
                     else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 01) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31))
                         logged = false;
@@ -234,8 +261,7 @@ namespace CabinTempArduino
                 {
                     if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
                     {
-                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
-                        logged = true;
+                        temperatureLogging();
                     }
                     else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 01)
                         logged = false;
@@ -253,7 +279,7 @@ namespace CabinTempArduino
 
                     if (nextLog == "")
                     {
-                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
+                        temperatureLogging();
 
                         nextHours = Convert.ToString(hoursNow + hours);
                         nextMinutes = Convert.ToString(minutesNow + minutes);
@@ -276,7 +302,7 @@ namespace CabinTempArduino
 
                     else if (DateTime.Now.ToString("HH:mm") == nextLog && logged != true)
                     {
-                        myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
+                        temperatureLogging();
 
                         nextHours = Convert.ToString(hoursNow + hours);
                         nextMinutes = Convert.ToString(minutesNow + minutes);
@@ -304,6 +330,19 @@ namespace CabinTempArduino
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
+
+        #region Methods
+        private void temperatureLogging()
+        {
+            string temp = Convert.ToString(rand.Next(0, 101));
+            myDatabase.LogTemperature(temp);
+            logged = true;
+            if(continous)
+            {
+                //Legg inn getLast
             }
         }
         #endregion
