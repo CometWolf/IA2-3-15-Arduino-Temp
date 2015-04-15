@@ -1,11 +1,10 @@
 #include "TempSensor.h"
 
-TempSensor::TempSensor(int pin, int maxValue, int minValue)
+TempSensor::TempSensor(int pin)
 {
-  this->pin = pin;
-  resolution = 1024/(maxValue - minValue);
+	this->pin = pin;
 };
 float TempSensor::getTemp()
-{ 
-    return (analogRead(pin)/resolution);
+{
+	return ((((analogRead(pin)*5.0) / 1024) - 0.5) * 100);
 };
