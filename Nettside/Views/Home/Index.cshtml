@@ -1,0 +1,65 @@
+﻿<head>
+     <Title>
+        ""
+     </Title>
+
+    <script type="text/javascript">
+        //Sets the temperature element to the lastest temperature reading from the database
+        function updateTemp() {
+            $.ajax({
+                type: 'POST',
+                url: "/Home/GetTemp",
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    document.getElementById("temp").innerHTML = "<strong>" + data.result + "°C</strong>";
+                },
+                error: function (data, sucess, error) {
+                    document.getElementById("temp").innerHTML = error;
+                }
+            });
+            return false;
+        }
+        setInterval(updateTemp, 60000); //recheck temp every minute
+        updateTemp();
+    </script>
+
+    <style type="text/css">
+        .container form {
+            display: table;
+            text-align: center;
+        }
+
+        .container label {
+            display: table-row;
+        }
+    </style>
+</head>
+
+
+<div class="container">
+    <center>
+        Temperaturen er nå <p id="temp"><strong>@(ViewBag.temperature + "°C")</strong></p>
+        <b> <font color="red">@ViewBag.alarm</font> </b>
+
+        <h3>Varslings grenser</h3>
+        <form id="alarm" action="@Url.Action("UpdateAlarmLimits", "Home")" method="post">
+            <label>Øvre grense: </label>
+            <input type="number" id="txtAlarmUpperLimit" value="@ViewBag.highAlarm" name="upperLimit" step="0.1" /> <br />
+            <label>Nedre grense: </label>
+            <input type="number" id="txtAlarmLowerLimit" value="@ViewBag.lowAlarm" name="lowerLimit" step="0.1" /> <br />
+            <label>Oppdaterings interval: </label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="number" id="txtUpdateInterval" value="@ViewBag.updateInterval" name="updateInterval" step="1" min="1" />min. <br />
+            <input type="submit" id="btnFurnaceLimit" value="Oppdater grenser" step="0.1" /> <br />
+        </form>
+
+        <h3>Ovn styring</h3>
+        <form id="frmFurnace" method="post" action="@Url.Action("UpdateFurnaceLimits", "Home")">
+            <label>Øvre grense: </label>
+            <input type="number" id="txtFurnaceUpperLimit" name="upperLimit" value="@ViewBag.furnaceHigh" step="0.1" /> <br />
+            <label>Nedre grense: </label>
+            <input type="number" id="txtFurnaceLowerLimit" name="lowerLimit" value="@ViewBag.furnaceLow" step="0.1" /> <br />
+            <input type="submit" value="Oppdater grenser" />
+        </form>
+        <br />
+    </center>
+</div>
