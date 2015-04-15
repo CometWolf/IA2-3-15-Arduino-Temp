@@ -247,6 +247,7 @@ namespace CabinTempArduino
                 myAccessConnection.Close();
             }
         }
+        #region get
         /// <summary>
         /// Gets all alarms in 'Feilmeldingslogg'
         /// </summary>
@@ -259,18 +260,7 @@ namespace CabinTempArduino
             try
             {
                 OpenDb(alarmTable);
-                int rows = myDatatable.Rows.Count;
-                int columns = myDatatable.Columns.Count;
-                alarms = new string[rows, columns];
-
-                for (int i = 0; i < rows; i++)
-                {
-                    for (int j = 0; j < columns; j++)
-                    {
-                        alarms[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();                        
-                    }
-                }
-                CloseDb(alarmTable);
+                alarms = Itterate();
             }
             catch (Exception ex)
             {
@@ -285,25 +275,163 @@ namespace CabinTempArduino
             }
             return alarms;
         }
+        /// <summary>
+        /// Gets last alarms
+        /// </summary>
+        /// <param name="entities">Entities to get</param>
+        /// <returns></returns>
         public string[,] GetAlarmLast(int entities)
         {
             string[,] alarms;
             try
             {
-                string connectionstring = String.Format(("SELECT TOP {1} * FROM {0} ORDER BY {2} DESC, {3} DESC"), alarmTable, entities, "Dato", "Tid");
+                string connectionstring = String.Format(("SELECT TOP {1} * FROM (SELECT * FROM {0} ORDER BY {2} DESC, {3} DESC)"), alarmTable, entities, "Dato", "Tid");
                 OpenDbMan(connectionstring);
-                int rows = myDatatable.Rows.Count;
-                int columns = myDatatable.Columns.Count;
-                alarms = new string[rows, columns];
+                alarms = Itterate();
+            }
+            catch (Exception ex)
+            {
+                alarms = new string[0, 0];
+                alarms[0, 0] = "N/A";
 
-                for (int i = 0; i < rows; i++)
-                {
-                    for (int j = 0; j < columns; j++)
-                    {
-                        alarms[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
-                    }
-                }
-                CloseDb(alarmTable);
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return alarms;
+        }
+        /// <summary>
+        /// Gets alarms from last minute(s)
+        /// </summary>
+        /// <param name="minutes">Minutes to get</param>
+        /// <returns></returns>
+        public string[,] GetAlarmMinutes(int minutes)
+        {
+            string[,] alarms;
+            DateTime date = DateTime.Now.AddMinutes((Convert.ToDouble(minutes)) * (-1));
+
+            try
+            {
+                string connectionstring = String.Format(("SELECT * FROM {0} WHERE {2}='{1}' AND {4}='{3}'"), alarmTable, date.ToString("dd.MM.yyyy"), "Dato", date.ToString("HH:mm:ss"), "Tid");
+                OpenDbMan(connectionstring);
+                alarms = Itterate();
+            }
+            catch (Exception ex)
+            {
+                alarms = new string[0, 0];
+                alarms[0, 0] = "N/A";
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return alarms;
+        }
+       
+        /// <summary>
+        /// Gets alarms from last hour(s)
+        /// </summary>
+        /// <param name="hours">Hours to get</param>
+        /// <returns></returns>
+        public string[,] GetAlarmHours(int hours)
+        {
+            string[,] alarms;
+            DateTime date = DateTime.Now.AddHours((Convert.ToDouble(hours)) * (-1));
+
+            try
+            {
+                string connectionstring = String.Format(("SELECT * FROM {0} WHERE {2}='{1}' AND {4}='{3}'"), alarmTable, date.ToString("dd.MM.yyyy"), "Dato", date.ToString("HH:mm:ss"), "Tid");
+                OpenDbMan(connectionstring);
+                alarms = Itterate();
+            }
+            catch (Exception ex)
+            {
+                alarms = new string[0, 0];
+                alarms[0, 0] = "N/A";
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return alarms;
+        }
+        /// <summary>
+        /// Gets alarms from last day(s)
+        /// </summary>
+        /// <param name="days">Days to get</param>
+        /// <returns></returns>
+        public string[,] GetAlarmDays(int days)
+        {
+            string[,] alarms;
+            DateTime date = DateTime.Now.AddDays((Convert.ToDouble(days)) * (-1));
+
+            try
+            {
+                string connectionstring = String.Format(("SELECT * FROM {0} WHERE {2}>'{1}'"), alarmTable, date.ToString("dd.MM.yyyy"), "Dato");
+                OpenDbMan(connectionstring);
+                alarms = Itterate();
+            }
+            catch (Exception ex)
+            {
+                alarms = new string[0, 0];
+                alarms[0, 0] = "N/A";
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return alarms;
+        }
+        /// <summary>
+        /// Gets alarms from last week(s)
+        /// </summary>
+        /// <param name="weeks">Weeks to get</param>
+        /// <returns></returns>
+        public string[,] GetAlarmWeeks(int weeks)
+        {
+            string[,] alarms;
+            DateTime date = DateTime.Now.AddDays((Convert.ToDouble(weeks)) * (-7));
+            try
+            {
+                string connectionstring = String.Format(("SELECT * FROM {0} WHERE {2}>'{1}'"), alarmTable, date.ToString("dd.MM.yyyy"), "Dato");
+                OpenDbMan(connectionstring);
+                alarms = Itterate();
+            }
+            catch (Exception ex)
+            {
+                alarms = new string[0, 0];
+                alarms[0, 0] = "N/A";
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return alarms;
+        }
+        /// <summary>
+        /// Gets alarms from last month(s)
+        /// </summary>
+        /// <param name="months">Months to get</param>
+        /// <returns></returns>
+        public string[,] GetAlarmMonths(int months)
+        {
+            string[,] alarms;
+            DateTime date = DateTime.Now.AddMonths(months * (-1));
+            try
+            {
+                string connectionstring = String.Format(("SELECT * FROM {0} WHERE {2}>'{1}'"), alarmTable, date.ToString("dd.MM.yyyy"), "Dato");
+                OpenDbMan(connectionstring);
+                alarms = Itterate();
             }
             catch (Exception ex)
             {
@@ -331,17 +459,7 @@ namespace CabinTempArduino
             try
             {
                 OpenDb(alarmTable, values);
-                int rows = myDatatable.Rows.Count;
-                int columns = myDatatable.Columns.Count;
-                alarms = new string[rows, columns];
-
-                for (int i = 0; i < rows; i++)
-                {
-                    for (int j = 0; j < columns; j++)
-                    {
-                        alarms[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
-                    }
-                }
+                alarms = Itterate();
                 CloseDb(alarmTable);
             }
             catch (Exception ex)
@@ -357,7 +475,9 @@ namespace CabinTempArduino
             }
             return alarms;
         }
-#endregion
+        
+        #endregion
+        #endregion
         #region Temperature
         /// <summary>
         /// Adds a row to TemperaturLogg
@@ -402,6 +522,113 @@ namespace CabinTempArduino
             try
             {
                 OpenDb(tempTable);
+                int rows = myDatatable.Rows.Count;
+                int columns = myDatatable.Columns.Count;
+                temperature = new string[rows, columns];
+
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        temperature[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                temperature = new string[0, 0];
+                temperature[0, 0] = "N/A";
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return temperature;
+        }
+        /// <summary>
+        /// Gets temperatures from last day(s)
+        /// </summary>
+        /// <param name="days">Days to get</param>
+        /// <returns>Temperature table values as string</returns>
+        public string[,] GetTemperatureDays(int days)
+        {
+            string[,] temperature;
+            DateTime date = DateTime.Now.AddDays(Convert.ToDouble(days * (-1)));
+            try
+            {
+                string connectionstring = String.Format(("SELECT * FROM {0} WHERE {2}>'{1}'"), tempTable, date.ToString("dd.MM.yyyy"), "Dato");
+                OpenDbMan(connectionstring);
+                temperature = Itterate();
+
+            }
+            catch (Exception ex)
+            {
+                temperature = new string[0, 0];
+                temperature[0, 0] = "N/A";
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return temperature;
+        }
+        /// <summary>
+        /// Gets temperatures from last week(s)
+        /// </summary>
+        /// <param name="weeks">Weeks to get</param>
+        /// <returns>Temperature table values as string</returns>
+        public string[,] GetTemperatureWeeks(int weeks)
+        {
+            string[,] temperature;
+            DateTime date = DateTime.Now.AddDays(Convert.ToDouble(weeks * (-7)));
+            try
+            {
+                string connectionstring = String.Format(("SELECT * FROM {0} WHERE {2}>'{1}'"), tempTable, date.ToString("dd.MM.yyyy"), "Dato");
+                OpenDbMan(connectionstring);
+                int rows = myDatatable.Rows.Count;
+                int columns = myDatatable.Columns.Count;
+                temperature = new string[rows, columns];
+
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        temperature[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                temperature = new string[0, 0];
+                temperature[0, 0] = "N/A";
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return temperature;
+        }
+        /// <summary>
+        /// Gets temperatures from last month(s)
+        /// </summary>
+        /// <param name="months">Months to get</param>
+        /// <returns>Temperature table values as string</returns>
+        public string[,] GetTemperatureMonths(int months)
+        {
+            string[,] temperature;
+            DateTime date = DateTime.Now.AddMonths(months * (-1));
+            try
+            {
+                string connectionstring = String.Format(("SELECT * FROM {0} WHERE {2}>'{1}'"), tempTable, date.ToString("dd.MM.yyyy"), "Dato");
+                OpenDbMan(connectionstring);
                 int rows = myDatatable.Rows.Count;
                 int columns = myDatatable.Columns.Count;
                 temperature = new string[rows, columns];
@@ -531,6 +758,21 @@ namespace CabinTempArduino
             return settings;
         }
         #endregion
+        private string[,] Itterate()
+        {
+            string[,] value;
+            int rows = myDatatable.Rows.Count;
+            int columns = myDatatable.Columns.Count;
+            value = new string[rows, columns];
 
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    value[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
+                }
+            }
+            return value;
+        }
     }
 }
