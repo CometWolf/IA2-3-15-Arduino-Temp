@@ -705,7 +705,6 @@ namespace CabinTempArduino
 
             try
             {
-
                 OpenDb(settingsTable);
 
                 myDatatable.AcceptChanges();

@@ -119,7 +119,7 @@ namespace CabinTempArduino
                     {
                         if (!int.TryParse(txtCustomInterval.Text, out value) || txtCustomInterval.Text == "0")
                         {
-                            MessageBox.Show("Do not use decimal numbers or zero.");
+                            MessageBox.Show("Do not use decimal numbers, text or zero.");
                         }
                         else
                         {
@@ -131,7 +131,7 @@ namespace CabinTempArduino
                                 {
                                     settings.UpdateSetting(Convert.ToString(value * 60), 5, 0);
                                     settings.UpdateSetting("true", 7, 0);
-                                    MessageBox.Show("Interval successfully set changes.");
+                                    MessageBox.Show("Interval successfully changed.");
                                 }
                             }
                             else if (rbtMinutes.Checked)
@@ -140,9 +140,9 @@ namespace CabinTempArduino
                                     MessageBox.Show("Do not go above 24 hours.");
                                 else
                                 {
-                                    settings.UpdateSetting(txtCustomInterval.Text, 5, 0);
+                                    settings.UpdateSetting(Convert.ToString(value), 5, 0);
                                     settings.UpdateSetting("true", 7, 0);
-                                    MessageBox.Show("Interval successfully set changes.");
+                                    MessageBox.Show("Interval successfully changed.");
                                 }
                             }
                         }

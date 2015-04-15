@@ -30,6 +30,7 @@ namespace CabinTempArduino
         string nextHours = "";
         int oldInterval;
         bool continous = false;
+        string[] settings;
         #endregion
 
         #endregion
@@ -52,6 +53,8 @@ namespace CabinTempArduino
                 rbtError.Enabled = false;
                 rbtTemperature.Enabled = false;
                 txtFetchLast.ReadOnly = true;
+                settings = myDatabase.GetSettings(0);
+                oldInterval = Convert.ToInt32(settings[5]);
             }
             //END GUI
 
@@ -149,7 +152,8 @@ namespace CabinTempArduino
             #endregion
 
             if ((SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Charging") ||
-                (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "High, Charging"))
+                (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "High, Charging")||
+                (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Low, Charging"))
                 charging = true;
             else if (prbBatteryStatus.Value<=95 && charging)
             {
@@ -163,7 +167,7 @@ namespace CabinTempArduino
             //50% charge
             if (prbBatteryStatus.Value > 50)
                 fiftyCharge = true;
-            else if (prbBatteryStatus.Value <= 50 && fiftyCharge)
+            else if (prbBatteryStatus.Value <= 50 && fiftyCharge && !charging)
             {
                 for (int i = 0; i <= emails.GetUpperBound(0); i++)
                 {
@@ -209,16 +213,19 @@ namespace CabinTempArduino
             }
         }
         #region TemperatureLogging
+
+
+
         private void tmrLogTemperature_Tick(object sender, EventArgs e)
         {
             try
             {
-                string[] settings = myDatabase.GetSettings(0);
+                settings = myDatabase.GetSettings(0);
                 int interval = Convert.ToInt32(settings[5]);
 
                 if (interval == 15 && settings[7] == "false")
                 {
-                    if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 08 && logged != true)
+                    if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
                     {
                         temperatureLogging();
                     }
@@ -234,7 +241,7 @@ namespace CabinTempArduino
                     {
                         temperatureLogging();
                     }
-                    else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 09) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) ||
+                    else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 01) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) ||
                         (Convert.ToInt32(DateTime.Now.ToString("mm")) == 46) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 01))
                         logged = false;
 
@@ -261,7 +268,7 @@ namespace CabinTempArduino
                     else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 01)
                         logged = false;
                 }
-                else
+                else if (settings[7] == "true")
                 {
                     int hours = interval / 60;
                     int minutes = interval % 60;
