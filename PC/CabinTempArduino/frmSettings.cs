@@ -97,20 +97,20 @@ namespace CabinTempArduino
                 if (cboPreset.Text == "60 minutes")
                 {
                     settings.UpdateSetting("60", 5, 0);
+                    settings.UpdateSetting("false", 7, 0);
                     MessageBox.Show("Interval successfully changes.");
-                    main.Custom = false;
                 }
                 else if (cboPreset.Text == "30 minutes")
                 {
                     settings.UpdateSetting("30", 5, 0);
+                    settings.UpdateSetting("false", 7, 0);
                     MessageBox.Show("Interval successfully changes.");
-                    main.Custom = false;
                 }
                 else if (cboPreset.Text == "15 minutes")
                 {
                     settings.UpdateSetting("15", 5, 0);
+                    settings.UpdateSetting("false", 7, 0);
                     MessageBox.Show("Interval successfully changes.");
-                    main.Custom = false;
                 }
                 else if (cboPreset.Text == "Custom")
                 {
@@ -130,6 +130,7 @@ namespace CabinTempArduino
                                 else
                                 {
                                     settings.UpdateSetting(Convert.ToString(value * 60), 5, 0);
+                                    settings.UpdateSetting("true", 7, 0);
                                     MessageBox.Show("Interval successfully set changes.");
                                 }
                             }
@@ -140,6 +141,7 @@ namespace CabinTempArduino
                                 else
                                 {
                                     settings.UpdateSetting(txtCustomInterval.Text, 5, 0);
+                                    settings.UpdateSetting("true", 7, 0);
                                     MessageBox.Show("Interval successfully set changes.");
                                 }
                             }

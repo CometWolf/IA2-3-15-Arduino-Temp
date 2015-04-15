@@ -30,7 +30,6 @@ namespace CabinTempArduino
         string nextHours = "";
         int oldInterval;
         bool continous = false;
-        bool custom;
         #endregion
 
         #endregion
@@ -63,10 +62,6 @@ namespace CabinTempArduino
         {
             get { return spComPort.PortName; }
             set { spComPort.PortName = value; }
-        }
-        public bool Custom
-        {
-            set { custom = value; }
         }
         #endregion
         #region Objects
@@ -221,9 +216,9 @@ namespace CabinTempArduino
                 string[] settings = myDatabase.GetSettings(0);
                 int interval = Convert.ToInt32(settings[5]);
 
-                if (interval == 15)
+                if (interval == 15 && settings[7] == "false")
                 {
-                    if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15 && logged != true)
+                    if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 08 && logged != true)
                     {
                         temperatureLogging();
                     }
@@ -239,12 +234,12 @@ namespace CabinTempArduino
                     {
                         temperatureLogging();
                     }
-                    else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 16) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) ||
+                    else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 09) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) ||
                         (Convert.ToInt32(DateTime.Now.ToString("mm")) == 46) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 01))
                         logged = false;
 
                 }
-                else if (interval == 30)
+                else if (interval == 30 && settings[7] == "false")
                 {
                     if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
                     {
@@ -257,7 +252,7 @@ namespace CabinTempArduino
                     else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 01) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31))
                         logged = false;
                 }
-                else if (interval == 60)
+                else if (interval == 60 && settings[7] == "false")
                 {
                     if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
                     {
