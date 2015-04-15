@@ -77,6 +77,7 @@
             this.Controls.Add(this.txtValue);
             this.Controls.Add(this.cboLimitType);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
             this.Name = "frmLimits";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Limits";

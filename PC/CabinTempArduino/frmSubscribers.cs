@@ -72,6 +72,7 @@ namespace CabinTempArduino
         {
             bool username = false;
             bool lengthPassword = false;
+            bool uniqueEmail = false;
             bool email = matchingValues(txtEmail.Text, txtConfirmEmail.Text, "emails");
             bool password = matchingValues(txtPassword.Text, txtConfirmPassword.Text, "passwords");
             if (password)
@@ -83,7 +84,7 @@ namespace CabinTempArduino
                 if (cboSelectSubscriber.Text == "New")
                 {
                     username = unique(txtUsername.Text,3,"username");
-
+                    uniqueEmail = unique(txtEmail.Text, 5, "email");
 
                     if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
                         && email && username && (txtEmail.Text != "") && (txtConfirmEmail.Text != "") && (txtPassword.Text != "") && (txtConfirmPassword.Text != "")
@@ -113,6 +114,8 @@ namespace CabinTempArduino
 
                     if (txtUsername.Text != subscribers[index, 3])
                         username = unique(txtUsername.Text,3,"username");
+                    if(txtEmail.Text != subscribers[index,5])
+                        uniqueEmail = unique(txtEmail.Text, 5, "email");
 
                     if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
                     && email && (txtEmail.Text != "") && (txtConfirmEmail.Text != "") && (txtPassword.Text != "") && (txtConfirmPassword.Text != "")
