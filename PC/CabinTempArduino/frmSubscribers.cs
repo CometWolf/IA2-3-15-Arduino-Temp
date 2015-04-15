@@ -70,90 +70,103 @@ namespace CabinTempArduino
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            if (cboSelectSubscriber.Text == "New")
+            bool username = false;
+            bool lengthPassword = false;
+            bool email = matchingValues(txtEmail.Text, txtConfirmEmail.Text, "emails");
+            bool password = matchingValues(txtPassword.Text, txtConfirmPassword.Text, "passwords");
+            if (password)
             {
-                bool lengthPassword = false;
-                bool email = matchingValues(txtEmail.Text,txtConfirmEmail.Text,"emails");
-                bool password = matchingValues(txtPassword.Text, txtConfirmPassword.Text, "passwords");
-                if (password)
-                {
-                    lengthPassword = passwordLength(txtPassword.Text, txtConfirmPassword.Text);
-                }
-
-                if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
-                    && email && (txtEmail.Text != "") && (txtConfirmEmail.Text != "") && (txtPassword.Text != "") && (txtConfirmPassword.Text != "")
-                    && lengthPassword)
-                {
-                    myDatabase.AddSubscriber(txtSurName.Text, txtFirstName.Text, txtUsername.Text, txtPassword.Text, txtEmail.Text, txtPhone.Text);
-                    ClearAllTextBoxes();
-                    MessageBox.Show("Subscriber successfully added.");
-
-                    subscribers = myDatabase.GetSubscribers();
-                    cboSelectSubscriber.Items.Clear();
-                    cboSelectSubscriber.Items.Add("New");
-                    for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
-                    {
-                        cboSelectSubscriber.Items.Add(subscribers[i, 3]);
-                    }
-                    cboSelectSubscriber.Text = "New";
-                }
-                else if ((txtFirstName.Text == "") || (txtSurName.Text == "") || (txtPhone.Text == "") || (txtUsername.Text == "") || 
-                    (txtEmail.Text == "") || (txtConfirmEmail.Text == "") || (txtPassword.Text == "") || (txtConfirmPassword.Text == ""))
-                    MessageBox.Show("Fill all textboxes.");
+                lengthPassword = passwordLength(txtPassword.Text, txtConfirmPassword.Text);
             }
-            else if (cboSelectSubscriber.Text == myDatabase.SearchUsername(cboSelectSubscriber.Text))
+            try
             {
-                int index = myDatabase.getUserID(cboSelectSubscriber.Text);
-
-                bool lengthPassword = false;
-                bool email = matchingValues(txtEmail.Text, txtConfirmEmail.Text, "emails");
-                bool password = matchingValues(txtPassword.Text, txtConfirmPassword.Text, "passwords");
-                if (password)
+                if (cboSelectSubscriber.Text == "New")
                 {
-                    lengthPassword = passwordLength(txtPassword.Text, txtConfirmPassword.Text);
-                }
+                    username = unique(txtUsername.Text,3,"username");
 
-                if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
-                && email && (txtEmail.Text != "") && (txtConfirmEmail.Text != "") && (txtPassword.Text != "") && (txtConfirmPassword.Text != "")
-                && lengthPassword)
-                {
-                    myDatabase.UpdateSubscriber(index,txtSurName.Text, txtFirstName.Text, txtUsername.Text, txtPassword.Text, txtEmail.Text, txtPhone.Text);
-                    MessageBox.Show("Subscriber successfully changed.");
 
-                    subscribers = myDatabase.GetSubscribers();
-                    cboSelectSubscriber.Items.Clear();
-                    cboSelectSubscriber.Items.Add("New");
-                    for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+                    if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
+                        && email && username && (txtEmail.Text != "") && (txtConfirmEmail.Text != "") && (txtPassword.Text != "") && (txtConfirmPassword.Text != "")
+                        && lengthPassword)
                     {
-                        cboSelectSubscriber.Items.Add(subscribers[i, 3]);
+                        myDatabase.AddSubscriber(txtSurName.Text, txtFirstName.Text, txtUsername.Text, txtPassword.Text, txtEmail.Text, txtPhone.Text);
+                        ClearAllTextBoxes();
+                        MessageBox.Show("Subscriber successfully added.");
+
+                        subscribers = myDatabase.GetSubscribers();
+                        cboSelectSubscriber.Items.Clear();
+                        cboSelectSubscriber.Items.Add("New");
+                        for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+                        {
+                            cboSelectSubscriber.Items.Add(subscribers[i, 3]);
+                        }
+                        cboSelectSubscriber.Text = "New";
                     }
+                    else if ((txtFirstName.Text == "") || (txtSurName.Text == "") || (txtPhone.Text == "") || (txtUsername.Text == "") ||
+                        (txtEmail.Text == "") || (txtConfirmEmail.Text == "") || (txtPassword.Text == "") || (txtConfirmPassword.Text == ""))
+                        MessageBox.Show("Fill all textboxes.");
                 }
-                else if ((txtFirstName.Text == "") || (txtSurName.Text == "") || (txtPhone.Text == "") || (txtUsername.Text == "") || 
-                    (txtEmail.Text == "") || (txtConfirmEmail.Text == "") || (txtPassword.Text == "") || (txtConfirmPassword.Text == ""))
-                    MessageBox.Show("Fill all textboxes.");
+                else if (cboSelectSubscriber.Text == myDatabase.SearchUsername(cboSelectSubscriber.Text))
+                {
+                    int userID = myDatabase.getUserID(cboSelectSubscriber.Text);
+                    int index = myDatabase.getIndex(cboSelectSubscriber.Text);
+
+                    if (txtUsername.Text != subscribers[index, 3])
+                        username = unique(txtUsername.Text,3,"username");
+
+                    if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
+                    && email && (txtEmail.Text != "") && (txtConfirmEmail.Text != "") && (txtPassword.Text != "") && (txtConfirmPassword.Text != "")
+                    && lengthPassword && (txtUsername.Text == subscribers[index, 3] || username))
+                    {
+                        myDatabase.UpdateSubscriber(userID, txtSurName.Text, txtFirstName.Text, txtUsername.Text, txtPassword.Text, txtEmail.Text, txtPhone.Text);
+                        MessageBox.Show("Subscriber successfully changed.");
+
+                        subscribers = myDatabase.GetSubscribers();
+                        cboSelectSubscriber.Items.Clear();
+                        cboSelectSubscriber.Items.Add("New");
+                        for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+                        {
+                            cboSelectSubscriber.Items.Add(subscribers[i, 3]);
+                        }
+                        cboSelectSubscriber.Text = txtUsername.Text;
+                    }
+                    else if ((txtFirstName.Text == "") || (txtSurName.Text == "") || (txtPhone.Text == "") || (txtUsername.Text == "") ||
+                        (txtEmail.Text == "") || (txtConfirmEmail.Text == "") || (txtPassword.Text == "") || (txtConfirmPassword.Text == ""))
+                        MessageBox.Show("Fill all textboxes.");
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
-
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if(cboSelectSubscriber.Text == myDatabase.SearchUsername(cboSelectSubscriber.Text))
+            try
             {
-                int index = myDatabase.getIndex(cboSelectSubscriber.Text);
-                myDatabase.DeleteSubscriber(index);
-            }
+                if (cboSelectSubscriber.Text == myDatabase.SearchUsername(cboSelectSubscriber.Text))
+                {
+                    int index = myDatabase.getIndex(cboSelectSubscriber.Text);
+                    myDatabase.DeleteSubscriber(index);
+                }
 
-            subscribers = myDatabase.GetSubscribers();
-            cboSelectSubscriber.Items.Clear();
-            cboSelectSubscriber.Items.Add("New");
-            for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+                subscribers = myDatabase.GetSubscribers();
+                cboSelectSubscriber.Items.Clear();
+                cboSelectSubscriber.Items.Add("New");
+                for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+                {
+                    cboSelectSubscriber.Items.Add(subscribers[i, 3]);
+                }
+
+
+                ClearAllTextBoxes();
+                cboSelectSubscriber.Text = "New";
+                MessageBox.Show("User successfully deleted!");
+            }
+            catch(Exception ex)
             {
-                cboSelectSubscriber.Items.Add(subscribers[i, 3]);
+                MessageBox.Show(ex.Message);
             }
-            
-
-            ClearAllTextBoxes();
-            cboSelectSubscriber.Text = "New";
-            MessageBox.Show("User successfully deleted!");
         }
         #region Methods
         private void TextBoxesReadOnlyTrue()
@@ -212,6 +225,27 @@ namespace CabinTempArduino
                 MessageBox.Show(ex.Message);
             }
             return length;
+        }
+        private bool unique(string value, int col, string valueType)
+        {
+            bool isUnique = false;
+            try
+            {
+                for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+                {
+                    if (value != subscribers[i, col])
+                        isUnique = true;
+                    else
+                        isUnique = false;
+                }
+                if (!isUnique)
+                    throw new Exception("The "+ valueType +" is already in use");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return isUnique;
         }
         #endregion
     }

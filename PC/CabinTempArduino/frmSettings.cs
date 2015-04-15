@@ -26,7 +26,6 @@ namespace CabinTempArduino
             //END GUI
 
             //Valid ports
-
             string[] serialPortNames = SerialPort.GetPortNames();
             foreach (string port in serialPortNames)
             {
