@@ -227,7 +227,7 @@ namespace CabinTempArduino
 
                 DataRow row = myDatatable.NewRow();
 
-                row["Dato"] = timestamp.ToString("dd:MM:yyyy");
+                row["Dato"] = timestamp.ToString("dd.MM.yyyy");
                 row["Tid"] = timestamp.ToString("HH:mm:ss");
                 row["Feilmelding"] = message;
                 row["AlarmID"] = alarmID;
@@ -314,13 +314,16 @@ namespace CabinTempArduino
 
             try
             {
-                string connectionstring = String.Format(("SELECT * FROM {0} WHERE {2}='{1}' AND {4}='{3}'"), alarmTable, date.ToString("dd.MM.yyyy"), "Dato", date.ToString("HH:mm:ss"), "Tid");
+                string connectionstring = String.Format((
+                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}') AND {4} >= Cdate ('{3}')"),
+                    alarmTable, date.ToString("dd.MM.yyyy"), "Dato", date.ToString("dd.MM.yyyy HH:mm:ss"), "Tid");
+
                 OpenDbMan(connectionstring);
                 alarms = Itterate();
             }
             catch (Exception ex)
             {
-                alarms = new string[0, 0];
+                alarms = new string[1, 1];
                 alarms[0, 0] = "N/A";
 
                 throw ex;
@@ -331,7 +334,6 @@ namespace CabinTempArduino
             }
             return alarms;
         }
-       
         /// <summary>
         /// Gets alarms from last hour(s)
         /// </summary>
@@ -344,7 +346,9 @@ namespace CabinTempArduino
 
             try
             {
-                string connectionstring = String.Format(("SELECT * FROM {0} WHERE {2}='{1}' AND {4}='{3}'"), alarmTable, date.ToString("dd.MM.yyyy"), "Dato", date.ToString("HH:mm:ss"), "Tid");
+                string connectionstring = String.Format((
+                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}') AND {4} >= Cdate ('{3}')"),
+                    alarmTable, date.ToString("dd.MM.yyyy"), "Dato", date.ToString("dd.MM.yyyy HH:mm:ss"), "Tid");
                 OpenDbMan(connectionstring);
                 alarms = Itterate();
             }
@@ -373,7 +377,10 @@ namespace CabinTempArduino
 
             try
             {
-                string connectionstring = String.Format(("SELECT * FROM {0} WHERE {2}>'{1}'"), alarmTable, date.ToString("dd.MM.yyyy"), "Dato");
+                string connectionstring = String.Format((
+                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"), 
+                    alarmTable, date.ToString("dd.MM.yyyy"), "Dato");
+                
                 OpenDbMan(connectionstring);
                 alarms = Itterate();
             }
@@ -401,7 +408,9 @@ namespace CabinTempArduino
             DateTime date = DateTime.Now.AddDays((Convert.ToDouble(weeks)) * (-7));
             try
             {
-                string connectionstring = String.Format(("SELECT * FROM {0} WHERE {2}>'{1}'"), alarmTable, date.ToString("dd.MM.yyyy"), "Dato");
+                string connectionstring = String.Format((
+                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"), 
+                    alarmTable, date.ToString("dd.MM.yyyy"), "Dato");
                 OpenDbMan(connectionstring);
                 alarms = Itterate();
             }
@@ -429,7 +438,10 @@ namespace CabinTempArduino
             DateTime date = DateTime.Now.AddMonths(months * (-1));
             try
             {
-                string connectionstring = String.Format(("SELECT * FROM {0} WHERE {2}>'{1}'"), alarmTable, date.ToString("dd.MM.yyyy"), "Dato");
+                string connectionstring = String.Format((
+                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"), 
+                    alarmTable, date.ToString("dd.MM.yyyy"), "Dato");
+
                 OpenDbMan(connectionstring);
                 alarms = Itterate();
             }
@@ -512,6 +524,7 @@ namespace CabinTempArduino
                 myAccessConnection.Close();
             }
         }
+        #region get
         /// <summary>
         /// Gets all registered temperatures in TemperaturLogg
         /// </summary>
@@ -522,18 +535,98 @@ namespace CabinTempArduino
             try
             {
                 OpenDb(tempTable);
-                int rows = myDatatable.Rows.Count;
-                int columns = myDatatable.Columns.Count;
-                temperature = new string[rows, columns];
+                temperature = Itterate();
 
-                for (int i = 0; i < rows; i++)
-                {
-                    for (int j = 0; j < columns; j++)
-                    {
-                        temperature[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
-                    }
-                }
+            }
+            catch (Exception ex)
+            {
+                temperature = new string[1, 1];
+                temperature[0, 0] = "N/A";
 
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return temperature;
+        }
+        /// <summary>
+        /// Gets last temperatures
+        /// </summary>
+        /// <param name="entities">Entities to get</param>
+        /// <returns></returns>
+        public string[,] GetTemperatureLast(int entities)
+        {
+            string[,] temperature;
+            try
+            {
+                string connectionstring = String.Format(("SELECT TOP {1} * FROM (SELECT * FROM {0} ORDER BY {2} DESC, {3} DESC)"), tempTable, entities, "Dato", "Tid");
+                OpenDbMan(connectionstring);
+                temperature = Itterate();
+            }
+            catch (Exception ex)
+            {
+                temperature = new string[0, 0];
+                temperature[0, 0] = "N/A";
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return temperature;
+        }
+        /// <summary>
+        /// Gets temperatures from last minute(s)
+        /// </summary>
+        /// <param name="minutes">Minutes to get</param>
+        /// <returns></returns>
+        public string[,] GetTemperatureMinutes(int minutes)
+        {
+            string[,] temperature;
+            DateTime date = DateTime.Now.AddMinutes((Convert.ToDouble(minutes)) * (-1));
+
+            try
+            {
+                string connectionstring = String.Format((
+                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}') AND {4} >= Cdate ('{3}')"),
+                    tempTable, date.ToString("dd.MM.yyyy"), "Dato", date.ToString("dd.MM.yyyy HH:mm:ss"), "Tid");
+
+                OpenDbMan(connectionstring);
+                temperature = Itterate();
+            }
+            catch (Exception ex)
+            {
+                temperature = new string[1, 1];
+                temperature[0, 0] = "N/A";
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+            return temperature;
+        }
+        /// <summary>
+        /// Gets temperatures from last hour(s)
+        /// </summary>
+        /// <param name="hours">Hours to get</param>
+        /// <returns></returns>
+        public string[,] GetTemperatureHours(int hours)
+        {
+            string[,] temperature;
+            DateTime date = DateTime.Now.AddHours((Convert.ToDouble(hours)) * (-1));
+
+            try
+            {
+                string connectionstring = String.Format((
+                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}') AND {4} >= Cdate ('{3}')"),
+                    tempTable, date.ToString("dd.MM.yyyy"), "Dato", date.ToString("dd.MM.yyyy HH:mm:ss"), "Tid");
+                OpenDbMan(connectionstring);
+                temperature = Itterate();
             }
             catch (Exception ex)
             {
@@ -552,17 +645,20 @@ namespace CabinTempArduino
         /// Gets temperatures from last day(s)
         /// </summary>
         /// <param name="days">Days to get</param>
-        /// <returns>Temperature table values as string</returns>
+        /// <returns></returns>
         public string[,] GetTemperatureDays(int days)
         {
             string[,] temperature;
-            DateTime date = DateTime.Now.AddDays(Convert.ToDouble(days * (-1)));
+            DateTime date = DateTime.Now.AddDays((Convert.ToDouble(days)) * (-1));
+
             try
             {
-                string connectionstring = String.Format(("SELECT * FROM {0} WHERE {2}>'{1}'"), tempTable, date.ToString("dd.MM.yyyy"), "Dato");
+                string connectionstring = String.Format((
+                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"),
+                    tempTable, date.ToString("dd.MM.yyyy"), "Dato");
+
                 OpenDbMan(connectionstring);
                 temperature = Itterate();
-
             }
             catch (Exception ex)
             {
@@ -581,27 +677,18 @@ namespace CabinTempArduino
         /// Gets temperatures from last week(s)
         /// </summary>
         /// <param name="weeks">Weeks to get</param>
-        /// <returns>Temperature table values as string</returns>
+        /// <returns></returns>
         public string[,] GetTemperatureWeeks(int weeks)
         {
             string[,] temperature;
-            DateTime date = DateTime.Now.AddDays(Convert.ToDouble(weeks * (-7)));
+            DateTime date = DateTime.Now.AddDays((Convert.ToDouble(weeks)) * (-7));
             try
             {
-                string connectionstring = String.Format(("SELECT * FROM {0} WHERE {2}>'{1}'"), tempTable, date.ToString("dd.MM.yyyy"), "Dato");
+                string connectionstring = String.Format((
+                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"),
+                    tempTable, date.ToString("dd.MM.yyyy"), "Dato");
                 OpenDbMan(connectionstring);
-                int rows = myDatatable.Rows.Count;
-                int columns = myDatatable.Columns.Count;
-                temperature = new string[rows, columns];
-
-                for (int i = 0; i < rows; i++)
-                {
-                    for (int j = 0; j < columns; j++)
-                    {
-                        temperature[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
-                    }
-                }
-
+                temperature = Itterate();
             }
             catch (Exception ex)
             {
@@ -620,27 +707,19 @@ namespace CabinTempArduino
         /// Gets temperatures from last month(s)
         /// </summary>
         /// <param name="months">Months to get</param>
-        /// <returns>Temperature table values as string</returns>
+        /// <returns></returns>
         public string[,] GetTemperatureMonths(int months)
         {
             string[,] temperature;
             DateTime date = DateTime.Now.AddMonths(months * (-1));
             try
             {
-                string connectionstring = String.Format(("SELECT * FROM {0} WHERE {2}>'{1}'"), tempTable, date.ToString("dd.MM.yyyy"), "Dato");
+                string connectionstring = String.Format((
+                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"),
+                    tempTable, date.ToString("dd.MM.yyyy"), "Dato");
+
                 OpenDbMan(connectionstring);
-                int rows = myDatatable.Rows.Count;
-                int columns = myDatatable.Columns.Count;
-                temperature = new string[rows, columns];
-
-                for (int i = 0; i < rows; i++)
-                {
-                    for (int j = 0; j < columns; j++)
-                    {
-                        temperature[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
-                    }
-                }
-
+                temperature = Itterate();
             }
             catch (Exception ex)
             {
@@ -692,7 +771,8 @@ namespace CabinTempArduino
             }
             return temperature;
         }
-#endregion
+        #endregion
+        #endregion
         #region Settings
         /// <summary>
         /// Updates a single cell in tablesettings
@@ -733,7 +813,6 @@ namespace CabinTempArduino
             try
             {
                 OpenDb(settingsTable);
-                int rows = myDatatable.Rows.Count;
                 int columns = myDatatable.Columns.Count;
                 settings = new string[columns];
 
