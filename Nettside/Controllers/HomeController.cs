@@ -9,7 +9,7 @@ using WebApplication6.Models;
 namespace WebApplication6.Controllers {
     public class HomeController : Controller {
         //path to database
-        private Database database = new Database("C:\\Users\\Jørund\\Documents\\GitHub\\IA2-3-15-Arduino-Temp\\Nettside\\ArduinoTemperaturmåling.accdb");
+        private Database database = new Database("C:\\Users\\Haakon\\Desktop\\IA2-3-15-Arduino-Temp\\Nettside\\ArduinoTemperaturmåling.accdb");
 
         [HttpPost]
         public JsonResult GetTemp() { //get latest logged temp, used to dynamically update temp display
@@ -18,17 +18,13 @@ namespace WebApplication6.Controllers {
         }
 
         [HttpPost]
-        public void UpdateAlarmLimits(string upperLimit, string lowerLimit, string updateInterval) { //Stores the given alarm settings in the database
-            database.UpdateSetting(upperLimit, 1, 0);
-            database.UpdateSetting(lowerLimit, 3, 0);
+        public void UpdateSettings(string aUpperLimit, string aLowerLimit, string updateInterval, string fUpperLimit, string fLowerLimit) {
+            //updates database settings
+            database.UpdateSetting(aUpperLimit, 1, 0);
+            database.UpdateSetting(aLowerLimit, 3, 0);
             database.UpdateSetting(updateInterval, 5, 0);
-            Response.Redirect("~/");
-        }
-
-        [HttpPost]
-        public void UpdateFurnaceLimits(string upperLimit, string lowerLimit) { //Stores the given furnace settings in the database
-            database.UpdateSetting(upperLimit, 2, 0);
-            database.UpdateSetting(lowerLimit, 4, 0);
+            database.UpdateSetting(fUpperLimit, 2, 0);
+            database.UpdateSetting(fLowerLimit, 4, 0);
             Response.Redirect("~/");
         }
         
