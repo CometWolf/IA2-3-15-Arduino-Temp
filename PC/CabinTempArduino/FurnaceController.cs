@@ -52,22 +52,26 @@ namespace CabinTempArduino
         #endregion
 
         #region Methods
-        public string GetTemp()
+        public string GetTemp(string tempName)
         {
             string temp;
-            Send("TEMP");
+            Send(tempName);
             Thread.Sleep(50);
             temp = Received();
             return temp;
         }
+        public void AlarmReceived(string alarmName)
+        {
+            Send(alarmName);
+        }
 
         public string CheckAlarm(string alarmName)
         {
-            string alarm;
+            string message;
             Send(alarmName);
             Thread.Sleep(50);
-            alarm = Received();
-            return alarm;
+            message = Received();
+            return message;
         }
         public void SetAlarmUpper(string alarmName)
         {
