@@ -61,3 +61,12 @@ C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.Web.Infrast
 C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\obj\Debug\WebApplication6.csprojResolveAssemblyReference.cache
 C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\obj\Debug\WebApplication6.dll
 C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\obj\Debug\WebApplication6.pdb
+C:\Users\Jørund\Documents\GitHub\IA2-3-15-Arduino-Temp\Nettside\obj\Debug\WebApplication6.csprojResolveAssemblyReference.cache
+C:\Users\Jørund\Documents\GitHub\IA2-3-15-Arduino-Temp\Nettside\obj\Debug\WebApplication6.dll
+C:\Users\Jørund\Documents\GitHub\IA2-3-15-Arduino-Temp\Nettside\bin\WebApplication6.dll.config
+C:\Users\Jørund\Documents\GitHub\IA2-3-15-Arduino-Temp\Nettside\bin\WebApplication6.dll
+C:\Users\Jørund\Documents\GitHub\IA2-3-15-Arduino-Temp\Nettside\bin\WebApplication6.pdb
+C:\Users\Jørund\Documents\GitHub\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Jørund\Documents\GitHub\IA2-3-15-Arduino-Temp\Nettside\bin\Newtonsoft.Json.dll
+C:\Users\Jørund\Documents\GitHub\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.Web.Infrastructure.xml
+C:\Users\Jørund\Documents\GitHub\IA2-3-15-Arduino-Temp\Nettside\obj\Debug\WebApplication6.pdb

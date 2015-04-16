@@ -17,7 +17,7 @@ namespace WebApplication6.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private Database database = new Database("C:\\Users\\Haakon\\Desktop\\IA2-3-15-Arduino-Temp\\Nettside\\ArduinoTemperaturmåling.accdb");
+        private Database database = new Database("C:\\Users\\Jørund\\Documents\\GitHub\\IA2-3-15-Arduino-Temp\\Nettside\\ArduinoTemperaturmåling.accdb");
         private ApplicationUserManager _userManager;
 
         public AccountController()

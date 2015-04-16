@@ -109,7 +109,7 @@ namespace WebApplication6.Models
                 string updateQuery = string.Format(("UPDATE {0} SET [Etternavn]='{1}', [Fornavn]='{2}', [Brukernavn]='{3}', [Passord]='{4}', [E-post]='{5}', [Telefon]='{6}' WHERE [BrukerId]={7}")
                                             ,subscriberTable,surName,firstName,userName,password,email,phone,id);
 
-                myAccessConnection.Close();
+                CloseDbMan(updateQuery);
 
             }
             catch (Exception ex)
@@ -178,7 +178,12 @@ namespace WebApplication6.Models
         exit:
         return subscribers[index,3];
         }
-        public int getUserID(string username)
+        /// <summary>
+        /// Gets user Id from username
+        /// </summary>
+        /// <param name="username">Name to get</param>
+        /// <returns>UserId</returns>
+        public int GetUserID(string username)
         {
             int index = 0;
             string[,] subscribers = GetSubscribers();
@@ -193,7 +198,12 @@ namespace WebApplication6.Models
         exit:
             return Convert.ToInt32(subscribers[index, 0]);
         }
-        public int getIndex(string username)
+        /// <summary>
+        /// Gets index from username
+        /// </summary>
+        /// <param name="username">Name to get</param>
+        /// <returns>Index</returns>
+        public int GetIndex(string username)
         {
             int index = 0;
             string[,] subscribers = GetSubscribers(); 
@@ -227,8 +237,7 @@ namespace WebApplication6.Models
 
                 DataRow row = myDatatable.NewRow();
 
-                row["Dato"] = timestamp.ToString("dd.MM.yyyy");
-                row["Tid"] = timestamp.ToString("HH:mm:ss");
+                row["Timestamp"] = timestamp.ToString("dd.MM.yyyy HH:mm:ss");
                 row["Feilmelding"] = message;
                 row["AlarmID"] = alarmID;
                 row["Temperatur"] = temp;
@@ -247,7 +256,90 @@ namespace WebApplication6.Models
                 myAccessConnection.Close();
             }
         }
-        #region get
+        #region Sign
+        /// <summary>
+        /// Signs all alarms
+        /// </summary>
+        public void SignAlarm()
+        {
+            try
+            {
+                OpenDb(subscriberTable);
+
+                string updateQuery = string.Format((
+                    "UPDATE {0} SET [Status]='{1}'"), 
+                    alarmTable, 1);
+
+                CloseDbMan(updateQuery);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+        }
+        /// <summary>
+        /// Signs alarm with the specified Id
+        /// </summary>
+        /// <param name="AlarmId">Id to sign</param>
+        public void SignAlarm(string AlarmId)
+        {
+            try
+            {
+                OpenDb(subscriberTable);
+
+                string updateQuery = string.Format((
+                    "UPDATE {0} SET [Status]='{1}' WHERE [AlarmId] = '{2}'"),
+                    alarmTable, 1, AlarmId);
+
+                CloseDbMan(updateQuery);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+        }
+        /// <summary>
+        /// Updates status of alarms with the specified Id
+        /// </summary>
+        /// <param name="AlarmId">Id to sign</param>
+        /// <param name="status">New status</param>
+        public void SignAlarm(string AlarmId, int status = 1)
+        {
+            try
+            {
+                OpenDb(subscriberTable);
+
+                string updateQuery = string.Format((
+                    "UPDATE {0} SET [Status]='{1}' WHERE [AlarmId] = '{2}'"),
+                    alarmTable, status, AlarmId);
+
+                CloseDbMan(updateQuery);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+        }
+        #endregion
+        #region Get
         /// <summary>
         /// Gets all alarms in 'Feilmeldingslogg'
         /// </summary>
@@ -280,12 +372,14 @@ namespace WebApplication6.Models
         /// </summary>
         /// <param name="entities">Entities to get</param>
         /// <returns></returns>
-        public string[,] GetAlarmLast(int entities)
+        public string[,] GetAlarmLast(int entities = 1)
         {
             string[,] alarms;
             try
             {
-                string connectionstring = String.Format(("SELECT TOP {1} * FROM (SELECT * FROM {0} ORDER BY {2} DESC, {3} DESC)"), alarmTable, entities, "Dato", "Tid");
+                string connectionstring = String.Format((
+                    "SELECT TOP {1} * FROM (SELECT * FROM {0} ORDER BY {2} DESC)"), 
+                    alarmTable, entities, "Timestamp");
                 OpenDbMan(connectionstring);
                 alarms = Itterate();
             }
@@ -307,7 +401,7 @@ namespace WebApplication6.Models
         /// </summary>
         /// <param name="minutes">Minutes to get</param>
         /// <returns></returns>
-        public string[,] GetAlarmMinutes(int minutes)
+        public string[,] GetAlarmMinutes(int minutes = 1)
         {
             string[,] alarms;
             DateTime date = DateTime.Now.AddMinutes((Convert.ToDouble(minutes)) * (-1));
@@ -315,8 +409,8 @@ namespace WebApplication6.Models
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}') AND {4} >= Cdate ('{3}')"),
-                    alarmTable, date.ToString("dd.MM.yyyy"), "Dato", date.ToString("dd.MM.yyyy HH:mm:ss"), "Tid");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    alarmTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
 
                 OpenDbMan(connectionstring);
                 alarms = Itterate();
@@ -339,7 +433,7 @@ namespace WebApplication6.Models
         /// </summary>
         /// <param name="hours">Hours to get</param>
         /// <returns></returns>
-        public string[,] GetAlarmHours(int hours)
+        public string[,] GetAlarmHours(int hours = 1)
         {
             string[,] alarms;
             DateTime date = DateTime.Now.AddHours((Convert.ToDouble(hours)) * (-1));
@@ -347,8 +441,8 @@ namespace WebApplication6.Models
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}') AND {4} >= Cdate ('{3}')"),
-                    alarmTable, date.ToString("dd.MM.yyyy"), "Dato", date.ToString("dd.MM.yyyy HH:mm:ss"), "Tid");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    alarmTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
                 OpenDbMan(connectionstring);
                 alarms = Itterate();
             }
@@ -370,7 +464,7 @@ namespace WebApplication6.Models
         /// </summary>
         /// <param name="days">Days to get</param>
         /// <returns></returns>
-        public string[,] GetAlarmDays(int days)
+        public string[,] GetAlarmDays(int days = 1)
         {
             string[,] alarms;
             DateTime date = DateTime.Now.AddDays((Convert.ToDouble(days)) * (-1));
@@ -378,8 +472,8 @@ namespace WebApplication6.Models
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"), 
-                    alarmTable, date.ToString("dd.MM.yyyy"), "Dato");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    alarmTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
                 
                 OpenDbMan(connectionstring);
                 alarms = Itterate();
@@ -402,15 +496,15 @@ namespace WebApplication6.Models
         /// </summary>
         /// <param name="weeks">Weeks to get</param>
         /// <returns></returns>
-        public string[,] GetAlarmWeeks(int weeks)
+        public string[,] GetAlarmWeeks(int weeks = 1)
         {
             string[,] alarms;
             DateTime date = DateTime.Now.AddDays((Convert.ToDouble(weeks)) * (-7));
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"), 
-                    alarmTable, date.ToString("dd.MM.yyyy"), "Dato");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    alarmTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
                 OpenDbMan(connectionstring);
                 alarms = Itterate();
             }
@@ -432,15 +526,15 @@ namespace WebApplication6.Models
         /// </summary>
         /// <param name="months">Months to get</param>
         /// <returns></returns>
-        public string[,] GetAlarmMonths(int months)
+        public string[,] GetAlarmMonths(int months = 1)
         {
             string[,] alarms;
             DateTime date = DateTime.Now.AddMonths(months * (-1));
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"), 
-                    alarmTable, date.ToString("dd.MM.yyyy"), "Dato");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    alarmTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
 
                 OpenDbMan(connectionstring);
                 alarms = Itterate();
@@ -506,8 +600,7 @@ namespace WebApplication6.Models
 
                 DataRow row = myDatatable.NewRow();
 
-                row["Dato"] = timestamp.ToString("dd.MM.yyyy");
-                row["Tid"] = timestamp.ToString("HH:mm:ss");
+                row["Timestamp"] = timestamp.ToString("dd.MM.yyyy HH:mm:ss");
                 row["Temperatur"] = temp;
 
                 myDatatable.AcceptChanges();
@@ -561,7 +654,9 @@ namespace WebApplication6.Models
             string[,] temperature;
             try
             {
-                string connectionstring = String.Format(("SELECT TOP {1} * FROM (SELECT * FROM {0} ORDER BY {2} DESC, {3} DESC)"), tempTable, entities, "Dato", "Tid");
+                string connectionstring = String.Format((
+                    "SELECT TOP {1} * FROM (SELECT * FROM {0} ORDER BY {2} DESC)"), 
+                    tempTable, entities, "Timestamp");
                 OpenDbMan(connectionstring);
                 temperature = Itterate();
             }
@@ -583,7 +678,7 @@ namespace WebApplication6.Models
         /// </summary>
         /// <param name="minutes">Minutes to get</param>
         /// <returns></returns>
-        public string[,] GetTemperatureMinutes(int minutes)
+        public string[,] GetTemperatureMinutes(int minutes = 1)
         {
             string[,] temperature;
             DateTime date = DateTime.Now.AddMinutes((Convert.ToDouble(minutes)) * (-1));
@@ -591,8 +686,8 @@ namespace WebApplication6.Models
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}') AND {4} >= Cdate ('{3}')"),
-                    tempTable, date.ToString("dd.MM.yyyy"), "Dato", date.ToString("dd.MM.yyyy HH:mm:ss"), "Tid");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    tempTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
 
                 OpenDbMan(connectionstring);
                 temperature = Itterate();
@@ -615,7 +710,7 @@ namespace WebApplication6.Models
         /// </summary>
         /// <param name="hours">Hours to get</param>
         /// <returns></returns>
-        public string[,] GetTemperatureHours(int hours)
+        public string[,] GetTemperatureHours(int hours = 1)
         {
             string[,] temperature;
             DateTime date = DateTime.Now.AddHours((Convert.ToDouble(hours)) * (-1));
@@ -623,8 +718,8 @@ namespace WebApplication6.Models
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}') AND {4} >= Cdate ('{3}')"),
-                    tempTable, date.ToString("dd.MM.yyyy"), "Dato", date.ToString("dd.MM.yyyy HH:mm:ss"), "Tid");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    tempTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
                 OpenDbMan(connectionstring);
                 temperature = Itterate();
             }
@@ -646,7 +741,7 @@ namespace WebApplication6.Models
         /// </summary>
         /// <param name="days">Days to get</param>
         /// <returns></returns>
-        public string[,] GetTemperatureDays(int days)
+        public string[,] GetTemperatureDays(int days = 1)
         {
             string[,] temperature;
             DateTime date = DateTime.Now.AddDays((Convert.ToDouble(days)) * (-1));
@@ -654,8 +749,8 @@ namespace WebApplication6.Models
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"),
-                    tempTable, date.ToString("dd.MM.yyyy"), "Dato");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    tempTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
 
                 OpenDbMan(connectionstring);
                 temperature = Itterate();
@@ -678,15 +773,15 @@ namespace WebApplication6.Models
         /// </summary>
         /// <param name="weeks">Weeks to get</param>
         /// <returns></returns>
-        public string[,] GetTemperatureWeeks(int weeks)
+        public string[,] GetTemperatureWeeks(int weeks = 1)
         {
             string[,] temperature;
             DateTime date = DateTime.Now.AddDays((Convert.ToDouble(weeks)) * (-7));
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"),
-                    tempTable, date.ToString("dd.MM.yyyy"), "Dato");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    tempTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
                 OpenDbMan(connectionstring);
                 temperature = Itterate();
             }
@@ -708,15 +803,15 @@ namespace WebApplication6.Models
         /// </summary>
         /// <param name="months">Months to get</param>
         /// <returns></returns>
-        public string[,] GetTemperatureMonths(int months)
+        public string[,] GetTemperatureMonths(int months = 1)
         {
             string[,] temperature;
             DateTime date = DateTime.Now.AddMonths(months * (-1));
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"),
-                    tempTable, date.ToString("dd.MM.yyyy"), "Dato");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    tempTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
 
                 OpenDbMan(connectionstring);
                 temperature = Itterate();
@@ -807,7 +902,7 @@ namespace WebApplication6.Models
         /// </summary>
         /// <param name="settingNr">Set of settings to get</param>
         /// <returns>Settings</returns>
-        public string[] GetSettings(int settingNr = 0)
+        public string[] GetSettings(int settingNr)
         {
             string[] settings;
             try
@@ -845,7 +940,7 @@ namespace WebApplication6.Models
 
             for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < columns; j++)
+                for (int j = 1; j < columns; j++)
                 {
                     value[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
                 }

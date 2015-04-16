@@ -9,7 +9,7 @@ using WebApplication6.Models;
 namespace WebApplication6.Controllers {
     public class HomeController : Controller {
         //path to database
-        private Database database = new Database("C:\\Users\\Haakon\\Desktop\\IA2-3-15-Arduino-Temp\\Nettside\\ArduinoTemperaturmåling.accdb");
+        private Database database = new Database("C:\\Users\\Jørund\\Documents\\GitHub\\IA2-3-15-Arduino-Temp\\Nettside\\ArduinoTemperaturmåling.accdb");
 
         [HttpPost]
         public JsonResult GetTemp() { //get latest logged temp, used to dynamically update temp display
@@ -36,6 +36,7 @@ namespace WebApplication6.Controllers {
             if (!User.Identity.IsAuthenticated) { //Check if user is logged in
                 //Not logged in, redirect to login page
                 Response.Redirect("~/Account/Login");
+                return null;
             }
             ViewBag.Title = "Hovedside";
             //initial temperature get
@@ -49,7 +50,7 @@ namespace WebApplication6.Controllers {
             ViewBag.updateInterval = setting[5];
             //alarm
             string[,] alarm = database.GetAlarmLast(1);
-            if (alarm[0, 6] == "0") { //alarm not signed
+            if (alarm[0, 5] == "0") { //alarm not signed
                 ViewBag.alarm = "\n" + alarm[0,4];
             } //else no unsigned alarm */
             return View();
