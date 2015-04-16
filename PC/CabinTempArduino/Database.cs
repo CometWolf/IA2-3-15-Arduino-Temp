@@ -178,7 +178,12 @@ namespace CabinTempArduino
         exit:
         return subscribers[index,3];
         }
-        public int getUserID(string username)
+        /// <summary>
+        /// Gets user Id from username
+        /// </summary>
+        /// <param name="username">Name to get</param>
+        /// <returns>UserId</returns>
+        public int GetUserID(string username)
         {
             int index = 0;
             string[,] subscribers = GetSubscribers();
@@ -193,7 +198,12 @@ namespace CabinTempArduino
         exit:
             return Convert.ToInt32(subscribers[index, 0]);
         }
-        public int getIndex(string username)
+        /// <summary>
+        /// Gets index from username
+        /// </summary>
+        /// <param name="username">Name to get</param>
+        /// <returns>Index</returns>
+        public int GetIndex(string username)
         {
             int index = 0;
             string[,] subscribers = GetSubscribers(); 
@@ -227,8 +237,7 @@ namespace CabinTempArduino
 
                 DataRow row = myDatatable.NewRow();
 
-                row["Dato"] = timestamp.ToString("dd.MM.yyyy");
-                row["Tid"] = timestamp.ToString("HH:mm:ss");
+                row["Timestamp"] = timestamp.ToString("dd.MM.yyyy HH:mm:ss");
                 row["Feilmelding"] = message;
                 row["AlarmID"] = alarmID;
                 row["Temperatur"] = temp;
@@ -285,7 +294,9 @@ namespace CabinTempArduino
             string[,] alarms;
             try
             {
-                string connectionstring = String.Format(("SELECT TOP {1} * FROM (SELECT * FROM {0} ORDER BY {2} DESC, {3} DESC)"), alarmTable, entities, "Dato", "Tid");
+                string connectionstring = String.Format((
+                    "SELECT TOP {1} * FROM (SELECT * FROM {0} ORDER BY {2} DESC)"), 
+                    alarmTable, entities, "Timestamp");
                 OpenDbMan(connectionstring);
                 alarms = Itterate();
             }
@@ -315,8 +326,8 @@ namespace CabinTempArduino
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}') AND {4} >= Cdate ('{3}')"),
-                    alarmTable, date.ToString("dd.MM.yyyy"), "Dato", date.ToString("dd.MM.yyyy HH:mm:ss"), "Tid");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    alarmTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
 
                 OpenDbMan(connectionstring);
                 alarms = Itterate();
@@ -347,8 +358,8 @@ namespace CabinTempArduino
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}') AND {4} >= Cdate ('{3}')"),
-                    alarmTable, date.ToString("dd.MM.yyyy"), "Dato", date.ToString("dd.MM.yyyy HH:mm:ss"), "Tid");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    alarmTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
                 OpenDbMan(connectionstring);
                 alarms = Itterate();
             }
@@ -378,8 +389,8 @@ namespace CabinTempArduino
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"), 
-                    alarmTable, date.ToString("dd.MM.yyyy"), "Dato");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    alarmTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
                 
                 OpenDbMan(connectionstring);
                 alarms = Itterate();
@@ -409,8 +420,8 @@ namespace CabinTempArduino
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"), 
-                    alarmTable, date.ToString("dd.MM.yyyy"), "Dato");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    alarmTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
                 OpenDbMan(connectionstring);
                 alarms = Itterate();
             }
@@ -439,8 +450,8 @@ namespace CabinTempArduino
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"), 
-                    alarmTable, date.ToString("dd.MM.yyyy"), "Dato");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    alarmTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
 
                 OpenDbMan(connectionstring);
                 alarms = Itterate();
@@ -506,8 +517,7 @@ namespace CabinTempArduino
 
                 DataRow row = myDatatable.NewRow();
 
-                row["Dato"] = timestamp.ToString("dd.MM.yyyy");
-                row["Tid"] = timestamp.ToString("HH:mm:ss");
+                row["Timestamp"] = timestamp.ToString("dd.MM.yyyy HH:mm:ss");
                 row["Temperatur"] = temp;
 
                 myDatatable.AcceptChanges();
@@ -561,7 +571,9 @@ namespace CabinTempArduino
             string[,] temperature;
             try
             {
-                string connectionstring = String.Format(("SELECT TOP {1} * FROM (SELECT * FROM {0} ORDER BY {2} DESC, {3} DESC)"), tempTable, entities, "Dato", "Tid");
+                string connectionstring = String.Format((
+                    "SELECT TOP {1} * FROM (SELECT * FROM {0} ORDER BY {2} DESC)"), 
+                    tempTable, entities, "Timestamp");
                 OpenDbMan(connectionstring);
                 temperature = Itterate();
             }
@@ -591,8 +603,8 @@ namespace CabinTempArduino
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}') AND {4} >= Cdate ('{3}')"),
-                    tempTable, date.ToString("dd.MM.yyyy"), "Dato", date.ToString("dd.MM.yyyy HH:mm:ss"), "Tid");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    tempTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
 
                 OpenDbMan(connectionstring);
                 temperature = Itterate();
@@ -623,8 +635,8 @@ namespace CabinTempArduino
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}') AND {4} >= Cdate ('{3}')"),
-                    tempTable, date.ToString("dd.MM.yyyy"), "Dato", date.ToString("dd.MM.yyyy HH:mm:ss"), "Tid");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    tempTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
                 OpenDbMan(connectionstring);
                 temperature = Itterate();
             }
@@ -654,8 +666,8 @@ namespace CabinTempArduino
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"),
-                    tempTable, date.ToString("dd.MM.yyyy"), "Dato");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    tempTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
 
                 OpenDbMan(connectionstring);
                 temperature = Itterate();
@@ -685,8 +697,8 @@ namespace CabinTempArduino
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"),
-                    tempTable, date.ToString("dd.MM.yyyy"), "Dato");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    tempTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
                 OpenDbMan(connectionstring);
                 temperature = Itterate();
             }
@@ -715,8 +727,8 @@ namespace CabinTempArduino
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE {2} >= Cdate ('{1}')"),
-                    tempTable, date.ToString("dd.MM.yyyy"), "Dato");
+                    "SELECT * FROM {0} WHERE {1} >= Cdate ('{2}')"),
+                    tempTable, "Timestamp", date.ToString("dd.MM.yyyy HH:mm:ss"));
 
                 OpenDbMan(connectionstring);
                 temperature = Itterate();
@@ -845,9 +857,9 @@ namespace CabinTempArduino
 
             for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < columns; j++)
+                for (int j = 1; j < columns; j++)
                 {
-                    value[i, j] = myDatatable.Rows[i+1].ItemArray[j].ToString();
+                    value[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
                 }
             }
             return value;
