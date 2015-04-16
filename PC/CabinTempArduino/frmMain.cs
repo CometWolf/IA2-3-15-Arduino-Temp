@@ -104,12 +104,12 @@ namespace CabinTempArduino
         private void btnFetch_Click(object sender, EventArgs e)
         {
             rtbDatabaseValues.Clear();
-            string[,] fetchedArray;
 
             if (cboAnnotation.Text == "Entries")
             {
                 if (rbtTemperature.Checked)
                 {
+<<<<<<< HEAD
                     rtbDatabaseValues.Clear();
                     rtbDatabaseValues.Text = "Date \t Time \t Temperature \r\n";
                     fetchedArray = myDatabase.GetTemperatureLast(Convert.ToInt32(txtFetchLast.Text));
@@ -137,6 +137,13 @@ namespace CabinTempArduino
                         }
                         rtbDatabaseValues.AppendText("\r\n");
                     }
+=======
+                    FetchTemp(myDatabase.GetTemperatureLast(Convert.ToInt32(txtFetchLast.Text)));
+                }
+                else if (rbtError.Checked)
+                {
+                    FetchAlarm(myDatabase.GetAlarmLast(Convert.ToInt32(txtFetchLast.Text)));
+>>>>>>> origin/master
                 }
                 else
                     throw new Exception("Check off for temperature or error");
@@ -145,6 +152,7 @@ namespace CabinTempArduino
             {
                 if (rbtTemperature.Checked)
                 {
+<<<<<<< HEAD
                     rtbDatabaseValues.Clear();
                     rtbDatabaseValues.Text = "Date \t  Time \t Temperature \r\n";
                     fetchedArray = myDatabase.GetTemperatureDays(Convert.ToInt32(txtFetchLast.Text));
@@ -171,6 +179,13 @@ namespace CabinTempArduino
                         }
                         rtbDatabaseValues.AppendText("\r\n");
                     }
+=======
+                    FetchTemp(myDatabase.GetTemperatureDays(Convert.ToInt32(txtFetchLast.Text)));
+                }
+                else if (rbtError.Checked)
+                {
+                    FetchAlarm(myDatabase.GetAlarmDays(Convert.ToInt32(txtFetchLast.Text)));
+>>>>>>> origin/master
                 }
                 else
                     throw new Exception("Check off for temperature or error");
@@ -179,6 +194,7 @@ namespace CabinTempArduino
             {
                 if (rbtTemperature.Checked)
                 {
+<<<<<<< HEAD
                     rtbDatabaseValues.Clear();
                     rtbDatabaseValues.Text = "Date \t Time \t Temperature \r\n";
                     fetchedArray = myDatabase.GetTemperatureMonths(Convert.ToInt32(txtFetchLast.Text));
@@ -206,6 +222,13 @@ namespace CabinTempArduino
                         }
                         rtbDatabaseValues.AppendText("\r\n");
                     }
+=======
+                    FetchTemp(myDatabase.GetTemperatureMonths(Convert.ToInt32(txtFetchLast.Text)));
+                }
+                else if (rbtError.Checked)
+                {
+                    FetchAlarm(myDatabase.GetAlarmMonths(Convert.ToInt32(txtFetchLast.Text)));
+>>>>>>> origin/master
                 }
                 else
                     MessageBox.Show("Check off for temperature or error");
@@ -235,6 +258,33 @@ namespace CabinTempArduino
                     rbtError.Enabled = true;
                     rbtTemperature.Enabled = true;
                 }
+            }
+        }
+        private void FetchTemp(string[,] values)
+        {
+            rtbDatabaseValues.Clear();
+            rtbDatabaseValues.Text = "Time \t\t\t" + "Temperature" + "\r\n";
+            for (int i = 0; i <= values.GetUpperBound(0); i++)
+            {
+                for (int j = 0; j <= values.GetUpperBound(1); j++)
+                {
+                    rtbDatabaseValues.AppendText(values[i, j] + "\t");
+                }
+                rtbDatabaseValues.AppendText("\r\n");
+            }
+        }
+        private void FetchAlarm(string[,] values)
+        {
+            rtbDatabaseValues.Clear();
+            rtbDatabaseValues.Text = "Time \t\t\t" + "AlarmID\t" + "Temp\t" + "AlarmText \r\n";
+            values = myDatabase.GetAlarmLast(Convert.ToInt32(txtFetchLast.Text));
+            for (int i = 0; i <= values.GetUpperBound(0); i++)
+            {
+                for (int j = 0; j <= values.GetUpperBound(1); j++)
+                {
+                    rtbDatabaseValues.AppendText(values[i, j] + "\t");
+                }
+                rtbDatabaseValues.AppendText("\r\n");
             }
         }
         #region BatterySurvailence

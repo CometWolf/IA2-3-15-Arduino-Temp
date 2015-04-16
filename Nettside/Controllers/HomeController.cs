@@ -18,41 +18,39 @@ namespace WebApplication6.Controllers {
         }
 
         [HttpPost]
-        public void UpdateAlarmLimits(string upperLimit, string lowerLimit, string updateInterval) { //Stores the given alarm settings in the database
-            database.UpdateSetting(upperLimit, 1, 0);
-            database.UpdateSetting(lowerLimit, 3, 0);
+        public void UpdateSettings(string aUpperLimit, string aLowerLimit, string updateInterval, string fUpperLimit, string fLowerLimit) {
+            //updates database settings
+            database.UpdateSetting(aUpperLimit, 1, 0);
+            database.UpdateSetting(aLowerLimit, 3, 0);
             database.UpdateSetting(updateInterval, 5, 0);
-            Response.Redirect("~/");
-        }
-
-        [HttpPost]
-        public void UpdateFurnaceLimits(string upperLimit, string lowerLimit) { //Stores the given furnace settings in the database
-            database.UpdateSetting(upperLimit, 2, 0);
-            database.UpdateSetting(lowerLimit, 4, 0);
+            database.UpdateSetting(fUpperLimit, 2, 0);
+            database.UpdateSetting(fLowerLimit, 4, 0);
             Response.Redirect("~/");
         }
         
         public ActionResult Index() {
             if (!User.Identity.IsAuthenticated) { //Check if user is logged in
                 //Not logged in, redirect to login page
-                //Response.Redirect("~/Account/Login");
+                Response.Redirect("~/Account/Login");
+                return null;
             }
             ViewBag.Title = "Hovedside";
+            MainViewModel model = new MainViewModel();
             //initial temperature get
-            ViewBag.temperature = database.GetTemperatureLast()[0,2];
+            model.temperature = database.GetTemperatureLast()[0,2];
             //settings
             string[] setting = database.GetSettings(0);
-            ViewBag.highAlarm = setting[1];
-            ViewBag.lowAlarm = setting[3];
-            ViewBag.furnaceHigh = setting[2];
-            ViewBag.furnaceLow = setting[4];
-            ViewBag.updateInterval = setting[5];
+            model.alarm.upperLimit = setting[1];
+            model.alarm.lowerLimit = setting[3];
+            model.furnace.upperLimit = setting[2];
+            model.furnace.lowerLimit = setting[4];
+            model.updateInterval = setting[5];
             //alarm
             string[,] alarm = database.GetAlarmLast(1);
-            if (alarm[0, 6] == "0") { //alarm not signed
-                ViewBag.alarm = "\n" + alarm[0,4];
+            if (alarm[0, 5] == "0") { //alarm not signed
+                model.alarm.message = "\n" + alarm[0,4];
             } //else no unsigned alarm */
-            return View();
+            return View(model);
         }
     }
 }

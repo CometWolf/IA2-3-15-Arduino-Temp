@@ -6,13 +6,13 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log ut: @(User.Identity.GetUserName())</a></li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Logg ut: @(User.Identity.GetUserName())</a></li>
     </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Logg in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }
