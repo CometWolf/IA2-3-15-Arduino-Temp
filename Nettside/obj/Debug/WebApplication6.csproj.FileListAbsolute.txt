@@ -52,3 +52,34 @@ C:\Users\Haakon\Documents\Visual Studio 2013\Projects\WebApplication6\bin\WebApp
 C:\Users\Haakon\Documents\Visual Studio 2013\Projects\WebApplication6\bin\WebApplication6.pdb
 C:\Users\Haakon\Documents\Visual Studio 2013\Projects\WebApplication6\obj\Debug\WebApplication6.dll
 C:\Users\Haakon\Documents\Visual Studio 2013\Projects\WebApplication6\obj\Debug\WebApplication6.pdb
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\WebApplication6.dll.config
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\WebApplication6.dll
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\WebApplication6.pdb
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\Newtonsoft.Json.dll
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\EntityFramework.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\EntityFramework.SqlServer.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.Web.Infrastructure.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\System.Web.Helpers.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\System.Web.Mvc.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\System.Web.Optimization.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\System.Web.Razor.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\System.Web.WebPages.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\System.Web.WebPages.Razor.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\Antlr3.Runtime.pdb
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.Owin.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.Owin.Security.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\obj\Debug\WebApplication6.csprojResolveAssemblyReference.cache
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\obj\Debug\WebApplication6.dll
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\obj\Debug\WebApplication6.pdb

@@ -8,7 +8,7 @@ using WebApplication6.Models;
 
 namespace WebApplication6.Controllers {
     public class HomeController : Controller {
-        private Database database = new Database("C:\\Users\\Haakon\\Documents\\Database5.accdb");
+        private Database database = new Database("ArduinoTemperaturmåling.accdb");
         private void CheckLogin() { //Check if user is logged in
             if (!User.Identity.IsAuthenticated) {
                 //Not logged in, redirect to login page
@@ -18,7 +18,7 @@ namespace WebApplication6.Controllers {
 
         [HttpPost]
         public JsonResult GetTemp() { //get latest logged temp, used to dynamically update temp display
-            string[,] temp = database.GetTemperatureLast(1);
+            string[,] temp = database.GetTemperatureLast();
             return Json(new { result = temp[0,2] }, JsonRequestBehavior.AllowGet);
         }
 
@@ -41,9 +41,9 @@ namespace WebApplication6.Controllers {
             CheckLogin();
             ViewBag.Title = "Hovedside";
             //initial temperature get
-            ViewBag.temperature = database.GetTemperatureLast(1)[0,2];
+            ViewBag.temperature = database.GetTemperatureLast()[0,2];
             //settings
-            string[] setting = database.GetSettings(1);
+            string[] setting = database.GetSettings(0);
             ViewBag.highAlarm = setting[1];
             ViewBag.lowAlarm = setting[3];
             ViewBag.furnaceHigh = setting[2];

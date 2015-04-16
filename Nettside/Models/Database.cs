@@ -556,7 +556,7 @@ namespace WebApplication6.Models
         /// </summary>
         /// <param name="entities">Entities to get</param>
         /// <returns></returns>
-        public string[,] GetTemperatureLast(int entities)
+        public string[,] GetTemperatureLast(int entities = 1)
         {
             string[,] temperature;
             try
@@ -807,7 +807,7 @@ namespace WebApplication6.Models
         /// </summary>
         /// <param name="settingNr">Set of settings to get</param>
         /// <returns>Settings</returns>
-        public string[] GetSettings(int settingNr)
+        public string[] GetSettings(int settingNr = 0)
         {
             string[] settings;
             try
