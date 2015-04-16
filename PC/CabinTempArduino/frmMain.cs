@@ -442,13 +442,8 @@ namespace CabinTempArduino
                 string[,] lastValue;
                 if(rbtTemperature.Checked)
                 {
-                    lastValue = myDatabase.GetTemperatureLast(1);
-                    rtbDatabaseValues.Text = lastValue[0, 0] + lastValue[0, 1] + lastValue[0, 3] + "\r\n" + rtbDatabaseValues.Text;
-                }
-                else if (rbtError.Checked)
-                {
-                    lastValue = myDatabase.GetAlarmLast(1);
-                    rtbDatabaseValues.Text = lastValue[0, 0] + lastValue[0, 1] + lastValue[0, 3] + "\r\n" + rtbDatabaseValues.Text;
+                    lastValue = myDatabase.GetTemperatureLast();
+                    rtbDatabaseValues.Text = lastValue[0, 0];
                 }
             }
         }
