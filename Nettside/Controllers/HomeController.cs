@@ -35,7 +35,7 @@ namespace WebApplication6.Controllers {
         public ActionResult Index() {
             if (!User.Identity.IsAuthenticated) { //Check if user is logged in
                 //Not logged in, redirect to login page
-                //Response.Redirect("~/Account/Login");
+                Response.Redirect("~/Account/Login");
             }
             ViewBag.Title = "Hovedside";
             //initial temperature get
