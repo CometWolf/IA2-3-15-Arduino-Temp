@@ -189,8 +189,7 @@
             resources.GetString("cboAnnotation.Items"),
             resources.GetString("cboAnnotation.Items1"),
             resources.GetString("cboAnnotation.Items2"),
-            resources.GetString("cboAnnotation.Items3"),
-            resources.GetString("cboAnnotation.Items4")});
+            resources.GetString("cboAnnotation.Items3")});
             resources.ApplyResources(this.cboAnnotation, "cboAnnotation");
             this.cboAnnotation.Name = "cboAnnotation";
             this.cboAnnotation.SelectedIndexChanged += new System.EventHandler(this.cboAnnotation_SelectedIndexChanged);

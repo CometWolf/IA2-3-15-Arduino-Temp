@@ -556,7 +556,7 @@ namespace CabinTempArduino
         /// </summary>
         /// <param name="entities">Entities to get</param>
         /// <returns></returns>
-        public string[,] GetTemperatureLast(int entities)
+        public string[,] GetTemperatureLast(int entities = 1)
         {
             string[,] temperature;
             try
