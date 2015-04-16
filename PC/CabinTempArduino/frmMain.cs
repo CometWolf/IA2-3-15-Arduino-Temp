@@ -96,7 +96,6 @@ namespace CabinTempArduino
         private void btnFetch_Click(object sender, EventArgs e)
         {
             rtbDatabaseValues.Clear();
-            string[,] fetchedArray;
 
             if (cboAnnotation.Text == "Entries")
             {
