@@ -280,7 +280,7 @@ namespace CabinTempArduino
         /// </summary>
         /// <param name="entities">Entities to get</param>
         /// <returns></returns>
-        public string[,] GetAlarmLast(int entities)
+        public string[,] GetAlarmLast(int entities = 1)
         {
             string[,] alarms;
             try
@@ -307,7 +307,7 @@ namespace CabinTempArduino
         /// </summary>
         /// <param name="minutes">Minutes to get</param>
         /// <returns></returns>
-        public string[,] GetAlarmMinutes(int minutes)
+        public string[,] GetAlarmMinutes(int minutes = 1)
         {
             string[,] alarms;
             DateTime date = DateTime.Now.AddMinutes((Convert.ToDouble(minutes)) * (-1));
@@ -339,7 +339,7 @@ namespace CabinTempArduino
         /// </summary>
         /// <param name="hours">Hours to get</param>
         /// <returns></returns>
-        public string[,] GetAlarmHours(int hours)
+        public string[,] GetAlarmHours(int hours = 1)
         {
             string[,] alarms;
             DateTime date = DateTime.Now.AddHours((Convert.ToDouble(hours)) * (-1));
@@ -370,7 +370,7 @@ namespace CabinTempArduino
         /// </summary>
         /// <param name="days">Days to get</param>
         /// <returns></returns>
-        public string[,] GetAlarmDays(int days)
+        public string[,] GetAlarmDays(int days = 1)
         {
             string[,] alarms;
             DateTime date = DateTime.Now.AddDays((Convert.ToDouble(days)) * (-1));
@@ -402,7 +402,7 @@ namespace CabinTempArduino
         /// </summary>
         /// <param name="weeks">Weeks to get</param>
         /// <returns></returns>
-        public string[,] GetAlarmWeeks(int weeks)
+        public string[,] GetAlarmWeeks(int weeks = 1)
         {
             string[,] alarms;
             DateTime date = DateTime.Now.AddDays((Convert.ToDouble(weeks)) * (-7));
@@ -432,7 +432,7 @@ namespace CabinTempArduino
         /// </summary>
         /// <param name="months">Months to get</param>
         /// <returns></returns>
-        public string[,] GetAlarmMonths(int months)
+        public string[,] GetAlarmMonths(int months = 1)
         {
             string[,] alarms;
             DateTime date = DateTime.Now.AddMonths(months * (-1));
@@ -583,7 +583,7 @@ namespace CabinTempArduino
         /// </summary>
         /// <param name="minutes">Minutes to get</param>
         /// <returns></returns>
-        public string[,] GetTemperatureMinutes(int minutes)
+        public string[,] GetTemperatureMinutes(int minutes = 1)
         {
             string[,] temperature;
             DateTime date = DateTime.Now.AddMinutes((Convert.ToDouble(minutes)) * (-1));
@@ -615,7 +615,7 @@ namespace CabinTempArduino
         /// </summary>
         /// <param name="hours">Hours to get</param>
         /// <returns></returns>
-        public string[,] GetTemperatureHours(int hours)
+        public string[,] GetTemperatureHours(int hours = 1)
         {
             string[,] temperature;
             DateTime date = DateTime.Now.AddHours((Convert.ToDouble(hours)) * (-1));
@@ -646,7 +646,7 @@ namespace CabinTempArduino
         /// </summary>
         /// <param name="days">Days to get</param>
         /// <returns></returns>
-        public string[,] GetTemperatureDays(int days)
+        public string[,] GetTemperatureDays(int days = 1)
         {
             string[,] temperature;
             DateTime date = DateTime.Now.AddDays((Convert.ToDouble(days)) * (-1));
@@ -678,7 +678,7 @@ namespace CabinTempArduino
         /// </summary>
         /// <param name="weeks">Weeks to get</param>
         /// <returns></returns>
-        public string[,] GetTemperatureWeeks(int weeks)
+        public string[,] GetTemperatureWeeks(int weeks = 1)
         {
             string[,] temperature;
             DateTime date = DateTime.Now.AddDays((Convert.ToDouble(weeks)) * (-7));
@@ -708,7 +708,7 @@ namespace CabinTempArduino
         /// </summary>
         /// <param name="months">Months to get</param>
         /// <returns></returns>
-        public string[,] GetTemperatureMonths(int months)
+        public string[,] GetTemperatureMonths(int months = 1)
         {
             string[,] temperature;
             DateTime date = DateTime.Now.AddMonths(months * (-1));
@@ -847,7 +847,7 @@ namespace CabinTempArduino
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    value[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
+                    value[i, j] = myDatatable.Rows[i+1].ItemArray[j].ToString();
                 }
             }
             return value;
