@@ -8,13 +8,8 @@ using WebApplication6.Models;
 
 namespace WebApplication6.Controllers {
     public class HomeController : Controller {
-        private Database database = new Database("ArduinoTemperaturmåling.accdb");
-        private void CheckLogin() { //Check if user is logged in
-            if (!User.Identity.IsAuthenticated) {
-                //Not logged in, redirect to login page
-                //Response.Redirect("~/Account/Login");
-            }
-        }
+        //path to database
+        private Database database = new Database("C:\\Users\\Haakon\\Desktop\\IA2-3-15-Arduino-Temp\\Nettside\\ArduinoTemperaturmåling.accdb");
 
         [HttpPost]
         public JsonResult GetTemp() { //get latest logged temp, used to dynamically update temp display
@@ -38,7 +33,10 @@ namespace WebApplication6.Controllers {
         }
         
         public ActionResult Index() {
-            CheckLogin();
+            if (!User.Identity.IsAuthenticated) { //Check if user is logged in
+                //Not logged in, redirect to login page
+                //Response.Redirect("~/Account/Login");
+            }
             ViewBag.Title = "Hovedside";
             //initial temperature get
             ViewBag.temperature = database.GetTemperatureLast()[0,2];
@@ -54,13 +52,6 @@ namespace WebApplication6.Controllers {
             if (alarm[0, 6] == "0") { //alarm not signed
                 ViewBag.alarm = "\n" + alarm[0,4];
             } //else no unsigned alarm */
-            return View();
-        }
-
-        public ActionResult Logg() {
-            CheckLogin();
-            ViewBag.Title = "Logg";
-            ViewBag.Message = "Alarm og temperatur logg";
             return View();
         }
     }
