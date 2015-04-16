@@ -30,6 +30,7 @@ void setup()
 {
   pc.begin(9600);
   lcd.begin(16,2);
+  lcd.print("Arduino IA2-3-15");
   lcd.setCursor(0,1);
   lcd.print("Temp:");
   lcd.setCursor(12,1);
