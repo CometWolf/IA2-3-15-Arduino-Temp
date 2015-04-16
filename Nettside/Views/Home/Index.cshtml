@@ -38,23 +38,23 @@
 
 <div class="container">
     <center>
-        Temperaturen er nå <p id="temp"><strong>@(ViewBag.temperature + "°C")</strong></p>
-        <b> <font color="red">@ViewBag.alarm</font> </b>
+        Temperaturen er nå <p id="temp"><strong>@(Model.temperature + "°C")</strong></p>
+        <b> <font color="red">@Model.alarm.message </font> </b>
 
         <h3>Varslingsgrenser</h3>
         <form id="alarm" action="@Url.Action("UpdateSettings", "Home")" method="post">
             <label>Øvre grense: </label>
-            <input type="number" id="txtAlarmUpperLimit" value="@ViewBag.highAlarm" name="aUpperLimit" step="0.1" /> <br />
+            <input type="number" id="txtAlarmUpperLimit" value="@Model.alarm.upperLimit" name="aUpperLimit" step="0.1" /> <br />
             <label>Nedre grense: </label>
-            <input type="number" id="txtAlarmLowerLimit" value="@ViewBag.lowAlarm" name="aLowerLimit" step="0.1" /> <br />
+            <input type="number" id="txtAlarmLowerLimit" value="@Model.alarm.lowerLimit" name="aLowerLimit" step="0.1" /> <br />
             <label>Oppdateringsinterval: </label>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="number" id="txtUpdateInterval" value="@ViewBag.updateInterval" name="updateInterval" step="1" min="1" />min. <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="number" id="txtUpdateInterval" value="@Model.updateInterval" name="updateInterval" step="1" min="1" />min. <br />
 
             <h3>Ovn styring</h3>
             <label>Øvre grense: </label>
-            <input type="number" id="txtFurnaceUpperLimit" name="fUpperLimit" value="@ViewBag.furnaceHigh" step="0.1" /> <br />
+            <input type="number" id="txtFurnaceUpperLimit" name="fUpperLimit" value="@Model.furnace.upperLimit" step="0.1" /> <br />
             <label>Nedre grense: </label>
-            <input type="number" id="txtFurnaceLowerLimit" name="fLowerLimit" value="@ViewBag.furnaceLow" step="0.1" /> <br />
+            <input type="number" id="txtFurnaceLowerLimit" name="fLowerLimit" value="@Model.furnace.lowerLimit" step="0.1" /> <br />
             <br />
             <input type="submit" value="Oppdater grenser" />
         </form>

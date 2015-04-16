@@ -35,21 +35,22 @@ namespace WebApplication6.Controllers {
                 return null;
             }
             ViewBag.Title = "Hovedside";
+            MainViewModel model = new MainViewModel();
             //initial temperature get
-            ViewBag.temperature = database.GetTemperatureLast()[0,2];
+            model.temperature = database.GetTemperatureLast()[0,2];
             //settings
             string[] setting = database.GetSettings(0);
-            ViewBag.highAlarm = setting[1];
-            ViewBag.lowAlarm = setting[3];
-            ViewBag.furnaceHigh = setting[2];
-            ViewBag.furnaceLow = setting[4];
-            ViewBag.updateInterval = setting[5];
+            model.alarm.upperLimit = setting[1];
+            model.alarm.lowerLimit = setting[3];
+            model.furnace.upperLimit = setting[2];
+            model.furnace.lowerLimit = setting[4];
+            model.updateInterval = setting[5];
             //alarm
             string[,] alarm = database.GetAlarmLast(1);
             if (alarm[0, 5] == "0") { //alarm not signed
-                ViewBag.alarm = "\n" + alarm[0,4];
+                model.alarm.message = "\n" + alarm[0,4];
             } //else no unsigned alarm */
-            return View();
+            return View(model);
         }
     }
 }
