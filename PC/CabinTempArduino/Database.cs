@@ -936,13 +936,13 @@ namespace CabinTempArduino
             string[,] value;
             int rows = myDatatable.Rows.Count;
             int columns = myDatatable.Columns.Count;
-            value = new string[rows, columns];
+            value = new string[rows, columns-1];
 
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 1; j < columns; j++)
                 {
-                    value[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
+                    value[i, j-1] = myDatatable.Rows[i].ItemArray[j].ToString();
                 }
             }
             return value;
