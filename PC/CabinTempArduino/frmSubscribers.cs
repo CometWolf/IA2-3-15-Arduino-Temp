@@ -56,7 +56,7 @@ namespace CabinTempArduino
                 TextBoxesReadOnlyFalse();
                 btnDelete.Enabled = true; btnSubmit.Enabled = true;
 
-                int index = myDatabase.getIndex(cboSelectSubscriber.Text);
+                int index = myDatabase.GetIndex(cboSelectSubscriber.Text);
                 txtSurName.Text = subscribers[index, 1];
                 txtFirstName.Text = subscribers[index, 2];
                 txtUsername.Text = subscribers[index, 3];
@@ -109,8 +109,8 @@ namespace CabinTempArduino
                 }
                 else if (cboSelectSubscriber.Text == myDatabase.SearchUsername(cboSelectSubscriber.Text))
                 {
-                    int userID = myDatabase.getUserID(cboSelectSubscriber.Text);
-                    int index = myDatabase.getIndex(cboSelectSubscriber.Text);
+                    int userID = myDatabase.GetUserID(cboSelectSubscriber.Text);
+                    int index = myDatabase.GetIndex(cboSelectSubscriber.Text);
 
                     if (txtUsername.Text != subscribers[index, 3])
                         username = unique(txtUsername.Text,3,"username");
@@ -149,7 +149,7 @@ namespace CabinTempArduino
             {
                 if (cboSelectSubscriber.Text == myDatabase.SearchUsername(cboSelectSubscriber.Text))
                 {
-                    int index = myDatabase.getIndex(cboSelectSubscriber.Text);
+                    int index = myDatabase.GetIndex(cboSelectSubscriber.Text);
                     myDatabase.DeleteSubscriber(index);
                 }
 

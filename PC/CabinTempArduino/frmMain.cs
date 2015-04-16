@@ -30,6 +30,8 @@ namespace CabinTempArduino
         string nextHours = "";
         int oldInterval;
         bool continous = false;
+        bool newInterval = false;
+        int tempLogInterval;
         string[] settings;
         #endregion
 
@@ -55,6 +57,7 @@ namespace CabinTempArduino
                 txtFetchLast.ReadOnly = true;
                 settings = myDatabase.GetSettings(0);
                 oldInterval = Convert.ToInt32(settings[5]);
+                tempLogInterval = Convert.ToInt32(settings[5]);
             }
             //END GUI
 
@@ -65,6 +68,11 @@ namespace CabinTempArduino
         {
             get { return spComPort.PortName; }
             set { spComPort.PortName = value; }
+        }
+        public int OldTempLogInterval
+        {
+            get { return oldInterval; }
+            set { oldInterval = value; }
         }
         #endregion
         #region Objects
@@ -107,9 +115,10 @@ namespace CabinTempArduino
                     fetchedArray = myDatabase.GetTemperatureLast(Convert.ToInt32(txtFetchLast.Text));
                     for (int i = 0; i <= fetchedArray.GetUpperBound(0); i++)
                     {
-                        for (int j = 0; j <= fetchedArray.GetUpperBound(1); j++)
+                        for (int j = 1; j <= fetchedArray.GetUpperBound(1); j++)
                         {
                             rtbDatabaseValues.AppendText(fetchedArray[i, j]);
+                            rtbDatabaseValues.AppendText("\t");
                         }
                         rtbDatabaseValues.AppendText("\r\n");
                     }
@@ -121,9 +130,10 @@ namespace CabinTempArduino
                     fetchedArray = myDatabase.GetAlarmLast(Convert.ToInt32(txtFetchLast.Text));
                     for (int i = 0; i <= fetchedArray.GetUpperBound(0); i++)
                     {
-                        for (int j = 0; j <= fetchedArray.GetUpperBound(1); j++)
+                        for (int j = 1; j <= fetchedArray.GetUpperBound(1); j++)
                         {
                             rtbDatabaseValues.AppendText(fetchedArray[i, j]);
+                            rtbDatabaseValues.AppendText("\t");
                         }
                         rtbDatabaseValues.AppendText("\r\n");
                     }
@@ -136,13 +146,14 @@ namespace CabinTempArduino
                 if (rbtTemperature.Checked)
                 {
                     rtbDatabaseValues.Clear();
-                    rtbDatabaseValues.Text = "Date \t Time \t Temperature \r\n";
+                    rtbDatabaseValues.Text = "Date \t  Time \t Temperature \r\n";
                     fetchedArray = myDatabase.GetTemperatureDays(Convert.ToInt32(txtFetchLast.Text));
                     for (int i = 0; i <= fetchedArray.GetUpperBound(0); i++)
                     {
-                        for (int j = 0; j <= fetchedArray.GetUpperBound(1); j++)
+                        for (int j = 1; j <= fetchedArray.GetUpperBound(1); j++)
                         {
                             rtbDatabaseValues.AppendText(fetchedArray[i, j]);
+                            rtbDatabaseValues.AppendText("\t");
                         }
                         rtbDatabaseValues.AppendText("\r\n");
                     }
@@ -156,6 +167,7 @@ namespace CabinTempArduino
                         for (int j = 1; j <= fetchedArray.GetUpperBound(1); j++)
                         {
                             rtbDatabaseValues.AppendText(fetchedArray[i, j]);
+                            rtbDatabaseValues.AppendText("\t");
                         }
                         rtbDatabaseValues.AppendText("\r\n");
                     }
@@ -172,9 +184,10 @@ namespace CabinTempArduino
                     fetchedArray = myDatabase.GetTemperatureMonths(Convert.ToInt32(txtFetchLast.Text));
                     for (int i = 0; i <= fetchedArray.GetUpperBound(0); i++)
                     {
-                        for (int j = 0; j <= fetchedArray.GetUpperBound(1); j++)
+                        for (int j = 1; j <= fetchedArray.GetUpperBound(1); j++)
                         {
                             rtbDatabaseValues.AppendText(fetchedArray[i, j]);
+                            rtbDatabaseValues.AppendText("\t");
                         }
                         rtbDatabaseValues.AppendText("\r\n");
                     }
@@ -189,6 +202,7 @@ namespace CabinTempArduino
                         for (int j = 1; j <= fetchedArray.GetUpperBound(1); j++)
                         {
                             rtbDatabaseValues.AppendText(fetchedArray[i, j]);
+                            rtbDatabaseValues.AppendText("\t");
                         }
                         rtbDatabaseValues.AppendText("\r\n");
                     }
@@ -291,7 +305,6 @@ namespace CabinTempArduino
         {
             if (cboAnnotation.Text == "Continous")
             {
-                
                 rbtError.Enabled = true;
                 rbtTemperature.Enabled = true;
                 txtFetchLast.ReadOnly = true;
@@ -308,9 +321,6 @@ namespace CabinTempArduino
             }
         }
         #region TemperatureLogging
-
-
-
         private void tmrLogTemperature_Tick(object sender, EventArgs e)
         {
             try
@@ -318,111 +328,114 @@ namespace CabinTempArduino
                 settings = myDatabase.GetSettings(0);
                 int interval = Convert.ToInt32(settings[5]);
 
-                if (interval == 15 && settings[7] == "false")
+                if ((OldTempLogInterval != interval) && (newInterval == false))
                 {
-                    if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
-                    {
-                        temperatureLogging();
-                    }
-                    else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30 && logged != true)
-                    {
-                        temperatureLogging();
-                    }
-                    else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 45 && logged != true)
-                    {
-                        temperatureLogging();
-                    }
-                    else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
-                    {
-                        temperatureLogging();
-                    }
-                    else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 01) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) ||
-                        (Convert.ToInt32(DateTime.Now.ToString("mm")) == 46) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 01))
-                        logged = false;
-
+                    nextLog = "";
+                    temperatureLogging();
+                    newInterval = true;
+                    logged = false;
+                    OldTempLogInterval = interval;
                 }
-                else if (interval == 30 && settings[7] == "false")
+                else if (OldTempLogInterval == interval)
                 {
-                    if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
+                    newInterval = false;
+                    if (tempLogInterval == 15 && settings[7] == "false")
                     {
-                        temperatureLogging();
+                        if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
+                        {
+                            temperatureLogging();
+                        }
+                        else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15 && logged != true)
+                        {
+                            temperatureLogging();
+                        }
+                        else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30 && logged != true)
+                        {
+                            temperatureLogging();
+                        }
+                        else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 45 && logged != true)
+                        {
+                            temperatureLogging();
+                        }
+                        else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 01) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 16) ||
+                            (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 46))
+                            logged = false;
                     }
-                    else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30 && logged != true)
+                    else if (tempLogInterval == 30 && settings[7] == "false")
                     {
-                        temperatureLogging();
+                        if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
+                        {
+                            temperatureLogging();
+                        }
+                        else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30 && logged != true)
+                        {
+                            temperatureLogging();
+                        }
+                        else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 01) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31))
+                            logged = false;
                     }
-                    else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 01) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31))
-                        logged = false;
+                    else if (tempLogInterval == 60 && settings[7] == "false")
+                    {
+                        if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
+                        {
+                            temperatureLogging();
+                        }
+                        else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 01)
+                            logged = false;
+                    }
+                    else if (settings[7] == "true")
+                    {
+                        int hours = tempLogInterval / 60;
+                        int minutes = tempLogInterval % 60;
+
+                        int hoursNow = Convert.ToInt32(DateTime.Now.ToString("HH"));
+                        int minutesNow = Convert.ToInt32(DateTime.Now.ToString("mm"));
+
+                        if (nextLog == "")
+                        {
+                            nextHours = Convert.ToString(hoursNow + hours);
+                            nextMinutes = Convert.ToString(minutesNow + minutes);
+
+                            if (Convert.ToInt32(nextHours) >= 24)
+                                nextHours = (Convert.ToInt32(nextHours) % 24).ToString();
+                            if (Convert.ToInt32(nextMinutes) >= 60)
+                                nextMinutes = (Convert.ToInt32(nextMinutes) % 60).ToString();
+                            if (nextHours.Length == 1)
+                                nextHours = "0" + nextHours;
+                            if (nextMinutes.Length == 1)
+                                nextMinutes = "0" + nextMinutes;
+
+                            nextLog = nextHours + ":" + nextMinutes;
+                            loggedMinute = minutesNow;
+                        }
+
+                        else if (DateTime.Now.ToString("HH:mm") == nextLog && logged != true)
+                        {
+
+                            nextHours = Convert.ToString(hoursNow + hours);
+                            nextMinutes = Convert.ToString(minutesNow + minutes);
+
+                            if (Convert.ToInt32(nextHours) >= 24)
+                                nextHours = (Convert.ToInt32(nextHours) % 24).ToString();
+                            if (Convert.ToInt32(nextMinutes) >= 60)
+                                nextMinutes = (Convert.ToInt32(nextMinutes) % 60).ToString();
+                            if (nextHours.Length == 1)
+                                nextHours = "0" + nextHours;
+                            if (nextMinutes.Length == 1)
+                                nextMinutes = "0" + nextMinutes;
+
+                            nextLog = nextHours + ":" + nextMinutes;
+                            loggedMinute = minutesNow;
+
+                            temperatureLogging();
+                        }
+                        else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == (loggedMinute + 1))
+                        {
+                            logged = false;
+                        }
+                    }
                 }
-                else if (interval == 60 && settings[7] == "false")
-                {
-                    if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
-                    {
-                        temperatureLogging();
-                    }
-                    else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 01)
-                        logged = false;
-                }
-                else if (settings[7] == "true")
-                {
-                    int hours = interval / 60;
-                    int minutes = interval % 60;
-
-                    int hoursNow = Convert.ToInt32(DateTime.Now.ToString("HH"));
-                    int minutesNow = Convert.ToInt32(DateTime.Now.ToString("mm"));
-
-                    if (oldInterval != interval)
-                        nextLog = "";
-
-                    if (nextLog == "")
-                    {
-                        temperatureLogging();
-
-                        nextHours = Convert.ToString(hoursNow + hours);
-                        nextMinutes = Convert.ToString(minutesNow + minutes);
-
-                        if (Convert.ToInt32(nextHours) >= 24)
-                            nextHours = (Convert.ToInt32(nextHours) % 24).ToString();
-                        if (Convert.ToInt32(nextMinutes) >= 60)
-                            nextMinutes = (Convert.ToInt32(nextMinutes) % 60).ToString();
-                        if (nextHours.Length == 1)
-                            nextHours = "0" + nextHours;
-                        if (nextMinutes.Length == 1)
-                            nextMinutes = "0" + nextMinutes;
-
-                        nextLog = nextHours + ":" + nextMinutes;
-                        loggedMinute = minutesNow;
-
-                        oldInterval = interval;
-                        logged = true;
-                    }
-
-                    else if (DateTime.Now.ToString("HH:mm") == nextLog && logged != true)
-                    {
-                        temperatureLogging();
-
-                        nextHours = Convert.ToString(hoursNow + hours);
-                        nextMinutes = Convert.ToString(minutesNow + minutes);
-
-                        if (Convert.ToInt32(nextHours) >= 24)
-                            nextHours = (Convert.ToInt32(nextHours) % 24).ToString();
-                        if (Convert.ToInt32(nextMinutes) >= 60)
-                            nextMinutes = (Convert.ToInt32(nextMinutes) % 60).ToString();
-                        if (nextHours.Length == 1)
-                            nextHours = "0" + nextHours;
-                        if (nextMinutes.Length == 1)
-                            nextMinutes = "0" + nextMinutes;
-
-                        nextLog = nextHours + ":" + nextMinutes;
-                        loggedMinute = minutesNow;
-
-                        logged = true;
-                    }
-                    else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == (loggedMinute + 1))
-                    {
-                        logged = false;
-                    }
-                }
+                
             }
             catch(Exception ex)
             {
@@ -434,16 +447,18 @@ namespace CabinTempArduino
         #region Methods
         private void temperatureLogging()
         {
-            string temp = Convert.ToString(rand.Next(0, 101));
-            myDatabase.LogTemperature(temp);
+            myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
             logged = true;
+
+            OldTempLogInterval = Convert.ToInt32(settings[5]);
+
             if(continous)
             {
                 string[,] lastValue;
                 if(rbtTemperature.Checked)
                 {
                     lastValue = myDatabase.GetTemperatureLast();
-                    rtbDatabaseValues.Text = lastValue[0, 0];
+                    rtbDatabaseValues.Text = lastValue[0,1] +"\t"+ lastValue[0,2] +"\r\n"+rtbDatabaseValues.Text;
                 }
             }
         }
