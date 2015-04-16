@@ -553,9 +553,6 @@
     <value>Month(s)</value>
   </data>
   <data name="cboAnnotation.Items3" xml:space="preserve">
-    <value>Year(s)</value>
-  </data>
-  <data name="cboAnnotation.Items4" xml:space="preserve">
     <value>Continous</value>
   </data>
   <data name="cboAnnotation.Location" type="System.Drawing.Point, System.Drawing">
