@@ -6,12 +6,12 @@
 #include<LiquidCrystal.h>
 
 const int tempPin = A0; 
-const byte furnacePin = 8;
+const byte furnacePin = 3;
 
 String alarmUpper = "50";
 String alarmLower = "-20";
-String furnaceLower;
-String furnaceUpper;
+String furnaceLower = "-10";
+String furnaceUpper = "0";
 String checkAlarm = "NOAL";
 float alarmUpperLimit;
 float alarmLowerLimit;
@@ -23,8 +23,8 @@ char displayChar[5];
 
 PC pc = PC();
 TempSensor tempSensor(tempPin);
-Furnace furnace(20, -10, furnacePin);
-LiquidCrystal lcd(12,11,5,4,3,2);
+Furnace furnace(0, -10, furnacePin);
+LiquidCrystal lcd(5,6,9,10,11,12);
 
 void setup() 
 {
@@ -93,11 +93,11 @@ void loop()
         pc.send("ALARM_LOW");
       }
     }
-    else if(((tempValue < alarmUpperLimit)||(tempValue > alarmLowerLimit))&&(motatt == "CHALNOAL"))
+    else if(((tempValue < alarmUpperLimit)||(tempValue > alarmLowerLimit))&&((handling == "CHAL")&&(value == "NOAL")))
     {
       checkAlarm = "NOAL";
     }
-    else if(((tempValue < alarmUpperLimit)||(tempValue > alarmLowerLimit))&&(handling == "CHAL"))
+    else if(((tempValue < alarmUpperLimit)||(tempValue > alarmLowerLimit))&&((handling == "CHAL")&&(value == "")))
     {
       pc.send("NOAL");
     }
