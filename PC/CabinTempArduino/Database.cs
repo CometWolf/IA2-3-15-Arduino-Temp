@@ -256,7 +256,90 @@ namespace CabinTempArduino
                 myAccessConnection.Close();
             }
         }
-        #region get
+        #region Sign
+        /// <summary>
+        /// Signs all alarms
+        /// </summary>
+        public void SignAlarm()
+        {
+            try
+            {
+                OpenDb(subscriberTable);
+
+                string updateQuery = string.Format((
+                    "UPDATE {0} SET [Status]='{1}'"), 
+                    alarmTable, 1);
+
+                CloseDbMan(updateQuery);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+        }
+        /// <summary>
+        /// Signs alarm with the specified Id
+        /// </summary>
+        /// <param name="AlarmId">Id to sign</param>
+        public void SignAlarm(string AlarmId)
+        {
+            try
+            {
+                OpenDb(subscriberTable);
+
+                string updateQuery = string.Format((
+                    "UPDATE {0} SET [Status]='{1}' WHERE [AlarmId] = '{2}'"),
+                    alarmTable, 1, AlarmId);
+
+                CloseDbMan(updateQuery);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+        }
+        /// <summary>
+        /// Updates status of alarms with the specified Id
+        /// </summary>
+        /// <param name="AlarmId">Id to sign</param>
+        /// <param name="status">New status</param>
+        public void SignAlarm(string AlarmId, int status = 1)
+        {
+            try
+            {
+                OpenDb(subscriberTable);
+
+                string updateQuery = string.Format((
+                    "UPDATE {0} SET [Status]='{1}' WHERE [AlarmId] = '{2}'"),
+                    alarmTable, status, AlarmId);
+
+                CloseDbMan(updateQuery);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+        }
+        #endregion
+        #region Get
         /// <summary>
         /// Gets all alarms in 'Feilmeldingslogg'
         /// </summary>
@@ -853,13 +936,13 @@ namespace CabinTempArduino
             string[,] value;
             int rows = myDatatable.Rows.Count;
             int columns = myDatatable.Columns.Count;
-            value = new string[rows, columns];
+            value = new string[rows, columns-1];
 
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 1; j < columns; j++)
                 {
-                    value[i, j] = myDatatable.Rows[i].ItemArray[j].ToString();
+                    value[i, j-1] = myDatatable.Rows[i].ItemArray[j].ToString();
                 }
             }
             return value;
