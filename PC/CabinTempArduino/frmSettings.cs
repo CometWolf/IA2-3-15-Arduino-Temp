@@ -37,6 +37,11 @@ namespace CabinTempArduino
             
         }
 
+        public bool IntervalLockdown
+        {
+            set { btnInterval.Enabled = value; }
+        }
+
         private void cboPreset_SelectedIndexChanged(object sender, EventArgs e)
         {
             //GUI
@@ -98,18 +103,24 @@ namespace CabinTempArduino
                 {
                     settings.UpdateSetting("60", 5, 0);
                     settings.UpdateSetting("false", 7, 0);
+                    main.NewInterval = true;
+                    main.Logged = false;
                     MessageBox.Show("Interval successfully changes.");
                 }
                 else if (cboPreset.Text == "30 minutes")
                 {
                     settings.UpdateSetting("30", 5, 0);
                     settings.UpdateSetting("false", 7, 0);
+                    main.NewInterval = true;
+                    main.Logged = false;
                     MessageBox.Show("Interval successfully changes.");
                 }
                 else if (cboPreset.Text == "15 minutes")
                 {
                     settings.UpdateSetting("15", 5, 0);
                     settings.UpdateSetting("false", 7, 0);
+                    main.NewInterval = true;
+                    main.Logged = false;
                     MessageBox.Show("Interval successfully changes.");
                 }
                 else if (cboPreset.Text == "Custom")
@@ -131,6 +142,8 @@ namespace CabinTempArduino
                                 {
                                     settings.UpdateSetting(Convert.ToString(value * 60), 5, 0);
                                     settings.UpdateSetting("true", 7, 0);
+                                    main.NewInterval = true;
+                                    main.Logged = false;
                                     MessageBox.Show("Interval successfully changed.");
                                 }
                             }
@@ -142,6 +155,8 @@ namespace CabinTempArduino
                                 {
                                     settings.UpdateSetting(Convert.ToString(value), 5, 0);
                                     settings.UpdateSetting("true", 7, 0);
+                                    main.NewInterval = true;
+                                    main.Logged = false;
                                     MessageBox.Show("Interval successfully changed.");
                                 }
                             }
@@ -155,6 +170,18 @@ namespace CabinTempArduino
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        public void Lockdown() //metode for å stenge av for input av ny interval.
+        {
+            if (btnInterval.Enabled == true)
+                btnInterval.Enabled = false;
+            else if (btnInterval.Enabled == false)
+                btnInterval.Enabled = true;
+
+            if (cboPreset.Enabled == true)
+                cboPreset.Enabled = false;
+            else if(cboPreset.Enabled == false)
+                cboPreset.Enabled = true;
         }
     }
 }

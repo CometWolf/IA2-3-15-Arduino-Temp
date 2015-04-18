@@ -28,12 +28,12 @@ namespace CabinTempArduino
         int loggedMinute = 0;
         string nextMinutes = "";
         string nextHours = "";
-        int oldInterval;
         bool continous = false;
         bool newInterval = false;
-        int tempLogInterval;
+        bool regularLog = true;
         string[] settings;
         #endregion
+        
 
         #endregion
         #region Disable Visual Styles
@@ -56,8 +56,6 @@ namespace CabinTempArduino
                 rbtTemperature.Enabled = false;
                 txtFetchLast.ReadOnly = true;
                 settings = myDatabase.GetSettings(0);
-                oldInterval = Convert.ToInt32(settings[5]);
-                tempLogInterval = Convert.ToInt32(settings[5]);
             }
             //END GUI
 
@@ -69,10 +67,15 @@ namespace CabinTempArduino
             get { return spComPort.PortName; }
             set { spComPort.PortName = value; }
         }
-        public int OldTempLogInterval
+        public bool NewInterval
         {
-            get { return oldInterval; }
-            set { oldInterval = value; }
+            get { return newInterval; }
+            set { newInterval = value; }
+        }
+        public bool Logged
+        {
+            get { return logged; }
+            set { logged = value; }
         }
         #endregion
         #region Objects
@@ -104,12 +107,12 @@ namespace CabinTempArduino
         private void btnFetch_Click(object sender, EventArgs e)
         {
             rtbDatabaseValues.Clear();
+            string[,] fetchedArray;
 
             if (cboAnnotation.Text == "Entries")
             {
                 if (rbtTemperature.Checked)
                 {
-<<<<<<< HEAD
                     rtbDatabaseValues.Clear();
                     rtbDatabaseValues.Text = "Date \t Time \t Temperature \r\n";
                     fetchedArray = myDatabase.GetTemperatureLast(Convert.ToInt32(txtFetchLast.Text));
@@ -137,13 +140,6 @@ namespace CabinTempArduino
                         }
                         rtbDatabaseValues.AppendText("\r\n");
                     }
-=======
-                    FetchTemp(myDatabase.GetTemperatureLast(Convert.ToInt32(txtFetchLast.Text)));
-                }
-                else if (rbtError.Checked)
-                {
-                    FetchAlarm(myDatabase.GetAlarmLast(Convert.ToInt32(txtFetchLast.Text)));
->>>>>>> origin/master
                 }
                 else
                     throw new Exception("Check off for temperature or error");
@@ -152,7 +148,6 @@ namespace CabinTempArduino
             {
                 if (rbtTemperature.Checked)
                 {
-<<<<<<< HEAD
                     rtbDatabaseValues.Clear();
                     rtbDatabaseValues.Text = "Date \t  Time \t Temperature \r\n";
                     fetchedArray = myDatabase.GetTemperatureDays(Convert.ToInt32(txtFetchLast.Text));
@@ -179,13 +174,6 @@ namespace CabinTempArduino
                         }
                         rtbDatabaseValues.AppendText("\r\n");
                     }
-=======
-                    FetchTemp(myDatabase.GetTemperatureDays(Convert.ToInt32(txtFetchLast.Text)));
-                }
-                else if (rbtError.Checked)
-                {
-                    FetchAlarm(myDatabase.GetAlarmDays(Convert.ToInt32(txtFetchLast.Text)));
->>>>>>> origin/master
                 }
                 else
                     throw new Exception("Check off for temperature or error");
@@ -194,7 +182,6 @@ namespace CabinTempArduino
             {
                 if (rbtTemperature.Checked)
                 {
-<<<<<<< HEAD
                     rtbDatabaseValues.Clear();
                     rtbDatabaseValues.Text = "Date \t Time \t Temperature \r\n";
                     fetchedArray = myDatabase.GetTemperatureMonths(Convert.ToInt32(txtFetchLast.Text));
@@ -222,13 +209,6 @@ namespace CabinTempArduino
                         }
                         rtbDatabaseValues.AppendText("\r\n");
                     }
-=======
-                    FetchTemp(myDatabase.GetTemperatureMonths(Convert.ToInt32(txtFetchLast.Text)));
-                }
-                else if (rbtError.Checked)
-                {
-                    FetchAlarm(myDatabase.GetAlarmMonths(Convert.ToInt32(txtFetchLast.Text)));
->>>>>>> origin/master
                 }
                 else
                     MessageBox.Show("Check off for temperature or error");
@@ -258,33 +238,6 @@ namespace CabinTempArduino
                     rbtError.Enabled = true;
                     rbtTemperature.Enabled = true;
                 }
-            }
-        }
-        private void FetchTemp(string[,] values)
-        {
-            rtbDatabaseValues.Clear();
-            rtbDatabaseValues.Text = "Time \t\t\t" + "Temperature" + "\r\n";
-            for (int i = 0; i <= values.GetUpperBound(0); i++)
-            {
-                for (int j = 0; j <= values.GetUpperBound(1); j++)
-                {
-                    rtbDatabaseValues.AppendText(values[i, j] + "\t");
-                }
-                rtbDatabaseValues.AppendText("\r\n");
-            }
-        }
-        private void FetchAlarm(string[,] values)
-        {
-            rtbDatabaseValues.Clear();
-            rtbDatabaseValues.Text = "Time \t\t\t" + "AlarmID\t" + "Temp\t" + "AlarmText \r\n";
-            values = myDatabase.GetAlarmLast(Convert.ToInt32(txtFetchLast.Text));
-            for (int i = 0; i <= values.GetUpperBound(0); i++)
-            {
-                for (int j = 0; j <= values.GetUpperBound(1); j++)
-                {
-                    rtbDatabaseValues.AppendText(values[i, j] + "\t");
-                }
-                rtbDatabaseValues.AppendText("\r\n");
             }
         }
         #region BatterySurvailence
@@ -339,7 +292,7 @@ namespace CabinTempArduino
             if (prbBatteryStatus.Value > 15)
                 criticalCharge = true;
 
-            else if (prbBatteryStatus.Value <= 15 && criticalCharge) //Critical
+            else if (prbBatteryStatus.Value <= 15 && criticalCharge && !charging) //Critical
             {
                 for (int i = 0; i <= emails.GetUpperBound(0); i++)
                 {
@@ -375,68 +328,53 @@ namespace CabinTempArduino
         {
             try
             {
+                frmSettings settingsInterval = new frmSettings();
                 settings = myDatabase.GetSettings(0);
                 int interval = Convert.ToInt32(settings[5]);
 
-                if ((OldTempLogInterval != interval) && (newInterval == false))
+                if (NewInterval && logged == false)
                 {
                     nextLog = "";
                     temperatureLogging();
-                    newInterval = true;
-                    logged = false;
-                    OldTempLogInterval = interval;
+                    regularLog = false;
+                    loggedMinute = Convert.ToInt32(DateTime.Now.ToString("mm"));
+                    settingsInterval.Lockdown(); //Brker lockdown for å sørge for at man ikke kan sette ny interval for fort. Denne funksjonen funker ikke.
                 }
-                else if (OldTempLogInterval == interval)
+                else if (!NewInterval && regularLog)
                 {
-                    newInterval = false;
-                    if (tempLogInterval == 15 && settings[7] == "false")
+                    if (interval == 15 && settings[7] == "false")
                     {
-                        if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
+                        if (((Convert.ToInt32(DateTime.Now.ToString("mm")) == 00) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15) ||
+                            (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 45)) && !logged)
                         {
                             temperatureLogging();
                         }
-                        else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15 && logged != true)
-                        {
-                            temperatureLogging();
-                        }
-                        else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30 && logged != true)
-                        {
-                            temperatureLogging();
-                        }
-                        else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 45 && logged != true)
-                        {
-                            temperatureLogging();
-                        }
-                        else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 01) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 16) ||
-                            (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 46))
+                        else if (((Convert.ToInt32(DateTime.Now.ToString("mm")) == 01) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 16) ||
+                            (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 46)) && logged)
                             logged = false;
                     }
-                    else if (tempLogInterval == 30 && settings[7] == "false")
+                    else if (interval == 30 && settings[7] == "false")
                     {
-                        if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
+                        if (((Convert.ToInt32(DateTime.Now.ToString("mm")) == 37) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30)) && !logged)
                         {
                             temperatureLogging();
                         }
-                        else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30 && logged != true)
-                        {
-                            temperatureLogging();
-                        }
-                        else if ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 01) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31))
+                        else if (((Convert.ToInt32(DateTime.Now.ToString("mm")) == 38) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31)) && logged)
                             logged = false;
                     }
-                    else if (tempLogInterval == 60 && settings[7] == "false")
+                    else if (interval == 60 && settings[7] == "false")
                     {
-                        if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && logged != true)
+                        if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && !logged)
                         {
                             temperatureLogging();
                         }
-                        else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 01)
+                        else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 01 && logged)
                             logged = false;
                     }
                     else if (settings[7] == "true")
                     {
-                        int hours = tempLogInterval / 60;
-                        int minutes = tempLogInterval % 60;
+                        int hours = interval / 60;
+                        int minutes = interval % 60;
 
                         int hoursNow = Convert.ToInt32(DateTime.Now.ToString("HH"));
                         int minutesNow = Convert.ToInt32(DateTime.Now.ToString("mm"));
@@ -456,12 +394,14 @@ namespace CabinTempArduino
                                 nextMinutes = "0" + nextMinutes;
 
                             nextLog = nextHours + ":" + nextMinutes;
+
+                            myDatabase.UpdateSetting(nextLog, 6, 0);
+                            
                             loggedMinute = minutesNow;
                         }
 
-                        else if (DateTime.Now.ToString("HH:mm") == nextLog && logged != true)
+                        else if (DateTime.Now.ToString("HH:mm") == settings[6] && !logged)
                         {
-
                             nextHours = Convert.ToString(hoursNow + hours);
                             nextMinutes = Convert.ToString(minutesNow + minutes);
 
@@ -475,15 +415,25 @@ namespace CabinTempArduino
                                 nextMinutes = "0" + nextMinutes;
 
                             nextLog = nextHours + ":" + nextMinutes;
-                            loggedMinute = minutesNow;
 
+                            myDatabase.UpdateSetting(nextLog, 6, 0);
+
+                            loggedMinute = minutesNow;
                             temperatureLogging();
                         }
-                        else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == (loggedMinute + 1))
+                        else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == (loggedMinute + 1) && logged)
                         {
+                            nextLog = "";
                             logged = false;
                         }
                     }
+                }
+                else if (logged && Convert.ToInt32(DateTime.Now.ToString("mm")) == (loggedMinute + 1))
+                {
+                    NewInterval = false;
+                    regularLog = true;
+                    logged = false;
+                    settingsInterval.Lockdown(); //lockdown løses opp og interval kan byttes.
                 }
                 
             }
@@ -499,9 +449,6 @@ namespace CabinTempArduino
         {
             myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
             logged = true;
-
-            OldTempLogInterval = Convert.ToInt32(settings[5]);
-
             if(continous)
             {
                 string[,] lastValue;

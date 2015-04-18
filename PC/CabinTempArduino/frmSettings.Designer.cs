@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnInterval = new System.Windows.Forms.Button();
             this.rbtMinutes = new System.Windows.Forms.RadioButton();
@@ -37,6 +38,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnComPort = new System.Windows.Forms.Button();
             this.cboComPort = new System.Windows.Forms.ComboBox();
+            this.intervalLockDown = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -172,5 +174,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnComPort;
         private System.Windows.Forms.ComboBox cboComPort;
+        private System.Windows.Forms.Timer intervalLockDown;
     }
 }
