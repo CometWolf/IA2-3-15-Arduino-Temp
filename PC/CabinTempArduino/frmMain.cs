@@ -94,52 +94,53 @@ namespace CabinTempArduino
         #endregion
         private void btnFetch_Click(object sender, EventArgs e)
         {
+            rtbDatabaseValues.Clear();
+            int fetchLast = Convert.ToInt32(txtFetchLast.Text);
+
+            switch (cboAnnotation.Text)
             {
+                case "Entries":
+                    if (rbtTemperature.Checked) FetchTemp(myDatabase.GetTemperatureLast(fetchLast));
+                    else if (rbtError.Checked) FetchAlarm(myDatabase.GetAlarmLast(fetchLast));
+                    else MessageBox.Show("Check off for temperature or error");
+                    break;
+                case "Day(s)":
+                    if (rbtTemperature.Checked) FetchTemp(myDatabase.GetTemperatureDays(fetchLast));
+                    else if (rbtError.Checked) FetchAlarm(myDatabase.GetAlarmDays(fetchLast));
+                    else MessageBox.Show("Check off for temperature or error");
+                    break;
+                case "Months(s)":
+                    if (rbtTemperature.Checked) FetchTemp(myDatabase.GetTemperatureMonths(fetchLast));
+                    else if (rbtError.Checked) FetchAlarm(myDatabase.GetAlarmMonths(fetchLast));
+                    else MessageBox.Show("Check off for temperature or error");
+                    break;
 
-                rtbDatabaseValues.Clear();
-                int fetchLast = Convert.ToInt32(txtFetchLast.Text);
+                default:
+                    break;
+            }
 
-                switch (cboAnnotation.Text)
+
+            if (cboAnnotation.Text == "Continous")
+            {
+                if (btnFetch.Text == "Start")
                 {
-                    case "Entries":
-                        if (rbtTemperature.Checked) FetchTemp(myDatabase.GetTemperatureLast(fetchLast));
-                        else if (rbtError.Checked) FetchAlarm(myDatabase.GetAlarmLast(fetchLast));
-                        else MessageBox.Show("Check off for temperature or error");
-                        break;
-                    case "Day(s)":
-                        if (rbtTemperature.Checked) FetchTemp(myDatabase.GetTemperatureDays(fetchLast));
-                        else if (rbtError.Checked) FetchAlarm(myDatabase.GetAlarmDays(fetchLast));
-                        else MessageBox.Show("Check off for temperature or error");
-                        break;
-                    case "Months(s)":
-                        if (rbtTemperature.Checked) FetchTemp(myDatabase.GetTemperatureMonths(fetchLast));
-                        else if (rbtError.Checked) FetchAlarm(myDatabase.GetAlarmMonths(fetchLast));
-                        else MessageBox.Show("Check off for temperature or error");
-                        break;
-                    default:
-                        break;
+                    continous = true;
+                    btnFetch.Text = "Stop";
+                    cboAnnotation.Enabled = false;
+                    rtbDatabaseValues.Clear();
+                    rtbDatabaseValues.Text = "Date \t Time \t Temperature \r\n";
+
                 }
-                if (cboAnnotation.Text == "Continous")
+                else if (btnFetch.Text == "Stop")
                 {
-                    if (btnFetch.Text == "Start")
-                    {
-                        continous = true;
-                        btnFetch.Text = "Stop";
-                        cboAnnotation.Enabled = false;
-                        rtbDatabaseValues.Clear();
-                        rtbDatabaseValues.Text = "Date \t Time \t Temperature \r\n";
-
-                    }
-                    else if (btnFetch.Text == "Stop")
-                    {
-                        continous = false;
-                        btnFetch.Text = "Start";
-                        cboAnnotation.Enabled = true;
-                        rbtError.Enabled = true;
-                        rbtTemperature.Enabled = true;
-                    }
+                    continous = false;
+                    btnFetch.Text = "Start";
+                    cboAnnotation.Enabled = true;
+                    rbtError.Enabled = true;
+                    rbtTemperature.Enabled = true;
                 }
             }
+
         }
         #region BatterySurveillance
         private void tmrBatteryStatus_Tick(object sender, EventArgs e)
