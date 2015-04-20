@@ -188,25 +188,25 @@ namespace CabinTempArduino
                 myAccessConnection.Close();
             }
         }
-        public bool SearchUsername(string username, string password)
+        public string SearchUsername(string username, string password)
         {
             try
             {
                 string connectionstring = String.Format((
-                    "SELECT * FROM {0} WHERE '{2}' = {1} AND '{4}' = {3}"),
-                    alarmTable, "Brukernavn", username, "Passord", password);
+                    "SELECT [{2}] FROM {0} WHERE '{1}' = [{2}] OR '{1}' = [{3}] AND '{4}' = [{5}]"),
+                    subscriberTable, username, "Brukernavn", "E-post", password, "Passord");
 
                 OpenDbMan(connectionstring);
 
                 if (myDatatable.Rows.Count > 0)
                 {
-                    return true;
+                    return myDatatable.Rows[0][0].ToString();
                 }
-                else return false;
+                else return null;
             }
             catch (Exception ex)
             {
-                return false;
+                return null;
                 throw ex;
             }
             finally

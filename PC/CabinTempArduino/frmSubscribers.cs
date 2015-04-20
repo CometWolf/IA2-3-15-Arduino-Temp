@@ -51,7 +51,7 @@ namespace CabinTempArduino
 
                 ClearAllTextBoxes();
             }
-            else if (cboSelectSubscriber.Text != "new" && cboSelectSubscriber.Text == myDatabase.SearchUsername(cboSelectSubscriber.Text))
+            else if (cboSelectSubscriber.Text != "new" && myDatabase.SearchUsername(cboSelectSubscriber.Text))
             {
                 TextBoxesReadOnlyFalse();
                 btnDelete.Enabled = true; btnSubmit.Enabled = true;
@@ -107,7 +107,7 @@ namespace CabinTempArduino
                         (txtEmail.Text == "") || (txtConfirmEmail.Text == "") || (txtPassword.Text == "") || (txtConfirmPassword.Text == ""))
                         MessageBox.Show("Fill all textboxes.");
                 }
-                else if (cboSelectSubscriber.Text == myDatabase.SearchUsername(cboSelectSubscriber.Text))
+                else if (myDatabase.SearchUsername(cboSelectSubscriber.Text))
                 {
                     int userID = myDatabase.GetUserID(cboSelectSubscriber.Text);
                     int index = myDatabase.GetIndex(cboSelectSubscriber.Text);
@@ -147,7 +147,7 @@ namespace CabinTempArduino
         {
             try
             {
-                if (cboSelectSubscriber.Text == myDatabase.SearchUsername(cboSelectSubscriber.Text))
+                if (myDatabase.SearchUsername(cboSelectSubscriber.Text))
                 {
                     int index = myDatabase.GetIndex(cboSelectSubscriber.Text);
                     myDatabase.DeleteSubscriber(index);
