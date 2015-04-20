@@ -39,7 +39,7 @@ namespace WebApplication6.Controllers {
             HomeViewModel model = new HomeViewModel();
             try {
                 //initial temperature get
-                model.temperature = database.GetTemperatureLast()[0,2];
+                model.temperature = database.GetTemperatureLast()[0,1];
                 //settings
                 string[] setting = database.GetSettings(0);
                 model.alarm.upperLimit = setting[1];
