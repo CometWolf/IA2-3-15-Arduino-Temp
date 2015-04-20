@@ -94,135 +94,54 @@ namespace CabinTempArduino
         #endregion
         private void btnFetch_Click(object sender, EventArgs e)
         {
-            rtbDatabaseValues.Clear();
-            string[,] fetchedArray;
+            {
 
-            if (cboAnnotation.Text == "Entries")
-            {
-                if (rbtTemperature.Checked)
+                rtbDatabaseValues.Clear();
+                int fetchLast = Convert.ToInt32(txtFetchLast.Text);
+
+                switch (cboAnnotation.Text)
                 {
-                    rtbDatabaseValues.Clear();
-                    rtbDatabaseValues.Text = "Date \t Time \t Temperature \r\n";
-                    fetchedArray = myDatabase.GetTemperatureLast(Convert.ToInt32(txtFetchLast.Text));
-                    for (int i = 0; i <= fetchedArray.GetUpperBound(0); i++)
-                    {
-                        for (int j = 1; j <= fetchedArray.GetUpperBound(1); j++)
-                        {
-                            rtbDatabaseValues.AppendText(fetchedArray[i, j]);
-                            rtbDatabaseValues.AppendText("\t");
-                        }
-                        rtbDatabaseValues.AppendText("\r\n");
-                    }
+                    case "Entries":
+                        if (rbtTemperature.Checked) FetchTemp(myDatabase.GetTemperatureLast(fetchLast));
+                        else if (rbtError.Checked) FetchAlarm(myDatabase.GetAlarmLast(fetchLast));
+                        else MessageBox.Show("Check off for temperature or error");
+                        break;
+                    case "Day(s)":
+                        if (rbtTemperature.Checked) FetchTemp(myDatabase.GetTemperatureDays(fetchLast));
+                        else if (rbtError.Checked) FetchAlarm(myDatabase.GetAlarmDays(fetchLast));
+                        else MessageBox.Show("Check off for temperature or error");
+                        break;
+                    case "Months(s)":
+                        if (rbtTemperature.Checked) FetchTemp(myDatabase.GetTemperatureMonths(fetchLast));
+                        else if (rbtError.Checked) FetchAlarm(myDatabase.GetAlarmMonths(fetchLast));
+                        else MessageBox.Show("Check off for temperature or error");
+                        break;
+                    default:
+                        break;
                 }
-                else if (rbtError.Checked)
+                if (cboAnnotation.Text == "Continous")
                 {
-                    rtbDatabaseValues.Clear();
-                    rtbDatabaseValues.Text = "Date \t Time \t Temperature \r\n";
-                    fetchedArray = myDatabase.GetAlarmLast(Convert.ToInt32(txtFetchLast.Text));
-                    for (int i = 0; i <= fetchedArray.GetUpperBound(0); i++)
+                    if (btnFetch.Text == "Start")
                     {
-                        for (int j = 1; j <= fetchedArray.GetUpperBound(1); j++)
-                        {
-                            rtbDatabaseValues.AppendText(fetchedArray[i, j]);
-                            rtbDatabaseValues.AppendText("\t");
-                        }
-                        rtbDatabaseValues.AppendText("\r\n");
-                    }
-                }
-                else
-                    throw new Exception("Check off for temperature or error");
-            }
-            else if (cboAnnotation.Text == "Day(s)")
-            {
-                if (rbtTemperature.Checked)
-                {
-                    rtbDatabaseValues.Clear();
-                    rtbDatabaseValues.Text = "Date \t  Time \t Temperature \r\n";
-                    fetchedArray = myDatabase.GetTemperatureDays(Convert.ToInt32(txtFetchLast.Text));
-                    for (int i = 0; i <= fetchedArray.GetUpperBound(0); i++)
-                    {
-                        for (int j = 1; j <= fetchedArray.GetUpperBound(1); j++)
-                        {
-                            rtbDatabaseValues.AppendText(fetchedArray[i, j]);
-                            rtbDatabaseValues.AppendText("\t");
-                        }
-                        rtbDatabaseValues.AppendText("\r\n");
-                    }
-                }
-                else if (rbtError.Checked)
-                {
-                    rtbDatabaseValues.Clear();
-                    fetchedArray = myDatabase.GetAlarmDays(Convert.ToInt32(txtFetchLast.Text));
-                    for (int i = 0; i <= fetchedArray.GetUpperBound(0); i++)
-                    {
-                        for (int j = 1; j <= fetchedArray.GetUpperBound(1); j++)
-                        {
-                            rtbDatabaseValues.AppendText(fetchedArray[i, j]);
-                            rtbDatabaseValues.AppendText("\t");
-                        }
-                        rtbDatabaseValues.AppendText("\r\n");
-                    }
-                }
-                else
-                    throw new Exception("Check off for temperature or error");
-            }
-            else if(cboAnnotation.Text == "Month(s)")
-            {
-                if (rbtTemperature.Checked)
-                {
-                    rtbDatabaseValues.Clear();
-                    rtbDatabaseValues.Text = "Date \t Time \t Temperature \r\n";
-                    fetchedArray = myDatabase.GetTemperatureMonths(Convert.ToInt32(txtFetchLast.Text));
-                    for (int i = 0; i <= fetchedArray.GetUpperBound(0); i++)
-                    {
-                        for (int j = 1; j <= fetchedArray.GetUpperBound(1); j++)
-                        {
-                            rtbDatabaseValues.AppendText(fetchedArray[i, j]);
-                            rtbDatabaseValues.AppendText("\t");
-                        }
-                        rtbDatabaseValues.AppendText("\r\n");
-                    }
-                }
-                else if (rbtError.Checked)
-                {
-                    rtbDatabaseValues.Clear();
-                    rtbDatabaseValues.Text = "Date \t Time \t Temperature \r\n";
-                    fetchedArray = myDatabase.GetAlarmMonths(Convert.ToInt32(txtFetchLast.Text));
-                    for (int i = 0; i <= fetchedArray.GetUpperBound(0); i++)
-                    {
-                        for (int j = 1; j <= fetchedArray.GetUpperBound(1); j++)
-                        {
-                            rtbDatabaseValues.AppendText(fetchedArray[i, j]);
-                            rtbDatabaseValues.AppendText("\t");
-                        }
-                        rtbDatabaseValues.AppendText("\r\n");
-                    }
-                }
-                else
-                    MessageBox.Show("Check off for temperature or error");
-            }
-            else if(cboAnnotation.Text == "Continous")
-            {
-                if (btnFetch.Text == "Start")
-                {
                         continous = true;
                         btnFetch.Text = "Stop";
                         cboAnnotation.Enabled = false;
                         rtbDatabaseValues.Clear();
                         rtbDatabaseValues.Text = "Date \t Time \t Temperature \r\n";
 
-                }
-                else if (btnFetch.Text == "Stop")
-                {
-                    continous = false;
-                    btnFetch.Text = "Start";
-                    cboAnnotation.Enabled = true;
-                    rbtError.Enabled = true;
-                    rbtTemperature.Enabled = true;
+                    }
+                    else if (btnFetch.Text == "Stop")
+                    {
+                        continous = false;
+                        btnFetch.Text = "Start";
+                        cboAnnotation.Enabled = true;
+                        rbtError.Enabled = true;
+                        rbtTemperature.Enabled = true;
+                    }
                 }
             }
         }
-        #region BatterySurvailence
+        #region BatterySurveillance
         private void tmrBatteryStatus_Tick(object sender, EventArgs e)
         {
             prbBatteryStatus.Value = Convert.ToInt32(SystemInformation.PowerStatus.BatteryLifePercent * 100);
@@ -285,7 +204,6 @@ namespace CabinTempArduino
             //END CRITICAL
         }
         #endregion BatterySurvailence
-
         private void cboAnnotation_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cboAnnotation.Text == "Continous")
@@ -401,6 +319,24 @@ namespace CabinTempArduino
             nextLog = nextHours + ":" + nextMinutes;
 
             myDatabase.UpdateSetting(nextLog, 6, 0);
+        }
+        private void FetchTemp(string[,] values, string header = "Time" + "\t" + "Temperature" + "\r\n")
+        {
+            rtbDatabaseValues.Clear();
+            rtbDatabaseValues.Text = header;
+            for (int i = 0; i <= values.GetUpperBound(0); i++)
+            {
+                for (int j = 0; j <= values.GetUpperBound(1); j++)
+                {
+                    rtbDatabaseValues.AppendText(values[i, j]);
+                    rtbDatabaseValues.AppendText("\t");
+                }
+                rtbDatabaseValues.AppendText("\r\n");
+            }
+        }
+        private void FetchAlarm(string[,] values, string header = "Time" + "\t" + "Temperature" + "\r\n")
+        {
+            FetchTemp(values, header);
         }
         #endregion
     }
