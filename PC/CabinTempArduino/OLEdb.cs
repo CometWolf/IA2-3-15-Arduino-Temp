@@ -87,9 +87,9 @@ namespace CabinTempArduino
         /// </summary>
         /// <param name="table">Table to read</param>
         /// <param name="value">Values to select as SQL</param>
-        protected static void OpenDb(string table, string value)
+        protected static void OpenDb(string table, string columns)
         {
-            myAccessCommand.CommandText = string.Format("SELECT {0} FROM {1}", value, table);
+            myAccessCommand.CommandText = string.Format("SELECT {0} FROM {1}", columns, table);
             myDatatable = new DataTable();
             myAccessConnection.Open();
             myDataAdapter.Fill(myDatatable);
