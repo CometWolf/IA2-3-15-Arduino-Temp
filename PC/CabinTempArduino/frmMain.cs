@@ -54,6 +54,8 @@ namespace CabinTempArduino
                 rbtTemperature.Enabled = false;
                 txtFetchLast.ReadOnly = true;
                 settings = myDatabase.GetSettings(0);
+                myDatabase.UpdateSetting("false", 8, 0);
+                nextLogTime();
             }
             //END GUI
 
@@ -258,7 +260,17 @@ namespace CabinTempArduino
                     }
                     else if (settings[7] == "true")
                     {
-                        if (DateTime.Now.ToString("HH:mm") == settings[6])
+                        if(interval == 1440)
+                        {
+                            if (DateTime.Now.ToString("HH:mm") == settings[6] && settings[8] == "false")
+                            {
+                                temperatureLogging();
+                                loggedMinute = Convert.ToInt32(DateTime.Now.ToString("mm"));
+                            }
+                            else if ((settings[8] == "true") && (Convert.ToInt32(DateTime.Now.ToString("mm")) == loggedMinute + 1))
+                                myDatabase.UpdateSetting("false", 8, 0);
+                        }
+                        else if (DateTime.Now.ToString("HH:mm") == settings[6] && interval != 1440)
                         {
                             nextLogTime();
                             temperatureLogging();
@@ -291,10 +303,8 @@ namespace CabinTempArduino
             nextLogTime();
             //logged = false;
             myDatabase.UpdateSetting("false", 8, 0);
-
         }
-
-        private void nextLogTime()
+        public void nextLogTime()
         {
             settings = myDatabase.GetSettings(0);
             int interval = Convert.ToInt32(settings[5]);

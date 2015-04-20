@@ -140,9 +140,15 @@ namespace CabinTempArduino
                                     MessageBox.Show("Do not go above 24 hours.");
                                 else if (Convert.ToString(value * 60) == usedValue[5])
                                     MessageBox.Show("Interval already in use.");
+                                else if (value * 60 == 1440)
+                                {
+                                    settings.UpdateSetting("1440", 5, 0);
+                                    main.nextLogTime();
+                                    settings.UpdateSetting("true", 7, 0);
+                                }
                                 else
                                 {
-                                    setNewInterval(Convert.ToString(value*60), "true");
+                                    setNewInterval(Convert.ToString(value * 60), "true");
                                 }
                             }
                             else if (rbtMinutes.Checked)
@@ -151,6 +157,12 @@ namespace CabinTempArduino
                                     MessageBox.Show("Do not go above 24 hours.");
                                 else if (Convert.ToString(value) == usedValue[5])
                                     MessageBox.Show("Interval already in use.");
+                                else if (value == 1440)
+                                {
+                                    settings.UpdateSetting("1440", 5, 0);
+                                    main.nextLogTime();
+                                    settings.UpdateSetting("true", 7, 0);
+                                }
                                 else
                                 {
                                     setNewInterval(Convert.ToString(value), "true");
