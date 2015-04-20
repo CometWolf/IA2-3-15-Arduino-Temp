@@ -20,7 +20,6 @@ namespace CabinTempArduino
         bool criticalCharge = true;
         bool fiftyCharge = true;
         bool charging = true;
-        bool logged = false;
         #endregion
 
         #region TempLog
@@ -30,6 +29,7 @@ namespace CabinTempArduino
         string nextHours = "";
         bool continous = false;
         string[] settings;
+        bool logged = false;
         #endregion
         
 
@@ -64,11 +64,6 @@ namespace CabinTempArduino
         {
             get { return spComPort.PortName; }
             set { spComPort.PortName = value; }
-        }
-        public bool Logged
-        {
-            get { return logged; }
-            set { logged = value; }
         }
         #endregion
         #region Objects
@@ -210,17 +205,11 @@ namespace CabinTempArduino
             {
                 if (btnFetch.Text == "Start")
                 {
-                    if (rbtTemperature.Checked || rbtError.Checked)
-                    {
                         continous = true;
                         btnFetch.Text = "Stop";
                         cboAnnotation.Enabled = false;
-                        rbtError.Enabled = false;
-                        rbtTemperature.Enabled = false;
                         rtbDatabaseValues.Clear();
-                    }
-                    else
-                        MessageBox.Show("Check off for temperature or error");
+                        rtbDatabaseValues.Text = "Date \t Time \t Temperature \r\n";
 
                 }
                 else if (btnFetch.Text == "Stop")
@@ -263,7 +252,7 @@ namespace CabinTempArduino
             {
                 for (int i = 0; i <= emails.GetUpperBound(0); i++)
                 {
-                    mail.Send(emails[i, 5], "PC Lader ikke", "PCen lader ikke lenger. Enten er støpselet dratt ut eller laderen defekt.");
+                    mail.Send(emails[i, 5], "PC Lader ikke", "PCen lader ikke lenger. Enten er støpselet dratt ut, strømmen gått eller laderen defekt.");
                 }
                 charging = false;
             }
@@ -304,6 +293,8 @@ namespace CabinTempArduino
                 rbtError.Enabled = true;
                 rbtTemperature.Enabled = true;
                 txtFetchLast.ReadOnly = true;
+                rbtError.Enabled = false;
+                rbtTemperature.Enabled = false;
                 btnFetch.Text = "Start";
                 btnFetch.Enabled = true;
             }
@@ -324,34 +315,27 @@ namespace CabinTempArduino
                 settings = myDatabase.GetSettings(0);
                 int interval = Convert.ToInt32(settings[5]);
 
-                    if (interval == 15 && settings[7] == "false")
+                    if (settings[7] == "false")
                     {
-                        if (((Convert.ToInt32(DateTime.Now.ToString("mm")) == 00) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15) ||
-                            (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 45)) && !logged)
+                        if (interval == 15 && ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 52) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15) ||
+                            (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 45)) 
+                            && settings[8] == "false")
                         {
                             temperatureLogging();
                         }
-                        else if (((Convert.ToInt32(DateTime.Now.ToString("mm")) == 01) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 16) ||
-                            (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 46)) && logged)
-                            logged = false;
-                    }
-                    else if (interval == 30 && settings[7] == "false")
-                    {
-                        if (((Convert.ToInt32(DateTime.Now.ToString("mm")) == 37) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30)) && !logged)
+                        else if (interval == 30 && ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 00) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30))
+                            && settings[8] == "false")
                         {
                             temperatureLogging();
                         }
-                        else if (((Convert.ToInt32(DateTime.Now.ToString("mm")) == 38) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31)) && logged)
-                            logged = false;
-                    }
-                    else if (interval == 60 && settings[7] == "false")
-                    {
-                        if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && !logged)
+                        else if (interval == 60 && Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && settings[8] == "false")
                         {
                             temperatureLogging();
                         }
-                        else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == 01 && logged)
-                            logged = false;
+                        else if (((Convert.ToInt32(DateTime.Now.ToString("mm")) == 53) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 16) ||
+                                (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 46)) 
+                            && settings[8] == "true")
+                            myDatabase.UpdateSetting("false", 8, 0);
                     }
                     else if (settings[7] == "true")
                     {
@@ -373,22 +357,21 @@ namespace CabinTempArduino
         private void temperatureLogging()
         {
             myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
-            logged = true;
             if(continous)
             {
                 string[,] lastValue;
-                if(rbtTemperature.Checked)
-                {
-                    lastValue = myDatabase.GetTemperatureLast();
-                    rtbDatabaseValues.Text = lastValue[0,1] +"\t"+ lastValue[0,2] +"\r\n"+rtbDatabaseValues.Text;
-                }
+                lastValue = myDatabase.GetTemperatureLast();
+                rtbDatabaseValues.AppendText(lastValue[0,1] +"\t"+ lastValue[0,2] +"\r\n");
             }
+            //logged = true;
+            myDatabase.UpdateSetting("true", 8, 0);
         }
         public void newInterval()
         {
             myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
             nextLogTime();
-            logged = false;
+            //logged = false;
+            myDatabase.UpdateSetting("false", 8, 0);
 
         }
 

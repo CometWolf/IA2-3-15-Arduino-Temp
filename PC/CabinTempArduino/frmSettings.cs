@@ -86,33 +86,42 @@ namespace CabinTempArduino
             if (cboComPort.Text == "Ports")
                 btnComPort.Enabled = false;
             else
-            btnComPort.Enabled = true;
+                btnComPort.Enabled = true;
         }
 
         private void btnInterval_Click(object sender, EventArgs e)
         {
             try
             {
+                string[] usedValue = settings.GetSettings(0);
+
                 if (cboPreset.Text == "60 minutes")
                 {
-                    settings.UpdateSetting("60", 5, 0);
-                    settings.UpdateSetting("false", 7, 0);
-                    main.newInterval();
-                    MessageBox.Show("Interval successfully changes.");
+                    if (usedValue[5] == "60")
+                        MessageBox.Show("Interval already in use.");
+                    else
+                    {
+                        setNewInterval("60", "false");
+                    }
+
                 }
                 else if (cboPreset.Text == "30 minutes")
                 {
-                    settings.UpdateSetting("30", 5, 0);
-                    settings.UpdateSetting("false", 7, 0);
-                    main.newInterval();
-                    MessageBox.Show("Interval successfully changes.");
+                    if (usedValue[5] == "30")
+                        MessageBox.Show("Interval already in use.");
+                    else
+                    {
+                        setNewInterval("30", "false");
+                    }
                 }
                 else if (cboPreset.Text == "15 minutes")
                 {
-                    settings.UpdateSetting("15", 5, 0);
-                    settings.UpdateSetting("false", 7, 0);
-                    main.newInterval();
-                    MessageBox.Show("Interval successfully changes.");
+                    if (usedValue[5] == "15")
+                        MessageBox.Show("Interval already in use.");
+                    else
+                    {
+                        setNewInterval("15", "false");
+                    }
                 }
                 else if (cboPreset.Text == "Custom")
                 {
@@ -129,24 +138,22 @@ namespace CabinTempArduino
                             {
                                 if (value > 24)
                                     MessageBox.Show("Do not go above 24 hours.");
+                                else if (Convert.ToString(value * 60) == usedValue[5])
+                                    MessageBox.Show("Interval already in use.");
                                 else
                                 {
-                                    settings.UpdateSetting(Convert.ToString(value * 60), 5, 0);
-                                    settings.UpdateSetting("true", 7, 0);
-                                    main.newInterval();
-                                    MessageBox.Show("Interval successfully changed.");
+                                    setNewInterval(Convert.ToString(value*60), "true");
                                 }
                             }
                             else if (rbtMinutes.Checked)
                             {
                                 if (value > 1440)
                                     MessageBox.Show("Do not go above 24 hours.");
+                                else if (Convert.ToString(value) == usedValue[5])
+                                    MessageBox.Show("Interval already in use.");
                                 else
                                 {
-                                    settings.UpdateSetting(Convert.ToString(value), 5, 0);
-                                    settings.UpdateSetting("true", 7, 0);
-                                    main.newInterval();
-                                    MessageBox.Show("Interval successfully changed.");
+                                    setNewInterval(Convert.ToString(value), "true");
                                 }
                             }
                         }
@@ -159,6 +166,13 @@ namespace CabinTempArduino
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        private void setNewInterval(string newInterval, string custom)
+        {
+            settings.UpdateSetting(newInterval, 5, 0);
+            settings.UpdateSetting(custom, 7, 0);
+            main.newInterval();
+            MessageBox.Show("Interval successfully changed.");
         }
     }
 }
