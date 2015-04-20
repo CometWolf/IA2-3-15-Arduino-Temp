@@ -287,6 +287,7 @@
             this.Controls.Add(this.txtCurrent);
             this.Controls.Add(this.grbBatteryStatus);
             this.Name = "frmMain";
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.grbBatteryStatus.ResumeLayout(false);
             this.grbBatteryStatus.PerformLayout();
             this.grbFetchingValues.ResumeLayout(false);

@@ -16,10 +16,13 @@ namespace CabinTempArduino
 
         public Arduino(int baudrate, string portname)
         {
-            this.baudrate = baudrate;
-            port = new SerialPort(portname, baudrate);
-            port.Open();
-            port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
+                this.baudrate = baudrate;
+                port = new SerialPort(portname, baudrate);
+                if (!port.IsOpen)
+                {
+                    port.Open();
+                }
+                port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
         }
 
         public string Received()
@@ -43,7 +46,6 @@ namespace CabinTempArduino
 
         public void Send(string text)
         {
-            port.Open();
             port.WriteLine(text);
         }
 

@@ -17,24 +17,24 @@ namespace CabinTempArduino
     {
         #region Variables
         #region Battery
-        bool criticalCharge = true;
-        bool fiftyCharge = true;
-        bool charging = true;
+        private static bool criticalCharge = true;
+        private static bool fiftyCharge = true;
+        private static bool charging = true;
         #endregion
 
         #region TempLog
-        string nextLog = "";
-        int loggedMinute = 0;
-        string nextMinutes = "";
-        string nextHours = "";
-        bool continous = false;
+        private static string nextLog = "";
+        private static int loggedMinute = 0;
+        private static string nextMinutes = "";
+        private static string nextHours = "";
+        private static bool continous = false;
         string[] settings;
-        //bool logged = false;
+        private static bool logged = false;
         #endregion
 
         #region ArduinoTemp
-        FurnaceController Temp;
-        string arduinoPort = "COM1";
+        private static string arduinoPort = "";
+        private static bool portSet = false;
         #endregion
 
         #endregion
@@ -50,6 +50,7 @@ namespace CabinTempArduino
         {
             InitializeComponent();
             SetWindowTheme(prbBatteryStatus.Handle, "", ""); //Disable Visual Styles ProgressBar
+
             //GUI
             if (cboAnnotation.Text == "Annotation")
             {
@@ -57,20 +58,17 @@ namespace CabinTempArduino
                 rbtError.Enabled = false;
                 rbtTemperature.Enabled = false;
                 txtFetchLast.ReadOnly = true;
-                settings = myDatabase.GetSettings(0);
-                myDatabase.UpdateSetting("false", 8, 0);
-                nextLogTime();
             }
             //END GUI
 
+            settings = myDatabase.GetSettings(0);
+            myDatabase.UpdateSetting("false", 8, 0);
+            nextLogTime();
+
+            arduinoPort = settings[9];
         }
         #endregion
         #region Properties
-        public string ComPort
-        {
-            get { return arduinoPort; }
-            set { arduinoPort = value; }
-        }
 
         public bool StartArduinoTimer
         {
@@ -79,6 +77,7 @@ namespace CabinTempArduino
         #endregion
         #region Objects
         Database myDatabase = new Database("ArduinoTemperaturMåling.accdb");
+        FurnaceController Temp;
         E_post mail = new E_post();
         Random rand = new Random();
         #endregion
@@ -247,25 +246,25 @@ namespace CabinTempArduino
 
                     if (settings[7] == "false")
                     {
-                        if (interval == 15 && ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 52) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15) ||
-                            (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 45)) 
-                            && settings[8] == "false")
+                        if (interval == 15 && ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 12) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15) ||
+                            (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 45))
+                            && !logged)
                         {
                             temperatureLogging();
                         }
                         else if (interval == 30 && ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 00) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30))
-                            && settings[8] == "false")
+                            && !logged)
                         {
                             temperatureLogging();
                         }
-                        else if (interval == 60 && Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && settings[8] == "false")
+                        else if (interval == 60 && Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && !logged)
                         {
                             temperatureLogging();
                         }
-                        else if (((Convert.ToInt32(DateTime.Now.ToString("mm")) == 53) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 16) ||
-                                (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 46)) 
-                            && settings[8] == "true")
-                            myDatabase.UpdateSetting("false", 8, 0);
+                        else if (((Convert.ToInt32(DateTime.Now.ToString("mm")) == 13) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 16) ||
+                                (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 46))
+                            && logged)
+                            logged = false; //myDatabase.UpdateSetting("false", 8, 0);
                     }
                     else if (settings[7] == "true")
                     {
@@ -303,8 +302,8 @@ namespace CabinTempArduino
                 lastValue = myDatabase.GetTemperatureLast();
                 rtbDatabaseValues.AppendText(lastValue[0,1] +"\t"+ lastValue[0,2] +"\r\n");
             }
-            //logged = true;
-            myDatabase.UpdateSetting("true", 8, 0);
+            logged = true;
+            //myDatabase.UpdateSetting("true", 8, 0);
         }
         public void newInterval()
         {
@@ -363,16 +362,36 @@ namespace CabinTempArduino
         private void tmrArduino_Tick(object sender, EventArgs e)
         {
             settings = myDatabase.GetSettings(0);
+
             try
             {
-                Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),
-                                             Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, arduinoPort);
+                settings = myDatabase.GetSettings(0);
+
+                if (arduinoPort != settings[9])
+                {
+                    Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),
+                                                 Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, settings[9]);
+                    arduinoPort = settings[9];
+                }
                 txtCurrent.Text = Temp.GetTemp("TEMP");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                tmrArduino.Stop();
-                txtCurrent.Text = "Sett port in settings";
+                txtCurrent.Text = "Set port in settings";
+            }
+        }
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+            try 
+            {
+                Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),
+                                             Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, settings[9]);
+                arduinoPort = settings[9];
+            }
+            catch(Exception)
+            {
+                txtCurrent.Text = "Set port in settings";
             }
         }
     }
