@@ -278,27 +278,6 @@ namespace CabinTempArduino
             }
         }
         /// <summary>
-        /// Signs alarm with the specified Id
-        /// </summary>
-        /// <param name="AlarmId">Id to sign</param>
-        public void SignAlarm(string AlarmId) {
-            try {
-                OpenDb(subscriberTable);
-
-                string updateQuery = string.Format((
-                    "UPDATE {0} SET [Status]='{1}' WHERE [AlarmId] = '{2}'"),
-                    alarmTable, 1, AlarmId);
-
-                CloseDbMan(updateQuery);
-
-            } catch (Exception ex) {
-
-                throw ex;
-            } finally {
-                myAccessConnection.Close();
-            }
-        }
-        /// <summary>
         /// Updates status of alarms with the specified Id
         /// </summary>
         /// <param name="AlarmId">Id to sign</param>

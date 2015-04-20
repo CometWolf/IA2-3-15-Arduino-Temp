@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.OleDb;
 
-namespace WebApplication6.Models
+namespace WebApplication6.Classes
 {
     class OLEdb
     {

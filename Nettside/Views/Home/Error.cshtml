@@ -1,0 +1,10 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">Følgende feil oppstod mens forespørselen din ble behandlet.</h2>
+<h2 class="text-danger">@Request.QueryString["e"]</h2>
+

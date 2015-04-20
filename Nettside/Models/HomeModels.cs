@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace WebApplication6.Models {
-    public class MainViewModel {
+    public class HomeViewModel {
         public string temperature;
         public string updateInterval;
         public class Furnace {
