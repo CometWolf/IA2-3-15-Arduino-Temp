@@ -71,7 +71,7 @@ namespace CabinTempArduino
                 if (cboComPort.Text != "Ports")
                 {
                     main.ComPort = cboComPort.Text;
-                    settings.UpdateSetting(cboComPort.Text, 6, 0);
+                    main.StartArduinoTimer = true;
                     MessageBox.Show("Port successfully changed");
                 }
             }

@@ -30,14 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.grbBatteryStatus = new System.Windows.Forms.GroupBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblStatusStatic = new System.Windows.Forms.Label();
             this.prbBatteryStatus = new System.Windows.Forms.ProgressBar();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtCurrent = new System.Windows.Forms.TextBox();
             this.lblCurrentTemp = new System.Windows.Forms.Label();
             this.rtbDatabaseValues = new System.Windows.Forms.RichTextBox();
             this.lblFetchedValuesDB = new System.Windows.Forms.Label();
@@ -60,6 +60,7 @@
             this.spComPort = new System.IO.Ports.SerialPort(this.components);
             this.tmrBatteryStatus = new System.Windows.Forms.Timer(this.components);
             this.tmrLogTemperature = new System.Windows.Forms.Timer(this.components);
+            this.tmrArduino = new System.Windows.Forms.Timer(this.components);
             this.grbBatteryStatus.SuspendLayout();
             this.grbFetchingValues.SuspendLayout();
             this.grbEdit.SuspendLayout();
@@ -97,11 +98,11 @@
             this.prbBatteryStatus.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.prbBatteryStatus.Value = 100;
             // 
-            // textBox1
+            // txtCurrent
             // 
-            resources.ApplyResources(this.textBox1, "textBox1");
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
+            resources.ApplyResources(this.txtCurrent, "txtCurrent");
+            this.txtCurrent.Name = "txtCurrent";
+            this.txtCurrent.ReadOnly = true;
             // 
             // lblCurrentTemp
             // 
@@ -235,23 +236,27 @@
             // chartFetchedValues
             // 
             resources.ApplyResources(this.chartFetchedValues, "chartFetchedValues");
-            chartArea1.Name = "ChartArea1";
-            this.chartFetchedValues.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            legend1.Position.Auto = false;
-            legend1.Position.Height = 4F;
-            legend1.Position.Width = 24.92401F;
-            legend1.Position.X = 44F;
-            legend1.Position.Y = 95F;
-            legend1.TitleAlignment = System.Drawing.StringAlignment.Near;
-            this.chartFetchedValues.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.chartFetchedValues.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            legend2.Position.Auto = false;
+            legend2.Position.Height = 4F;
+            legend2.Position.Width = 24.92401F;
+            legend2.Position.X = 44F;
+            legend2.Position.Y = 95F;
+            legend2.TitleAlignment = System.Drawing.StringAlignment.Near;
+            this.chartFetchedValues.Legends.Add(legend2);
             this.chartFetchedValues.Name = "chartFetchedValues";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.LegendText = "#SERIESNAME";
-            series1.Name = "Temp.";
-            this.chartFetchedValues.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.LegendText = "#SERIESNAME";
+            series2.Name = "Temp.";
+            this.chartFetchedValues.Series.Add(series2);
+            // 
+            // spComPort
+            // 
+            this.spComPort.PortName = "COM6";
             // 
             // tmrBatteryStatus
             // 
@@ -265,6 +270,11 @@
             this.tmrLogTemperature.Interval = 500;
             this.tmrLogTemperature.Tick += new System.EventHandler(this.tmrLogTemperature_Tick);
             // 
+            // tmrArduino
+            // 
+            this.tmrArduino.Enabled = true;
+            this.tmrArduino.Tick += new System.EventHandler(this.tmrArduino_Tick);
+            // 
             // frmMain
             // 
             resources.ApplyResources(this, "$this");
@@ -274,7 +284,7 @@
             this.Controls.Add(this.grbFetchingValues);
             this.Controls.Add(this.lblFetchedValuesDB);
             this.Controls.Add(this.lblCurrentTemp);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtCurrent);
             this.Controls.Add(this.grbBatteryStatus);
             this.Name = "frmMain";
             this.grbBatteryStatus.ResumeLayout(false);
@@ -295,7 +305,7 @@
 
         private System.Windows.Forms.GroupBox grbBatteryStatus;
         private System.Windows.Forms.ProgressBar prbBatteryStatus;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtCurrent;
         private System.Windows.Forms.Label lblCurrentTemp;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Label lblStatusStatic;
@@ -320,6 +330,7 @@
         private System.Windows.Forms.Timer tmrLogTemperature;
         private System.Windows.Forms.RadioButton rbtError;
         private System.Windows.Forms.RadioButton rbtTemperature;
+        private System.Windows.Forms.Timer tmrArduino;
     }
 }
 

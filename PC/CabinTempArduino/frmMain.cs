@@ -29,9 +29,12 @@ namespace CabinTempArduino
         string nextHours = "";
         bool continous = false;
         string[] settings;
-        bool logged = false;
+        //bool logged = false;
         #endregion
-        
+
+        #region ArduinoTemp
+        FurnaceController Temp;
+        #endregion
 
         #endregion
         #region Disable Visual Styles
@@ -66,6 +69,11 @@ namespace CabinTempArduino
         {
             get { return spComPort.PortName; }
             set { spComPort.PortName = value; }
+        }
+
+        public bool StartArduinoTimer
+        {
+            set { tmrArduino.Enabled = value; }
         }
         #endregion
         #region Objects
@@ -350,5 +358,21 @@ namespace CabinTempArduino
             FetchTemp(values, header);
         }
         #endregion
+
+        private void tmrArduino_Tick(object sender, EventArgs e)
+        {
+            settings = myDatabase.GetSettings(0);
+            try
+            {
+                Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),
+                                             Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, "COM3");
+                txtCurrent.Text = Temp.GetTemp("TEMP");
+            }
+            catch(Exception ex)
+            {
+                tmrArduino.Stop();
+                txtCurrent.Text = "Sett port in settings";
+            }
+        }
     }
 }
