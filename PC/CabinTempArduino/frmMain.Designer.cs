@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.grbBatteryStatus = new System.Windows.Forms.GroupBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblStatusStatic = new System.Windows.Forms.Label();
@@ -236,23 +236,23 @@
             // chartFetchedValues
             // 
             resources.ApplyResources(this.chartFetchedValues, "chartFetchedValues");
-            chartArea2.Name = "ChartArea1";
-            this.chartFetchedValues.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            legend2.Position.Auto = false;
-            legend2.Position.Height = 4F;
-            legend2.Position.Width = 24.92401F;
-            legend2.Position.X = 44F;
-            legend2.Position.Y = 95F;
-            legend2.TitleAlignment = System.Drawing.StringAlignment.Near;
-            this.chartFetchedValues.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.chartFetchedValues.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            legend1.Position.Auto = false;
+            legend1.Position.Height = 4F;
+            legend1.Position.Width = 24.92401F;
+            legend1.Position.X = 44F;
+            legend1.Position.Y = 95F;
+            legend1.TitleAlignment = System.Drawing.StringAlignment.Near;
+            this.chartFetchedValues.Legends.Add(legend1);
             this.chartFetchedValues.Name = "chartFetchedValues";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.LegendText = "#SERIESNAME";
-            series2.Name = "Temp.";
-            this.chartFetchedValues.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.LegendText = "#SERIESNAME";
+            series1.Name = "Temp.";
+            this.chartFetchedValues.Series.Add(series1);
             // 
             // spComPort
             // 

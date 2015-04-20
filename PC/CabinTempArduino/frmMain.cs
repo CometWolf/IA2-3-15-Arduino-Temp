@@ -34,6 +34,7 @@ namespace CabinTempArduino
 
         #region ArduinoTemp
         FurnaceController Temp;
+        string arduinoPort = "COM1";
         #endregion
 
         #endregion
@@ -67,8 +68,8 @@ namespace CabinTempArduino
         #region Properties
         public string ComPort
         {
-            get { return spComPort.PortName; }
-            set { spComPort.PortName = value; }
+            get { return arduinoPort; }
+            set { arduinoPort = value; }
         }
 
         public bool StartArduinoTimer
@@ -365,7 +366,7 @@ namespace CabinTempArduino
             try
             {
                 Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),
-                                             Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, "COM3");
+                                             Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, arduinoPort);
                 txtCurrent.Text = Temp.GetTemp("TEMP");
             }
             catch(Exception ex)
