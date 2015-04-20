@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication6.Classes;
 
 namespace WebApplication6.Controllers
 {
     public class LoggController : Controller
     {
+        Database database = new Database("");
         // GET: Logg
         public ActionResult Index()
         {
@@ -19,5 +21,9 @@ namespace WebApplication6.Controllers
             ViewBag.Message = "Alarm og temperatur logg";
             return View();
         }
+
+        //public void GetLogg(string date) {
+            //database.
+        //}
     }
 }

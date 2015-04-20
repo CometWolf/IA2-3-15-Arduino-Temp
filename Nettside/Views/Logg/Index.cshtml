@@ -1,7 +1,20 @@
-﻿
+﻿<head>
+
+</head>
 @{
     ViewBag.Title = "Logg";
 }
 
-<h2>Logg</h2>
+<h1>Logg</h1>
 
+
+<form action='@Url.Action("GetLogg","Logg")' method='post'>
+    Velg dato:
+    <input type="date" name="date">
+    <input type="submit" value="Submit">
+</form>
+
+
+<textarea>
+    This is where the user can enter text...
+</textarea>
