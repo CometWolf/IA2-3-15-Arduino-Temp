@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace CabinTempArduino
 {
     public partial class frmMain : Form
     {
         #region Variables
-
         #region Battery
         bool criticalCharge = true;
         bool fiftyCharge = true;
@@ -29,8 +29,6 @@ namespace CabinTempArduino
         string nextMinutes = "";
         string nextHours = "";
         bool continous = false;
-        bool newInterval = false;
-        bool regularLog = true;
         string[] settings;
         #endregion
         
@@ -66,11 +64,6 @@ namespace CabinTempArduino
         {
             get { return spComPort.PortName; }
             set { spComPort.PortName = value; }
-        }
-        public bool NewInterval
-        {
-            get { return newInterval; }
-            set { newInterval = value; }
         }
         public bool Logged
         {
@@ -328,20 +321,9 @@ namespace CabinTempArduino
         {
             try
             {
-                frmSettings settingsInterval = new frmSettings();
                 settings = myDatabase.GetSettings(0);
                 int interval = Convert.ToInt32(settings[5]);
 
-                if (NewInterval && logged == false)
-                {
-                    nextLog = "";
-                    temperatureLogging();
-                    regularLog = false;
-                    loggedMinute = Convert.ToInt32(DateTime.Now.ToString("mm"));
-                    settingsInterval.Lockdown(); //Brker lockdown for å sørge for at man ikke kan sette ny interval for fort. Denne funksjonen funker ikke.
-                }
-                else if (!NewInterval && regularLog)
-                {
                     if (interval == 15 && settings[7] == "false")
                     {
                         if (((Convert.ToInt32(DateTime.Now.ToString("mm")) == 00) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15) ||
@@ -373,70 +355,13 @@ namespace CabinTempArduino
                     }
                     else if (settings[7] == "true")
                     {
-                        int hours = interval / 60;
-                        int minutes = interval % 60;
-
-                        int hoursNow = Convert.ToInt32(DateTime.Now.ToString("HH"));
-                        int minutesNow = Convert.ToInt32(DateTime.Now.ToString("mm"));
-
-                        if (nextLog == "")
+                        if (DateTime.Now.ToString("HH:mm") == settings[6])
                         {
-                            nextHours = Convert.ToString(hoursNow + hours);
-                            nextMinutes = Convert.ToString(minutesNow + minutes);
-
-                            if (Convert.ToInt32(nextHours) >= 24)
-                                nextHours = (Convert.ToInt32(nextHours) % 24).ToString();
-                            if (Convert.ToInt32(nextMinutes) >= 60)
-                                nextMinutes = (Convert.ToInt32(nextMinutes) % 60).ToString();
-                            if (nextHours.Length == 1)
-                                nextHours = "0" + nextHours;
-                            if (nextMinutes.Length == 1)
-                                nextMinutes = "0" + nextMinutes;
-
-                            nextLog = nextHours + ":" + nextMinutes;
-
-                            myDatabase.UpdateSetting(nextLog, 6, 0);
-                            
-                            loggedMinute = minutesNow;
-                        }
-
-                        else if (DateTime.Now.ToString("HH:mm") == settings[6] && !logged)
-                        {
-                            nextHours = Convert.ToString(hoursNow + hours);
-                            nextMinutes = Convert.ToString(minutesNow + minutes);
-
-                            if (Convert.ToInt32(nextHours) >= 24)
-                                nextHours = (Convert.ToInt32(nextHours) % 24).ToString();
-                            if (Convert.ToInt32(nextMinutes) >= 60)
-                                nextMinutes = (Convert.ToInt32(nextMinutes) % 60).ToString();
-                            if (nextHours.Length == 1)
-                                nextHours = "0" + nextHours;
-                            if (nextMinutes.Length == 1)
-                                nextMinutes = "0" + nextMinutes;
-
-                            nextLog = nextHours + ":" + nextMinutes;
-
-                            myDatabase.UpdateSetting(nextLog, 6, 0);
-
-                            loggedMinute = minutesNow;
+                            nextLogTime();
                             temperatureLogging();
-                        }
-                        else if (Convert.ToInt32(DateTime.Now.ToString("mm")) == (loggedMinute + 1) && logged)
-                        {
-                            nextLog = "";
-                            logged = false;
                         }
                     }
                 }
-                else if (logged && Convert.ToInt32(DateTime.Now.ToString("mm")) == (loggedMinute + 1))
-                {
-                    NewInterval = false;
-                    regularLog = true;
-                    logged = false;
-                    settingsInterval.Lockdown(); //lockdown løses opp og interval kan byttes.
-                }
-                
-            }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
@@ -458,6 +383,41 @@ namespace CabinTempArduino
                     rtbDatabaseValues.Text = lastValue[0,1] +"\t"+ lastValue[0,2] +"\r\n"+rtbDatabaseValues.Text;
                 }
             }
+        }
+        public void newInterval()
+        {
+            myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
+            nextLogTime();
+            logged = false;
+
+        }
+
+        private void nextLogTime()
+        {
+            settings = myDatabase.GetSettings(0);
+            int interval = Convert.ToInt32(settings[5]);
+
+            int hours = interval / 60;
+            int minutes = interval % 60;
+
+            int hoursNow = Convert.ToInt32(DateTime.Now.ToString("HH"));
+            int minutesNow = Convert.ToInt32(DateTime.Now.ToString("mm"));
+
+            nextHours = Convert.ToString(hoursNow + hours);
+            nextMinutes = Convert.ToString(minutesNow + minutes);
+
+            if (Convert.ToInt32(nextHours) >= 24)
+                nextHours = (Convert.ToInt32(nextHours) % 24).ToString();
+            if (Convert.ToInt32(nextMinutes) >= 60)
+                nextMinutes = (Convert.ToInt32(nextMinutes) % 60).ToString();
+            if (nextHours.Length == 1)
+                nextHours = "0" + nextHours;
+            if (nextMinutes.Length == 1)
+                nextMinutes = "0" + nextMinutes;
+
+            nextLog = nextHours + ":" + nextMinutes;
+
+            myDatabase.UpdateSetting(nextLog, 6, 0);
         }
         #endregion
     }
