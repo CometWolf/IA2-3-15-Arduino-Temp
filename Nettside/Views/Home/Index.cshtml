@@ -39,22 +39,26 @@
 <div class="container">
     <center>
         Temperaturen er nå <p id="temp"><strong>@(Model.temperature + "°C")</strong></p>
-        <b> <font color="red">@Model.alarm.message </font> </b>
+        <form id='alarm' action='@Url.Action("SignAlarm", "Home")' method='post' hidden='@Model.alarm.hide'>
+            <b> <font color="red">@Model.alarm.message </font> </b><br hidden="@Model.alarm.hide" />
+            <input type="hidden" name="id" value="@Model.alarm.id"/>
+            <input type='submit' value='Kvitèr alarm' hidden="@Model.alarm.hide" />
+        </form>
 
         <h3>Varslingsgrenser</h3>
         <form id="alarm" action="@Url.Action("UpdateSettings", "Home")" method="post">
             <label>Øvre grense: </label>
-            <input type="number" id="txtAlarmUpperLimit" value="@Model.alarm.upperLimit" name="aUpperLimit" step="0.1" /> <br />
+            <input type="number" id="txtAlarmUpperLimit" value="@Model.alarm.upperLimit" name="aUpperLimit" step="0.1" required/> <br />
             <label>Nedre grense: </label>
-            <input type="number" id="txtAlarmLowerLimit" value="@Model.alarm.lowerLimit" name="aLowerLimit" step="0.1" /> <br />
+            <input type="number" id="txtAlarmLowerLimit" value="@Model.alarm.lowerLimit" name="aLowerLimit" step="0.1" required /> <br />
             <label>Oppdateringsinterval: </label>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="number" id="txtUpdateInterval" value="@Model.updateInterval" name="updateInterval" step="1" min="1" />min. <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="number" id="txtUpdateInterval" value="@Model.updateInterval" name="updateInterval" step="1" min="1" required />min. <br />
 
             <h3>Ovn styring</h3>
             <label>Øvre grense: </label>
-            <input type="number" id="txtFurnaceUpperLimit" name="fUpperLimit" value="@Model.furnace.upperLimit" step="0.1" /> <br />
+            <input type="number" id="txtFurnaceUpperLimit" name="fUpperLimit" value="@Model.furnace.upperLimit" step="0.1" required /> <br />
             <label>Nedre grense: </label>
-            <input type="number" id="txtFurnaceLowerLimit" name="fLowerLimit" value="@Model.furnace.lowerLimit" step="0.1" /> <br />
+            <input type="number" id="txtFurnaceLowerLimit" name="fLowerLimit" value="@Model.furnace.lowerLimit" step="0.1" required /> <br />
             <br />
             <input type="submit" value="Oppdater grenser" />
         </form>
