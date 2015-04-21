@@ -26,69 +26,85 @@ namespace CabinTempArduino
         private double furnaceLowerLimit;
         private double furnaceUpperlimit;
         private bool furnaceActive;
-        #endregion
+        #endregion  
 
         #region Properties
         public double AlarmLowerLimit
         {
             get { return alarmLowerLimit; }
-            set { alarmLowerLimit = value; }
+            set
+            {
+                alarmLowerLimit = value;
+                Send("ALLO" + alarmLowerLimit);
+            }
         }
         public double AlarmUpperLimit
         {
             get { return alarmUpperLimit; }
-            set { alarmUpperLimit = value; }
+            set
+            {
+                alarmUpperLimit = value;
+                Send("ALUP" + alarmUpperLimit);
+            }
         }
         public double FurnaceLowerLimit
         {
             get { return furnaceLowerLimit; }
-            set { furnaceLowerLimit = value; }
+            set 
+            { 
+                furnaceLowerLimit = value;
+                Send("FULO" + furnaceLowerLimit);
+            } 
         }
         public double FurnaceUpperLimit
         {
             get { return furnaceUpperlimit; }
-            set { furnaceUpperlimit = value; }
+            set 
+            { 
+                furnaceUpperlimit = value;
+                Send("FUUP" + furnaceUpperlimit);
+            }
         }
         #endregion
 
         #region Methods
-        public string GetTemp(string tempName)
+        public string GetTemp()
         {
             string temp;
-            Send(tempName);
+            Send("TEMP");
             Thread.Sleep(50);
             temp = Received();
             return temp;
         }
-        public void AlarmReceived(string alarmName)
+        public void AlarmReceived()
         {
-            Send(alarmName);
+            Send("ALOK");
         }
 
-        public string CheckAlarm(string alarmName)
+        public string CheckAlarm()
         {
             string message;
-            Send(alarmName);
+            Send("CHAL");
             Thread.Sleep(50);
             message = Received();
             return message;
         }
-        public void SetAlarmUpper(string alarmName)
-        {
-            Send(alarmName + alarmUpperLimit);
-        }
-        public void SetAlarmLower(string alarmName)
-        {
-            Send(alarmName + alarmLowerLimit);
-        }
-        public void SetFurnaceUpper(string alarmName)
-        {
-            Send(alarmName + furnaceUpperlimit);
-        }
-        public void SetFurnaceLower(string alarmName)
-        {
-            Send(alarmName + furnaceLowerLimit);
-        }
+        //public void SetAlarmUpper(string alarmName)
+        //{
+        //    Send(alarmName + alarmUpperLimit);
+        //}
+        //public void SetAlarmLower(string alarmName)
+        //{
+        //    Send(alarmName + alarmLowerLimit);
+        //}
+        //public void SetFurnaceUpper(string alarmName)
+        //{
+        //    Send(alarmName + furnaceUpperlimit);
+        //}
+        //public void SetFurnaceLower(string alarmName)
+        //{
+        //    Send(alarmName + furnaceLowerLimit);
+        //}
         #endregion
     }
 }
