@@ -295,7 +295,7 @@ namespace CabinTempArduino
         #region Methods
         private void temperatureLogging()
         {
-            myDatabase.LogTemperature(Temp.GetTemp("TEMP"));
+            myDatabase.LogTemperature(Temp.GetTemp());
             if(continous)
             {
                 string[,] lastValue;
@@ -307,7 +307,7 @@ namespace CabinTempArduino
         }
         public void newInterval()
         {
-            myDatabase.LogTemperature(Temp.GetTemp("TEMP"));
+            myDatabase.LogTemperature(Temp.GetTemp());
             nextLogTime();
             logged = false;
             //myDatabase.UpdateSetting("false", 8, 0);
@@ -371,14 +371,12 @@ namespace CabinTempArduino
                                                  Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, settings[9]);
                     arduinoPort = settings[9];
                 }
-                txtCurrent.Text = Temp.GetTemp("TEMP");
-
-                //Temp.SetAlarmLower(settings[4]);
-                //Temp.SetAlarmUpper(settings[1]);
-                //Temp.SetFurnaceLower(settings[3]);
-                //Temp.SetFurnaceUpper(settings[2]);
+                txtCurrent.Text = Temp.GetTemp();
 
                 Temp.AlarmLowerLimit = Convert.ToDouble(settings[4]);
+                Temp.AlarmUpperLimit = Convert.ToDouble(settings[1]);
+                Temp.FurnaceLowerLimit = Convert.ToDouble(settings[3]);
+                Temp.FurnaceUpperLimit = Convert.ToDouble(settings[2]);
 
             }
             catch(NullReferenceException)
