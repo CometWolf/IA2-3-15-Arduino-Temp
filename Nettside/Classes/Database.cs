@@ -162,21 +162,57 @@ namespace WebApplication6.Classes
         /// </summary>
         /// <param name="username">Name to search for</param>
         /// <returns></returns>
-        public string SearchUsername(string username)
+        public bool SearchUsername(string username)
         {
-            int index = 0;
-            string[,] subscribers = GetSubscribers();
-
-            for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+            try
             {
-                if (username == subscribers[i, 3])
-                    goto exit;
-                else
-                    index++;
-            }
+                string connectionstring = String.Format((
+                    "SELECT * FROM {0} WHERE '{2}' = {1}"), 
+                    alarmTable, "Brukernavn", username);
 
-        exit:
-        return subscribers[index,3];
+                OpenDbMan(connectionstring);
+
+                if (myDatatable.Rows.Count > 0)
+                {
+                    return true;
+                }
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
+        }
+        public string SearchUsername(string username, string password)
+        {
+            try
+            {
+                string connectionstring = String.Format((
+                    "SELECT [{2}] FROM {0} WHERE '{1}' = [{2}] OR '{1}' = [{3}] AND '{4}' = [{5}]"),
+                    subscriberTable, username, "Brukernavn", "E-post", password, "Passord");
+
+                OpenDbMan(connectionstring);
+
+                if (myDatatable.Rows.Count > 0)
+                {
+                    return myDatatable.Rows[0][0].ToString();
+                }
+                else return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+            finally
+            {
+                myAccessConnection.Close();
+            }
         }
         /// <summary>
         /// Gets user Id from username
@@ -260,7 +296,8 @@ namespace WebApplication6.Classes
         /// <summary>
         /// Signs all alarms
         /// </summary>
-        public void SignAlarm() {
+        public void SignAlarm() 
+        {
             try {
                 OpenDb(subscriberTable);
 
@@ -280,15 +317,16 @@ namespace WebApplication6.Classes
         /// <summary>
         /// Updates status of alarms with the specified Id
         /// </summary>
-        /// <param name="AlarmId">Id to sign</param>
+        /// <param name="alarmId">Id to sign</param>
         /// <param name="status">New status</param>
-        public void SignAlarm(string AlarmId, int status = 1) {
+        public void SignAlarm(string alarmId, int status = 1) 
+        {
             try {
                 OpenDb(subscriberTable);
 
                 string updateQuery = string.Format((
                     "UPDATE {0} SET [Status]='{1}' WHERE [AlarmId] = '{2}'"),
-                    alarmTable, status, AlarmId);
+                    alarmTable, status, alarmId);
 
                 CloseDbMan(updateQuery);
 

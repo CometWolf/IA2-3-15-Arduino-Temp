@@ -59,19 +59,16 @@ namespace WebApplication6.Controllers
         {
             if (ModelState.IsValid) //login format valid
             {
-                string[,] users = database.GetSubscribers();
-                int debug = users.GetUpperBound(0);
-                for (int i = 0; i <= users.GetUpperBound(0); i++) { //iterate user database
-                    if (users[i,5] == model.Email && users[i,4] == model.Password) { //compare email and password
-                        ApplicationUser user = await UserManager.FindAsync(model.Email, model.Password);
-                        if (user == null) { //user not found in asp database
-                            user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-                            IdentityResult result = await UserManager.CreateAsync(user, model.Password);  //register new user in asp
-                        }
-                        user.UserName = users[i, 3];
-                        await SignInAsync(user, model.RememberMe);
-                        return RedirectToLocal(returnUrl);
+                string username = database.SearchUsername(model.Email,model.Password);
+                if (username != null) { //login success
+                    ApplicationUser user = await UserManager.FindAsync(model.Email, model.Password);
+                    if (user == null) { //user not found in asp database
+                        user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+                        IdentityResult result = await UserManager.CreateAsync(user, model.Password);  //register new user in asp
                     }
+                    user.UserName = username;
+                    await SignInAsync(user, model.RememberMe);
+                    return RedirectToLocal(returnUrl);
                 }
                 ModelState.AddModelError("", "Feil brukernavn eller passord.");
             }

@@ -13,6 +13,8 @@ namespace WebApplication6.Models {
         }
         public Furnace furnace = new Furnace();
         public class Alarm {
+            public bool hide = true;
+            public string id;
             public string upperLimit;
             public string lowerLimit;
             public string message;

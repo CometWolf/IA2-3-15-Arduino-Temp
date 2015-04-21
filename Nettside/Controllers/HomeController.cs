@@ -39,7 +39,7 @@ namespace WebApplication6.Controllers {
                     model.alarm.message = "\n" + alarm[0, 3];
                 } //else no unsigned alarm
                 return View(model);
-            } catch (ExecutionEngineException e){
+            } catch (Exception e){
                 Response.Redirect("~/Home/Error?e=" + e.Message);
                 return null;
             }
