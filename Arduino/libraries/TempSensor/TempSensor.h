@@ -11,6 +11,7 @@ class TempSensor
 	  
 	  byte pin;
     int range;
+    int min;
     
   public:
 	  
