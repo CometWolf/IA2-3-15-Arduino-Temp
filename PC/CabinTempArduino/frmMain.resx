@@ -235,7 +235,7 @@
     <value>6</value>
   </data>
   <data name="txtCurrent.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 25</value>
+    <value>12, 25</value>
   </data>
   <data name="txtCurrent.Size" type="System.Drawing.Size, System.Drawing">
     <value>114, 20</value>
@@ -262,7 +262,7 @@
     <value>True</value>
   </data>
   <data name="lblCurrentTemp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 8</value>
+    <value>15, 9</value>
   </data>
   <data name="lblCurrentTemp.Size" type="System.Drawing.Size, System.Drawing">
     <value>67, 13</value>
