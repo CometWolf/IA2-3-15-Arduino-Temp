@@ -386,7 +386,8 @@ namespace CabinTempArduino
             catch(Exception ex)
             {
                 txtCurrent.Text = "Set port in settings";
-                MessageBox.Show(ex.GetType().ToString());
+                MessageBox.Show(ex.GetType().ToString() + "\r\n" + ex.Message);
+                throw ex;
             }
         }
 
