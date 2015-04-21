@@ -246,7 +246,7 @@ namespace CabinTempArduino
 
                     if (settings[7] == "false")
                     {
-                        if (interval == 15 && ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 12) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15) ||
+                        if (interval == 15 && ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 00) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15) ||
                             (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 45))
                             && !logged)
                         {
@@ -261,7 +261,7 @@ namespace CabinTempArduino
                         {
                             temperatureLogging();
                         }
-                        else if (((Convert.ToInt32(DateTime.Now.ToString("mm")) == 13) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 16) ||
+                        else if (((Convert.ToInt32(DateTime.Now.ToString("mm")) == 01) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 16) ||
                                 (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 46))
                             && logged)
                             logged = false; //myDatabase.UpdateSetting("false", 8, 0);
@@ -295,7 +295,7 @@ namespace CabinTempArduino
         #region Methods
         private void temperatureLogging()
         {
-            myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
+            myDatabase.LogTemperature(Temp.GetTemp("TEMP"));
             if(continous)
             {
                 string[,] lastValue;
@@ -307,10 +307,10 @@ namespace CabinTempArduino
         }
         public void newInterval()
         {
-            myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
+            myDatabase.LogTemperature(Temp.GetTemp("TEMP"));
             nextLogTime();
-            //logged = false;
-            myDatabase.UpdateSetting("false", 8, 0);
+            logged = false;
+            //myDatabase.UpdateSetting("false", 8, 0);
         }
         public void nextLogTime()
         {
@@ -361,8 +361,6 @@ namespace CabinTempArduino
 
         private void tmrArduino_Tick(object sender, EventArgs e)
         {
-            settings = myDatabase.GetSettings(0);
-
             try
             {
                 settings = myDatabase.GetSettings(0);
@@ -374,10 +372,23 @@ namespace CabinTempArduino
                     arduinoPort = settings[9];
                 }
                 txtCurrent.Text = Temp.GetTemp("TEMP");
+
+                //Temp.SetAlarmLower(settings[4]);
+                //Temp.SetAlarmUpper(settings[1]);
+                //Temp.SetFurnaceLower(settings[3]);
+                //Temp.SetFurnaceUpper(settings[2]);
+
+                Temp.AlarmLowerLimit = Convert.ToDouble(settings[4]);
+
             }
-            catch(Exception)
+            catch(NullReferenceException)
+            {
+                txtCurrent.Text = "Arduino is not plugged in";
+            }
+            catch(Exception ex)
             {
                 txtCurrent.Text = "Set port in settings";
+                MessageBox.Show(ex.GetType().ToString());
             }
         }
 
