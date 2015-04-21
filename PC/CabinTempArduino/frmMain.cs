@@ -34,7 +34,6 @@ namespace CabinTempArduino
 
         #region ArduinoTemp
         private static string arduinoPort = "";
-        private static bool portSet = false;
         #endregion
 
         #endregion
@@ -66,13 +65,6 @@ namespace CabinTempArduino
             nextLogTime();
 
             arduinoPort = settings[9];
-        }
-        #endregion
-        #region Properties
-
-        public bool StartArduinoTimer
-        {
-            set { tmrArduino.Enabled = value; }
         }
         #endregion
         #region Objects
@@ -244,6 +236,22 @@ namespace CabinTempArduino
                 settings = myDatabase.GetSettings(0);
                 int interval = Convert.ToInt32(settings[5]);
 
+                //Arduino
+                if (arduinoPort != settings[9])
+                {
+                    Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),
+                                                 Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, settings[9]);
+                    arduinoPort = settings[9];
+                }
+                txtCurrent.Text = Temp.GetTemp();
+
+                Temp.AlarmLowerLimit = Convert.ToDouble(settings[4]);
+                Temp.AlarmUpperLimit = Convert.ToDouble(settings[1]);
+                Temp.FurnaceLowerLimit = Convert.ToDouble(settings[3]);
+                Temp.FurnaceUpperLimit = Convert.ToDouble(settings[2]);
+                //END Arduino
+
+                //Logging
                     if (settings[7] == "false")
                     {
                         if (interval == 15 && ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 00) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15) ||
@@ -284,10 +292,19 @@ namespace CabinTempArduino
                             temperatureLogging();
                         }
                     }
+                //END Logging
                 }
+            catch (NullReferenceException)
+            {
+                txtCurrent.Text = "Set port in settings";
+            }
+            catch (System.IO.IOException)
+            {
+                txtCurrent.Text = "Arduino pulled out";
+            }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.GetType() + "\r\n" + ex.Message);
             }
         }
         #endregion
@@ -377,17 +394,18 @@ namespace CabinTempArduino
                 Temp.AlarmUpperLimit = Convert.ToDouble(settings[1]);
                 Temp.FurnaceLowerLimit = Convert.ToDouble(settings[3]);
                 Temp.FurnaceUpperLimit = Convert.ToDouble(settings[2]);
-
             }
             catch(NullReferenceException)
             {
-                txtCurrent.Text = "Arduino is not plugged in";
+                txtCurrent.Text = "Set port in settings";
+            }
+            catch(System.IO.IOException)
+            {
+                txtCurrent.Text = "Arduino plugged out";
             }
             catch(Exception ex)
             {
-                txtCurrent.Text = "Set port in settings";
                 MessageBox.Show(ex.GetType().ToString() + "\r\n" + ex.Message);
-                throw ex;
             }
         }
 

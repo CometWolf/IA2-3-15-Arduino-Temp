@@ -272,7 +272,6 @@
             // 
             // tmrArduino
             // 
-            this.tmrArduino.Enabled = true;
             this.tmrArduino.Tick += new System.EventHandler(this.tmrArduino_Tick);
             // 
             // frmMain
