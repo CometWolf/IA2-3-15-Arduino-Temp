@@ -9,9 +9,9 @@ const int tempPin = A0;
 const byte furnacePin = 3;
 
 String alarmUpper = "50";
-String alarmLower = "-20";
-String furnaceLower = "-10";
-String furnaceUpper = "0";
+String alarmLower = "-1";
+String furnaceLower = "4";
+String furnaceUpper = "20";
 String checkAlarm = "NOAL";
 float alarmUpperLimit;
 float alarmLowerLimit;
@@ -22,7 +22,7 @@ char temp[5];
 char displayChar[5];
 
 PC pc = PC();
-TempSensor tempSensor(tempPin);
+TempSensor tempSensor(tempPin,-50, 100);
 Furnace furnace(0, -10, furnacePin);
 LiquidCrystal lcd(5,6,9,10,11,12);
 
@@ -30,7 +30,7 @@ void setup()
 {
   pc.begin(9600);
   lcd.begin(16,2);
-  lcd.print("Arduino IA2-3-15");
+  lcd.print("IA 2-3-15");
   lcd.setCursor(0,1);
   lcd.print("Temp:");
   lcd.setCursor(12,1);
