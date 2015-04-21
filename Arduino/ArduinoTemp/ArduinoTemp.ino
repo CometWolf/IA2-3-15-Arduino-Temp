@@ -59,7 +59,7 @@ void loop()
   
   if (checkAlarm == "NOAL")
   {
-    if ((tempValue > alarmUpperLimit)||(tempValue < alarmLowerLimit))
+    if (((tempValue > alarmUpperLimit)||(tempValue < alarmLowerLimit))&&(motatt == ""))
   {
     if((tempValue < alarmLowerLimit)&&(handling != "ALOK"))
       {
