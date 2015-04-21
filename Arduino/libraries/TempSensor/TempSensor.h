@@ -4,21 +4,19 @@
 
 #define TempSensor_h
 
-
-
-
 class TempSensor
 {
   
   private:
 	  
 	  byte pin;
-  
+    int range;
+    
   public:
 	  
 	  float getTemp();
 	  
-	  TempSensor(int pin);
+	  TempSensor(int pin,int min, int max);
 
 };
 
