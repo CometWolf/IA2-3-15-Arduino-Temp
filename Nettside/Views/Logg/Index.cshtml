@@ -1,20 +1,32 @@
-﻿<head>
-
+﻿<head>      
+    <title></title>
 </head>
 @{
     ViewBag.Title = "Logg";
-}
+    }
 
 <h1>Logg</h1>
 
 
 <form action='@Url.Action("GetLogg","Logg")' method='post'>
-    Velg dato:
-    <input type="date" name="date">
-    <input type="submit" value="Submit">
+    <p>Hent verdier:</p>
+    <input type="number" name="input" />                                        @*input selvskrevet i textbox*@
+    <select name="unit">                                                        @*valg i combox*@
+        <option value="entity">Celler</option>
+        <option value="day">Dager</option>
+        <option value="week">Uker</option>
+    </select>
+    <br />
+    <input type="submit" value="Hent">
+    <br />
+    <input type="radio" name="type" value="Temperature" checked>Temperatur      @*type temperatur/alarm*@
+    <br>
+    <input type="radio" name="type" value="Alarm">Alarm
+    <br />
 </form>
 
 
-<textarea>
-    This is where the user can enter text...
-</textarea>
+    <textarea readonly name="txtShowLogg">
+        @Model.data
+
+    </textarea>
