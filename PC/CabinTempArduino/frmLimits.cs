@@ -37,29 +37,37 @@ namespace CabinTempArduino
 
         private void btnSetLimit_Click(object sender, EventArgs e)
         {
-            try
+            int interval = 0;
+
+            int.TryParse(txtValue.Text, out interval);
+
+            if (interval >= 1)
             {
-                switch (cboLimitType.Text)
+                try
                 {
-                    case "Lower limit":
-                        myDatabase.UpdateSetting(txtValue.Text, 3, 0);
-                        break;
-                    case "Upper limit":
-                        myDatabase.UpdateSetting(txtValue.Text, 2, 0);
-                        break;
-                    case "High alarm":
-                        myDatabase.UpdateSetting(txtValue.Text, 1, 0);
-                        break;
-                    case "Low alarm":
-                        myDatabase.UpdateSetting(txtValue.Text, 4, 0);
-                        break;
+                    switch (cboLimitType.Text)
+                    {
+                        case "Lower limit":
+                            myDatabase.UpdateSetting(txtValue.Text, 3, 0);
+                            break;
+                        case "Upper limit":
+                            myDatabase.UpdateSetting(txtValue.Text, 2, 0);
+                            break;
+                        case "High alarm":
+                            myDatabase.UpdateSetting(txtValue.Text, 1, 0);
+                            break;
+                        case "Low alarm":
+                            myDatabase.UpdateSetting(txtValue.Text, 4, 0);
+                            break;
+                    }
+                    MessageBox.Show("Limit successfully changed.");
                 }
-                MessageBox.Show("Limit successfully changed.");
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            else MessageBox.Show("Limit must be a whole number greater than 0");
         }
 
         private void cboLimitType_SelectedIndexChanged(object sender, EventArgs e)
