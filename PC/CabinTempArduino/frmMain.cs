@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Timers.Timer;
 
 namespace CabinTempArduino
 {
@@ -35,6 +36,8 @@ namespace CabinTempArduino
         #region ArduinoTemp
         private static string arduinoPort = "";
         private static bool alarmLogged = false;
+        private static string temp = "";
+        private static System.Timers.Timer tmrLogging;
         #endregion
 
         #endregion
@@ -235,26 +238,29 @@ namespace CabinTempArduino
                     arduinoPort = settings[9];
                     startUPlog();
                 }
-                txtCurrent.Text = Temp.GetTemp();
+                temp = Temp.GetTemp();
+                txtCurrent.Text = temp;
 
                 Temp.AlarmLowerLimit = Convert.ToDouble(settings[4]);
                 Temp.AlarmUpperLimit = Convert.ToDouble(settings[1]);
                 Temp.FurnaceLowerLimit = Convert.ToDouble(settings[3]);
                 Temp.FurnaceUpperLimit = Convert.ToDouble(settings[2]);
 
-                if ((Temp.CheckAlarm() == "ALARM_UP") && !alarmLogged)
+                string checkAlarm = Temp.CheckAlarm();
+
+                if (checkAlarm == "ALARM_UP" && !alarmLogged)
                 {
-                    logAlarmAndSendEmail("[ALARM] Øvre grense", "Den øvre alarmgrensen har blitt nådd", "010");
+                    logAlarmAndSendEmail("Høy temperatur", "Den øvre alarmgrensen har blitt nådd", "010");
                     txtCurrent.BackColor = Color.Red;
                     alarmLogged = true;
                 }
-                else if (Temp.CheckAlarm() == "ALARM_LOW" && !alarmLogged)
+                else if (checkAlarm == "ALARM_LOW" && !alarmLogged)
                 {
-                    logAlarmAndSendEmail("[ALARM] Nedre grense", "Den nedre alarmgrensen har blitt nådd", "010");
+                    logAlarmAndSendEmail("Lav temperatur", "Den nedre alarmgrensen har blitt nådd", "010");
                     txtCurrent.BackColor = Color.Blue;
                     alarmLogged = true;
                 }
-                else if (Temp.CheckAlarm() == "NO_ALARM")
+                else if (checkAlarm == "NO_ALARM")
                 {
                     txtCurrent.BackColor = Color.White;
                     alarmLogged = false;
@@ -262,20 +268,18 @@ namespace CabinTempArduino
                 //END Arduino
 
                 //Logging
+                string time = DateTime.Now.ToString("mm");
                 if (settings[7] == "false") //Checks if a preset interval has been used.
                 {
-                    if (interval == 15 && ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 00) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15) ||
-                        (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 45))
-                        && !logged) //Checks the system clock. Gets disabled by logged in temperatureLogging()
+                    if (interval == 15 && (time == "00" || time == "15" || time == "30"|| time == "45") && !logged) //Checks the system clock. Gets disabled by logged in temperatureLogging()
                     {
                         temperatureLogging(); 
                     }
-                    else if (interval == 30 && ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 00) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30))
-                        && !logged) //Checks the system clock. Gets disabled by logged in temperatureLogging()
+                    else if (interval == 30 && (time == "00" || time == "30") && !logged) //Checks the system clock. Gets disabled by logged in temperatureLogging()
                     {
                         temperatureLogging();
                     }
-                    else if (interval == 60 && Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && !logged) //Checks the system clock. Gets disabled by logged in temperatureLogging()
+                    else if (interval == 60 && time == "00" && !logged) //Checks the system clock. Gets disabled by logged in temperatureLogging()
                     {
                         temperatureLogging();
                     }
@@ -286,26 +290,24 @@ namespace CabinTempArduino
                 }
                 else if (settings[7] == "true") //Checks if a custom interval has been used.
                 {
+                    string timeCustom = DateTime.Now.ToString("HH:mm");
                     if (interval == 1440)
                     {
-                        if (DateTime.Now.ToString("HH:mm") == settings[6] && !logged)
+                        if (timeCustom == settings[6] && !logged)
                         {
                             temperatureLogging();
-                            loggedMinute = Convert.ToInt32(DateTime.Now.ToString("mm"));
+                            loggedMinute = Convert.ToInt32(time);
                         }
-                        else if ((settings[8] == "true") && (Convert.ToInt32(DateTime.Now.ToString("mm")) == loggedMinute + 1))
+                        else if (logged && (Convert.ToInt32(time) == loggedMinute + 1))
                             logged = false;
                     }
-                    else if (DateTime.Now.ToString("HH:mm") == settings[6] && interval != 1440)
+                    else if (timeCustom == settings[6] && interval != 1440)
                     {
                         nextLogTime();
                         temperatureLogging();
                     }
                 }
                 //END Logging
-            }
-            catch (NullReferenceException)
-            {
             }
             catch (System.IO.IOException)
             {
@@ -326,14 +328,14 @@ namespace CabinTempArduino
             {
                 string[,] lastValue;
                 lastValue = myDatabase.GetTemperatureLast();
-                rtbDatabaseValues.AppendText(lastValue[0,1] +"\t"+ lastValue[0,2] +"\r\n");
+                FetchTemp(lastValue);
             }
             logged = true;
         }
         public void newInterval()
         {
             //Logs a temperature when a new interval is set.
-            myDatabase.LogTemperature(Temp.GetTemp());
+            myDatabase.LogTemperature(temp);
             nextLogTime();
             logged = false;
         }
@@ -422,56 +424,6 @@ namespace CabinTempArduino
             myDatabase.LogAlarm(subject, alarmID, Temp.GetTemp());
         }
         #endregion
-
-        private void tmrArduino_Tick(object sender, EventArgs e)
-        {
-            try{
-                settings = myDatabase.GetSettings(0);
-
-                if (arduinoPort != settings[9])
-                {
-                    Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),
-                                                 Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, settings[9]);
-                    startUPlog();
-                }
-                txtCurrent.Text = Temp.GetTemp();
-
-                Temp.AlarmLowerLimit = Convert.ToDouble(settings[4]);
-                Temp.AlarmUpperLimit = Convert.ToDouble(settings[1]);
-                Temp.FurnaceLowerLimit = Convert.ToDouble(settings[3]);
-                Temp.FurnaceUpperLimit = Convert.ToDouble(settings[2]);
-
-                if((Temp.CheckAlarm() == "ALARM_UP") && !alarmLogged)
-                {
-                    logAlarmAndSendEmail("[ALARM] Øvre grense", "Den øvre alarmgrensen har blitt nådd", "010");
-                    txtCurrent.BackColor = Color.Red;
-                    alarmLogged = true;
-                }
-                else if(Temp.CheckAlarm() == "ALARM_LOW" && !alarmLogged)
-                {
-                    logAlarmAndSendEmail("[ALARM] Nedre grense", "Den nedre alarmgrensen har blitt nådd", "010");
-                    txtCurrent.BackColor = Color.Blue;
-                    alarmLogged = true;
-                }
-                else if(Temp.CheckAlarm() == "NO_ALARM")
-                {
-                    txtCurrent.BackColor = Color.White;
-                    alarmLogged = false;
-                }
-            }
-            catch(NullReferenceException)
-            {
-                txtCurrent.Text = "Set port in settings";
-            }
-            catch(System.IO.IOException)
-            {
-                txtCurrent.Text = "Arduino plugged out";
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.GetType().ToString() + "\r\n" + ex.Message);
-            }
-        }
 
         private void frmMain_Load(object sender, EventArgs e)
         {

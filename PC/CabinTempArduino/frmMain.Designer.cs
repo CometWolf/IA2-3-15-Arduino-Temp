@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.grbBatteryStatus = new System.Windows.Forms.GroupBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblStatusStatic = new System.Windows.Forms.Label();
@@ -59,7 +59,6 @@
             this.chartFetchedValues = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tmrBatteryStatus = new System.Windows.Forms.Timer(this.components);
             this.tmrLogTemperature = new System.Windows.Forms.Timer(this.components);
-            this.tmrArduino = new System.Windows.Forms.Timer(this.components);
             this.grbBatteryStatus.SuspendLayout();
             this.grbFetchingValues.SuspendLayout();
             this.grbEdit.SuspendLayout();
@@ -235,23 +234,23 @@
             // chartFetchedValues
             // 
             resources.ApplyResources(this.chartFetchedValues, "chartFetchedValues");
-            chartArea5.Name = "ChartArea1";
-            this.chartFetchedValues.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            legend5.Position.Auto = false;
-            legend5.Position.Height = 4F;
-            legend5.Position.Width = 24.92401F;
-            legend5.Position.X = 44F;
-            legend5.Position.Y = 95F;
-            legend5.TitleAlignment = System.Drawing.StringAlignment.Near;
-            this.chartFetchedValues.Legends.Add(legend5);
+            chartArea3.Name = "ChartArea1";
+            this.chartFetchedValues.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            legend3.Position.Auto = false;
+            legend3.Position.Height = 4F;
+            legend3.Position.Width = 24.92401F;
+            legend3.Position.X = 44F;
+            legend3.Position.Y = 95F;
+            legend3.TitleAlignment = System.Drawing.StringAlignment.Near;
+            this.chartFetchedValues.Legends.Add(legend3);
             this.chartFetchedValues.Name = "chartFetchedValues";
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series5.Legend = "Legend1";
-            series5.LegendText = "#SERIESNAME";
-            series5.Name = "Temp.";
-            this.chartFetchedValues.Series.Add(series5);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.LegendText = "#SERIESNAME";
+            series3.Name = "Temp.";
+            this.chartFetchedValues.Series.Add(series3);
             // 
             // tmrBatteryStatus
             // 
@@ -264,10 +263,6 @@
             this.tmrLogTemperature.Enabled = true;
             this.tmrLogTemperature.Interval = 1000;
             this.tmrLogTemperature.Tick += new System.EventHandler(this.tmrLogTemperature_Tick);
-            // 
-            // tmrArduino
-            // 
-            this.tmrArduino.Tick += new System.EventHandler(this.tmrArduino_Tick);
             // 
             // frmMain
             // 
@@ -324,7 +319,6 @@
         private System.Windows.Forms.Timer tmrLogTemperature;
         private System.Windows.Forms.RadioButton rbtError;
         private System.Windows.Forms.RadioButton rbtTemperature;
-        private System.Windows.Forms.Timer tmrArduino;
     }
 }
 
