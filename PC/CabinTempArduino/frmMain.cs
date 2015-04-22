@@ -34,6 +34,7 @@ namespace CabinTempArduino
 
         #region ArduinoTemp
         private static string arduinoPort = "";
+        private static bool alarmLogged = false;
         #endregion
 
         #endregion
@@ -240,27 +241,23 @@ namespace CabinTempArduino
                 Temp.FurnaceLowerLimit = Convert.ToDouble(settings[3]);
                 Temp.FurnaceUpperLimit = Convert.ToDouble(settings[2]);
 
-                switch(Temp.CheckAlarm())
+                if((Temp.CheckAlarm() == "ALARM_UP\r") && !alarmLogged)
                 {
-                    case "ALARM_UP":
-                        {
-                            logAlarmAndSendEmail("[ALARM] Øvre grense", "Den øvre alarmgrensen har blitt nådd","010");
-                            txtCurrent.BackColor = Color.Red;
-                            break;  
-                        }
-                    case "ALARM_LOW":
-                        {
-                            logAlarmAndSendEmail("[ALARM] Nedre grense", "Den nedre alarmgrensen har blitt nådd","010");
-                            txtCurrent.BackColor = Color.Red;
-                            break;
-                        }
-                    case "NO_ALARM":
-                        {
-                            break; 
-                        }
-                        
+                    logAlarmAndSendEmail("[ALARM] Øvre grense", "Den øvre alarmgrensen har blitt nådd", "010");
+                    txtCurrent.BackColor = Color.Red;
+                    alarmLogged = true;
                 }
-
+                else if(Temp.CheckAlarm() == "ALARM_LOW\r" && !alarmLogged)
+                {
+                    logAlarmAndSendEmail("[ALARM] Nedre grense", "Den nedre alarmgrensen har blitt nådd", "010");
+                    txtCurrent.BackColor = Color.Blue;
+                    alarmLogged = true;
+                }
+                else if(Temp.CheckAlarm() == "NO_ALARM\r")
+                {
+                    txtCurrent.BackColor = Color.White;
+                    alarmLogged = false;
+                }
                 //END Arduino
 
                 //Logging
@@ -317,6 +314,7 @@ namespace CabinTempArduino
             catch(Exception ex)
             {
                 MessageBox.Show(ex.GetType() + "\r\n" + ex.Message);
+                throw ex;
             }
         }
         #endregion
@@ -324,7 +322,7 @@ namespace CabinTempArduino
         #region Methods
         private void temperatureLogging()
         {
-            myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
+            myDatabase.LogTemperature(Temp.GetTemp());
             if(continous)
             {
                 string[,] lastValue;
@@ -335,23 +333,26 @@ namespace CabinTempArduino
         }
         public void newInterval()
         {
-            myDatabase.LogTemperature(Convert.ToString(rand.Next(0, 101)));
+            //Logs a temperature when a new interval is set.
+            myDatabase.LogTemperature(Temp.GetTemp());
             nextLogTime();
             logged = false;
         }
 
         private void startUPlog()
         {
+            //Logs a temperature at startUP.
             if (settings[7] != "1440")
             {
                 nextLogTime();
                 temperatureLogging();
             }
-            else if (settings[7] == "1440")
+            else if (settings[7] == "1440") //If the interval is set to 24hrs it only needs to set a new log time, because next logtime is the same time as the program was started.
                 nextLogTime();
         }
         public void nextLogTime()
         {
+            //Sets the next time a log shall happen if the interval is custom. By using the system clock.
             settings = myDatabase.GetSettings(0);
             int interval = Convert.ToInt32(settings[5]);
 
@@ -441,15 +442,15 @@ namespace CabinTempArduino
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            try 
+            try
             {
                 Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),
                                              Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, settings[9]);
                 arduinoPort = settings[9];
                 startUPlog();
-                   
+
             }
-            catch(Exception)
+            catch (Exception)
             {
                 txtCurrent.Text = "Set port in settings";
             }
