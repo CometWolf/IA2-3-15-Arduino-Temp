@@ -1,5 +1,6 @@
 ﻿<head>      
     <title></title>
+    
 </head>
 @{
     ViewBag.Title = "Logg";
@@ -10,23 +11,22 @@
 
 <form action='@Url.Action("GetLogg","Logg")' method='post'>
     <p>Hent verdier:</p>
-    <input type="number" name="input" />                                        @*input selvskrevet i textbox*@
-    <select name="unit">                                                        @*valg i combox*@
-        <option value="entity">Celler</option>
-        <option value="day">Dager</option>
-        <option value="week">Uker</option>
+    <input type="number" name="input" value="@Model.input"/>                                        @*input selvskrevet i textbox*@
+    <select name="unit">
+        @*valg i combox*@
+        <option value="entity" @Model.unit.entity>Celler</option>
+        <option value="day" @Model.unit.day>Dager</option>
+        <option value="month" @Model.unit.month>Måneder</option>
     </select>
     <br />
     <input type="submit" value="Hent">
     <br />
-    <input type="radio" name="type" value="Temperature" checked>Temperatur      @*type temperatur/alarm*@
-    <br>
-    <input type="radio" name="type" value="Alarm">Alarm
-    <br />
-</form>
-
-
-    <textarea readonly name="txtShowLogg">
-        @Model.data
-
-    </textarea>
+    <form action="">
+        <input type="radio" name="type" value="Temperature" @Model.type.temperature>Temperatur                          @*type temperatur/alarm*@
+        <br />
+        <input type="radio" name="type" value="Alarm" @Model.type.alarm>Alarm
+        <br />
+    </form>
+<div id="text">
+    @Html.Raw(Model.data)
+</div>
