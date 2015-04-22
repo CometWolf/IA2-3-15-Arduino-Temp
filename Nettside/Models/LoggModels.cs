@@ -8,7 +8,22 @@ namespace WebApplication6.Models
     public class LoggModel
     {
         public string data;
-        public string [,]array;
-        
+        public string input;
+        //public string type;
+        public class Unit
+        {
+            public string entity;
+            public string day;
+            public string month;
+            //public string type;
+            
+        }
+        public Unit unit = new Unit();
+        public class Type
+        {
+            public string temperature = "checked";
+            public string alarm;
+        }
+        public Type type = new Type();
     }
 }
