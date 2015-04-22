@@ -14,7 +14,7 @@ namespace CabinTempArduino
     public partial class frmSettings : Form
     {
         Database settings = new Database("ArduinoTemperaturMåling.accdb");
-        frmMain main = new frmMain();
+        frmMain main = (frmMain)Application.OpenForms["frmMain"];
         public frmSettings()
         {
             InitializeComponent();
@@ -33,8 +33,6 @@ namespace CabinTempArduino
                 cboComPort.Items.Add(port);
             }
             //END Valid ports
-
-            
         }
         private void cboPreset_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -71,6 +69,7 @@ namespace CabinTempArduino
                 if (cboComPort.Text != "Ports")
                 {
                     settings.UpdateSetting(cboComPort.Text, 9, 0);
+                    main.SetPortArduino(cboComPort.Text);
                     MessageBox.Show("Port successfully changed");
                 }
             }

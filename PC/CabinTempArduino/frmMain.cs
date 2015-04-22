@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Timers.Timer;
 
 namespace CabinTempArduino
 {
@@ -36,8 +35,7 @@ namespace CabinTempArduino
         #region ArduinoTemp
         private static string arduinoPort = "";
         private static bool alarmLogged = false;
-        private static string temp = "";
-        private static System.Timers.Timer tmrLogging;
+        private static string temp = "COM1";
         #endregion
 
         #endregion
@@ -81,14 +79,14 @@ namespace CabinTempArduino
             limitForm.ShowDialog();
         }
         #endregion
-        #region Subscribers
+        #region Open Subscribers
         private void btnSubscribers_Click(object sender, EventArgs e)
         {
             frmSubscribers subscribersForm = new frmSubscribers();
             subscribersForm.ShowDialog();
         }
         #endregion
-        #region Settings
+        #region Open Settings
         private void btnSettings_Click_1(object sender, EventArgs e)
         {
             frmSettings settingsForm = new frmSettings();
@@ -150,53 +148,60 @@ namespace CabinTempArduino
         #region BatterySurveillance
         private void tmrBatteryStatus_Tick(object sender, EventArgs e)
         {
-            prbBatteryStatus.Value = Convert.ToInt32(SystemInformation.PowerStatus.BatteryLifePercent * 100);
-            lblStatus.Text = SystemInformation.PowerStatus.BatteryChargeStatus.ToString();
-
-            string[,] emails = myDatabase.GetSubscribers();
-
-            #region GUI
-            if (prbBatteryStatus.Value <= 50)
-                prbBatteryStatus.ForeColor = Color.Yellow;
-            else if (prbBatteryStatus.Value <= 30)
-                prbBatteryStatus.ForeColor = Color.Red;
-            else
-                prbBatteryStatus.ForeColor = Color.Green;
-
-            if (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "0")
+            try
             {
-                lblStatus.Text = "Normal";
+                prbBatteryStatus.Value = Convert.ToInt32(SystemInformation.PowerStatus.BatteryLifePercent * 100);
+                lblStatus.Text = SystemInformation.PowerStatus.BatteryChargeStatus.ToString();
+
+                string[,] emails = myDatabase.GetSubscribers();
+
+                #region GUI
+                if (prbBatteryStatus.Value <= 50)
+                    prbBatteryStatus.ForeColor = Color.Yellow;
+                else if (prbBatteryStatus.Value <= 30)
+                    prbBatteryStatus.ForeColor = Color.Red;
+                else
+                    prbBatteryStatus.ForeColor = Color.Green;
+
+                if (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "0")
+                {
+                    lblStatus.Text = "Normal";
+                }
+                #endregion
+
+                if ((SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Charging") ||
+                    (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "High, Charging") ||
+                    (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Low, Charging"))
+                    charging = true;
+                else if (prbBatteryStatus.Value <= 95 && charging)
+                {
+                    logAlarmAndSendEmail("PC Lader ikke", "PCen lader ikke lenger. Enten er støpselet dratt ut, strømmen gått eller laderen defekt.", "001");
+                    charging = false;
+                }
+
+                //50% charge
+                if (prbBatteryStatus.Value > 50)
+                    fiftyCharge = true;
+                else if (prbBatteryStatus.Value <= 50 && fiftyCharge && !charging)
+                {
+                    logAlarmAndSendEmail("PC har under 50% batteri igjen", "PCen har under 50% batteri igjen.", "002");
+                    fiftyCharge = false;
+                }
+                //END 50% charge
+
+                //CRITICAL
+                if (prbBatteryStatus.Value > 15)
+                    criticalCharge = true;
+
+                else if (prbBatteryStatus.Value <= 15 && criticalCharge && !charging) //Critical
+                {
+                    logAlarmAndSendEmail("[Kritisk] PC har under 15% batteri igjen", "PCen har under 15% batteri igjen.", "003");
+                    criticalCharge = false;
+                }
             }
-            #endregion
-
-            if ((SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Charging") ||
-                (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "High, Charging")||
-                (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Low, Charging"))
-                charging = true;
-            else if (prbBatteryStatus.Value<=95 && charging)
+            catch(Exception ex)
             {
-                logAlarmAndSendEmail("PC Lader ikke", "PCen lader ikke lenger. Enten er støpselet dratt ut, strømmen gått eller laderen defekt.","001");
-                charging = false;
-            }
-
-            //50% charge
-            if (prbBatteryStatus.Value > 50)
-                fiftyCharge = true;
-            else if (prbBatteryStatus.Value <= 50 && fiftyCharge && !charging)
-            {
-                logAlarmAndSendEmail("PC har under 50% batteri igjen", "PCen har under 50% batteri igjen.","002");
-                fiftyCharge = false;
-            }
-            //END 50% charge
-
-            //CRITICAL
-            if (prbBatteryStatus.Value > 15)
-                criticalCharge = true;
-
-            else if (prbBatteryStatus.Value <= 15 && criticalCharge && !charging) //Critical
-            {
-                logAlarmAndSendEmail("[Kritisk] PC har under 15% batteri igjen", "PCen har under 15% batteri igjen.","003");
-                criticalCharge = false;
+                logAlarmAndSendEmail(ex.GetType().ToString(), ex.Message, "004");
             }
             //END CRITICAL
         }
@@ -231,14 +236,11 @@ namespace CabinTempArduino
                 int interval = Convert.ToInt32(settings[5]);
 
                 //Arduino
-                if (arduinoPort != settings[9])
+                if(Temp != null)
                 {
-                    Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),
-                                                 Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, settings[9]);
-                    arduinoPort = settings[9];
-                    startUPlog();
-                }
-                temp = Temp.GetTemp();
+                    temp = Temp.GetTemp();
+                }   
+                
                 txtCurrent.Text = temp;
 
                 Temp.AlarmLowerLimit = Convert.ToDouble(settings[4]);
@@ -256,8 +258,8 @@ namespace CabinTempArduino
                 }
                 else if (checkAlarm == "ALARM_LOW" && !alarmLogged)
                 {
-                    logAlarmAndSendEmail("Lav temperatur", "Den nedre alarmgrensen har blitt nådd", "010");
-                    txtCurrent.BackColor = Color.Blue;
+                    logAlarmAndSendEmail("Lav temperatur", "Den nedre alarmgrensen har blitt nådd", "020");
+                    txtCurrent.BackColor = Color.Aqua;
                     alarmLogged = true;
                 }
                 else if (checkAlarm == "NO_ALARM")
@@ -268,18 +270,20 @@ namespace CabinTempArduino
                 //END Arduino
 
                 //Logging
-                string time = DateTime.Now.ToString("mm");
                 if (settings[7] == "false") //Checks if a preset interval has been used.
                 {
-                    if (interval == 15 && (time == "00" || time == "15" || time == "30"|| time == "45") && !logged) //Checks the system clock. Gets disabled by logged in temperatureLogging()
-                    {
-                        temperatureLogging(); 
-                    }
-                    else if (interval == 30 && (time == "00" || time == "30") && !logged) //Checks the system clock. Gets disabled by logged in temperatureLogging()
+                    if (interval == 15 && ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 00) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 15) ||
+                        (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 45))
+                        && !logged) //Checks the system clock. Gets disabled by logged in temperatureLogging()
                     {
                         temperatureLogging();
                     }
-                    else if (interval == 60 && time == "00" && !logged) //Checks the system clock. Gets disabled by logged in temperatureLogging()
+                    else if (interval == 30 && ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 00) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30))
+                        && !logged) //Checks the system clock. Gets disabled by logged in temperatureLogging()
+                    {
+                        temperatureLogging();
+                    }
+                    else if (interval == 60 && Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && !logged) //Checks the system clock. Gets disabled by logged in temperatureLogging()
                     {
                         temperatureLogging();
                     }
@@ -290,18 +294,17 @@ namespace CabinTempArduino
                 }
                 else if (settings[7] == "true") //Checks if a custom interval has been used.
                 {
-                    string timeCustom = DateTime.Now.ToString("HH:mm");
                     if (interval == 1440)
                     {
-                        if (timeCustom == settings[6] && !logged)
+                        if (DateTime.Now.ToString("HH:mm") == settings[6] && !logged)
                         {
                             temperatureLogging();
-                            loggedMinute = Convert.ToInt32(time);
+                            loggedMinute = Convert.ToInt32(DateTime.Now.ToString("mm"));
                         }
-                        else if (logged && (Convert.ToInt32(time) == loggedMinute + 1))
+                        else if ((settings[8] == "true") && (Convert.ToInt32(DateTime.Now.ToString("mm")) == loggedMinute + 1))
                             logged = false;
                     }
-                    else if (timeCustom == settings[6] && interval != 1440)
+                    else if (DateTime.Now.ToString("HH:mm") == settings[6] && interval != 1440)
                     {
                         nextLogTime();
                         temperatureLogging();
@@ -309,12 +312,18 @@ namespace CabinTempArduino
                 }
                 //END Logging
             }
-            catch (System.IO.IOException)
+            catch(NullReferenceException error)
             {
-                txtCurrent.Text = "Set port in settings";
+                logAlarmAndSendEmail(error.GetType().ToString(), error.Message, "005");
+                throw error;
+            }
+            catch (System.IO.IOException IOex)
+            {
+                throw IOex;
             }
             catch(Exception ex)
             {
+                logAlarmAndSendEmail(ex.GetType().ToString(), ex.Message, "006");
                 throw ex;
             }
         }
@@ -423,6 +432,16 @@ namespace CabinTempArduino
             }
             myDatabase.LogAlarm(subject, alarmID, Temp.GetTemp());
         }
+
+        public void SetPortArduino(string port)
+        {
+            Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),
+                             Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, port);
+            arduinoPort = settings[9];
+            startUPlog();
+            tmrLogTemperature.Start();
+
+        }
         #endregion
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -438,6 +457,7 @@ namespace CabinTempArduino
             catch (Exception)
             {
                 txtCurrent.Text = "Set port in settings";
+                tmrLogTemperature.Stop();
             }
         }
     }
