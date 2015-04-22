@@ -11,9 +11,8 @@
 
 <form action='@Url.Action("GetLogg","Logg")' method='post'>
     <p>Hent verdier:</p>
-    <input type="number" name="input" value="@Model.input"/>                                        @*input selvskrevet i textbox*@
+    <input type="number" name="input" value="@Model.input"/>                                       
     <select name="unit">
-        @*valg i combox*@
         <option value="entity" @Model.unit.entity>Celler</option>
         <option value="day" @Model.unit.day>Dager</option>
         <option value="month" @Model.unit.month>Måneder</option>
@@ -22,7 +21,7 @@
     <input type="submit" value="Hent">
     <br />
     <form action="">
-        <input type="radio" name="type" value="Temperature" @Model.type.temperature>Temperatur                          @*type temperatur/alarm*@
+        <input type="radio" name="type" value="Temperature" @Model.type.temperature>Temperatur                       
         <br />
         <input type="radio" name="type" value="Alarm" @Model.type.alarm>Alarm
         <br />
