@@ -62,8 +62,6 @@ namespace CabinTempArduino
             //END GUI
 
             settings = myDatabase.GetSettings(0);
-            //myDatabase.UpdateSetting("false", 8, 0);
-            //nextLogTime();
             //arduinoPort = settings[9];
         }
         #endregion
@@ -97,7 +95,7 @@ namespace CabinTempArduino
         private void btnFetch_Click(object sender, EventArgs e)
         {
             rtbDatabaseValues.Clear();
-            int fetchLast = 0;
+            int fetchLast = 1;
             int.TryParse(txtFetchLast.Text, out fetchLast);
 
 
@@ -312,7 +310,6 @@ namespace CabinTempArduino
             catch (System.IO.IOException)
             {
                 txtCurrent.Text = "Set port in settings";
-                arduinoPort = "";
             }
             catch(Exception ex)
             {
