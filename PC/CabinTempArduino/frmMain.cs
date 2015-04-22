@@ -234,6 +234,7 @@ namespace CabinTempArduino
                 {
                     Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),
                                                  Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, settings[9]);
+                    arduinoPort = settings[9];
                     startUPlog();
                 }
                 txtCurrent.Text = Temp.GetTemp();
@@ -243,19 +244,19 @@ namespace CabinTempArduino
                 Temp.FurnaceLowerLimit = Convert.ToDouble(settings[3]);
                 Temp.FurnaceUpperLimit = Convert.ToDouble(settings[2]);
 
-                if((Temp.CheckAlarm() == "ALARM_UP\r") && !alarmLogged)
+                if ((Temp.CheckAlarm() == "ALARM_UP\r") && !alarmLogged)
                 {
                     logAlarmAndSendEmail("[ALARM] Øvre grense", "Den øvre alarmgrensen har blitt nådd", "010");
                     txtCurrent.BackColor = Color.Red;
                     alarmLogged = true;
                 }
-                else if(Temp.CheckAlarm() == "ALARM_LOW\r" && !alarmLogged)
+                else if (Temp.CheckAlarm() == "ALARM_LOW\r" && !alarmLogged)
                 {
                     logAlarmAndSendEmail("[ALARM] Nedre grense", "Den nedre alarmgrensen har blitt nådd", "010");
                     txtCurrent.BackColor = Color.Blue;
                     alarmLogged = true;
                 }
-                else if(Temp.CheckAlarm() == "NO_ALARM\r")
+                else if (Temp.CheckAlarm() == "NO_ALARM\r")
                 {
                     txtCurrent.BackColor = Color.White;
                     alarmLogged = false;
@@ -307,15 +308,14 @@ namespace CabinTempArduino
             }
             catch (NullReferenceException)
             {
-                txtCurrent.Text = "Set port in settings";
             }
             catch (System.IO.IOException)
             {
-                txtCurrent.Text = "Arduino pulled out";
+                txtCurrent.Text = "Set port in settings";
+                arduinoPort = "";
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.GetType() + "\r\n" + ex.Message);
                 throw ex;
             }
         }
@@ -428,15 +428,14 @@ namespace CabinTempArduino
 
         private void tmrArduino_Tick(object sender, EventArgs e)
         {
-            try
-            {
+            try{
                 settings = myDatabase.GetSettings(0);
 
                 if (arduinoPort != settings[9])
                 {
                     Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),
                                                  Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, settings[9]);
-                    arduinoPort = settings[9];
+                    startUPlog();
                 }
                 txtCurrent.Text = Temp.GetTemp();
 
@@ -444,6 +443,24 @@ namespace CabinTempArduino
                 Temp.AlarmUpperLimit = Convert.ToDouble(settings[1]);
                 Temp.FurnaceLowerLimit = Convert.ToDouble(settings[3]);
                 Temp.FurnaceUpperLimit = Convert.ToDouble(settings[2]);
+
+                if((Temp.CheckAlarm() == "ALARM_UP\r") && !alarmLogged)
+                {
+                    logAlarmAndSendEmail("[ALARM] Øvre grense", "Den øvre alarmgrensen har blitt nådd", "010");
+                    txtCurrent.BackColor = Color.Red;
+                    alarmLogged = true;
+                }
+                else if(Temp.CheckAlarm() == "ALARM_LOW\r" && !alarmLogged)
+                {
+                    logAlarmAndSendEmail("[ALARM] Nedre grense", "Den nedre alarmgrensen har blitt nådd", "010");
+                    txtCurrent.BackColor = Color.Blue;
+                    alarmLogged = true;
+                }
+                else if(Temp.CheckAlarm() == "NO_ALARM\r")
+                {
+                    txtCurrent.BackColor = Color.White;
+                    alarmLogged = false;
+                }
             }
             catch(NullReferenceException)
             {
