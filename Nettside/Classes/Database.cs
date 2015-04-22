@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.OleDb;
+using WebApplication6.Classes;
 
-namespace WebApplication6.Classes
+namespace WebApplication6
 {
     /// <summary>
     /// Connects to a database and simplifies communication
@@ -146,8 +147,8 @@ namespace WebApplication6.Classes
             }
             catch (Exception ex)
             {
-                subscribers = new string[0, 0];
-                subscribers[0, 0] = "N/A";
+                subscribers = new string[1, 1];
+                subscribers[0, 0] = "";
 
                 throw ex;
             }
@@ -168,7 +169,7 @@ namespace WebApplication6.Classes
             {
                 string connectionstring = String.Format((
                     "SELECT * FROM {0} WHERE '{2}' = {1}"), 
-                    alarmTable, "Brukernavn", username);
+                    subscriberTable, "Brukernavn", username);
 
                 OpenDbMan(connectionstring);
 
@@ -355,9 +356,8 @@ namespace WebApplication6.Classes
             }
             catch (Exception ex)
             {
-                alarms = new string[0, 0];
-                alarms[0, 0] = "N/A";
-
+                alarms = new string[1, 1];
+                alarms[0, 0] = "";
                 throw ex;
             }
             finally
@@ -384,9 +384,8 @@ namespace WebApplication6.Classes
             }
             catch (Exception ex)
             {
-                alarms = new string[0, 0];
-                alarms[0, 0] = "N/A";
-
+                alarms = new string[1, 1];
+                alarms[0, 0] = "";
                 throw ex;
             }
             finally
@@ -417,8 +416,7 @@ namespace WebApplication6.Classes
             catch (Exception ex)
             {
                 alarms = new string[1, 1];
-                alarms[0, 0] = "N/A";
-
+                alarms[0, 0] = "";
                 throw ex;
             }
             finally
@@ -447,9 +445,8 @@ namespace WebApplication6.Classes
             }
             catch (Exception ex)
             {
-                alarms = new string[0, 0];
-                alarms[0, 0] = "N/A";
-
+                alarms = new string[1, 1];
+                alarms[0, 0] = "";
                 throw ex;
             }
             finally
@@ -479,9 +476,8 @@ namespace WebApplication6.Classes
             }
             catch (Exception ex)
             {
-                alarms = new string[0, 0];
-                alarms[0, 0] = "N/A";
-
+                alarms = new string[1, 1];
+                alarms[0, 0] = "";
                 throw ex;
             }
             finally
@@ -509,9 +505,8 @@ namespace WebApplication6.Classes
             }
             catch (Exception ex)
             {
-                alarms = new string[0, 0];
-                alarms[0, 0] = "N/A";
-
+                alarms = new string[1, 1];
+                alarms[0, 0] = "";
                 throw ex;
             }
             finally
@@ -540,9 +535,8 @@ namespace WebApplication6.Classes
             }
             catch (Exception ex)
             {
-                alarms = new string[0, 0];
-                alarms[0, 0] = "N/A";
-
+                alarms = new string[1, 1];
+                alarms[0, 0] = "";
                 throw ex;
             }
             finally
@@ -569,8 +563,8 @@ namespace WebApplication6.Classes
             }
             catch (Exception ex)
             {
-                alarms = new string[0, 0];
-                alarms[0, 0] = "N/A";
+                alarms = new string[1, 1];
+                alarms[0, 0] = "";
 
                 throw ex;
             }
@@ -661,8 +655,8 @@ namespace WebApplication6.Classes
             }
             catch (Exception ex)
             {
-                temperature = new string[0, 0];
-                temperature[0, 0] = "N/A";
+                temperature = new string[1,1];
+                temperature[0, 0] = "";
 
                 throw ex;
             }
@@ -694,7 +688,7 @@ namespace WebApplication6.Classes
             catch (Exception ex)
             {
                 temperature = new string[1, 1];
-                temperature[0, 0] = "N/A";
+                temperature[0, 0] = "";
 
                 throw ex;
             }
@@ -724,8 +718,8 @@ namespace WebApplication6.Classes
             }
             catch (Exception ex)
             {
-                temperature = new string[0, 0];
-                temperature[0, 0] = "N/A";
+                temperature = new string[1,1];
+                temperature[0, 0] = "";
 
                 throw ex;
             }
@@ -756,8 +750,8 @@ namespace WebApplication6.Classes
             }
             catch (Exception ex)
             {
-                temperature = new string[0, 0];
-                temperature[0, 0] = "N/A";
+                temperature = new string[1, 1];
+                temperature[0, 0] = "";
 
                 throw ex;
             }
@@ -786,8 +780,8 @@ namespace WebApplication6.Classes
             }
             catch (Exception ex)
             {
-                temperature = new string[0, 0];
-                temperature[0, 0] = "N/A";
+                temperature = new string[1, 1];
+                temperature[0, 0] = "";
 
                 throw ex;
             }
@@ -817,8 +811,8 @@ namespace WebApplication6.Classes
             }
             catch (Exception ex)
             {
-                temperature = new string[0, 0];
-                temperature[0, 0] = "N/A";
+                temperature = new string[1, 1];
+                temperature[0, 0] = "";
 
                 throw ex;
             }
@@ -854,8 +848,8 @@ namespace WebApplication6.Classes
             }
             catch (Exception ex)
             {
-                temperature = new string[0, 0];
-                temperature[0, 0] = "N/A";
+                temperature = new string[1, 1];
+                temperature[0, 0] = "";
 
                 throw ex;
             }

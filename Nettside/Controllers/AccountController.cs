@@ -59,7 +59,14 @@ namespace WebApplication6.Controllers
         {
             if (ModelState.IsValid) //login format valid
             {
-                string username = database.SearchUsername(model.Email,model.Password);
+                string username;
+                try {
+                    username = database.SearchUsername(model.Email, model.Password);
+                } catch (Exception e) {
+                    Response.Redirect("~/Home/Error?e=" + e.Message);
+                    return null;
+                }
+
                 if (username != null) { //login success
                     ApplicationUser user = await UserManager.FindAsync(model.Email, model.Password);
                     if (user == null) { //user not found in asp database
