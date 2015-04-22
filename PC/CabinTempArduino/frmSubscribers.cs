@@ -38,6 +38,7 @@ namespace CabinTempArduino
         #endregion
         private void cboSelectSubscriber_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //Changes GUI depending on the value of cboSelectSubscriber
             subscribers = myDatabase.GetSubscribers();
             if (cboSelectSubscriber.Text != "Ny bruker")
                 btnSubmit.Text = "Lagre endringer";
@@ -70,21 +71,22 @@ namespace CabinTempArduino
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
+            //Submits or changes a user in the database.
             bool username = false;
             bool lengthPassword = false;
             bool uniqueEmail = false;
-            bool email = matchingValues(txtEmail.Text, txtConfirmEmail.Text, "E-Post");
-            bool password = matchingValues(txtPassword.Text, txtConfirmPassword.Text, "Passord");
+            bool email = MatchingValues(txtEmail.Text, txtConfirmEmail.Text, "E-Post");
+            bool password = MatchingValues(txtPassword.Text, txtConfirmPassword.Text, "Passord");
             if (password)
             {
-                lengthPassword = passwordLength(txtPassword.Text, txtConfirmPassword.Text);
+                lengthPassword = PasswordLength(txtPassword.Text, txtConfirmPassword.Text);
             }
             try
             {
                 if (cboSelectSubscriber.Text == "Ny bruker")
                 {
-                    username = unique(txtUsername.Text,3,"Brukernavn");
-                    uniqueEmail = unique(txtEmail.Text, 5, "E-Post");
+                    username = Unique(txtUsername.Text,3,"Brukernavn");
+                    uniqueEmail = Unique(txtEmail.Text, 5, "E-Post");
 
                     if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
                         && email && username && (txtEmail.Text != "") && (txtConfirmEmail.Text != "") && (txtPassword.Text != "") && (txtConfirmPassword.Text != "")
@@ -113,9 +115,9 @@ namespace CabinTempArduino
                     int index = myDatabase.GetIndex(cboSelectSubscriber.Text);
 
                     if (txtUsername.Text != subscribers[index, 3])
-                        username = unique(txtUsername.Text,3,"Brukernavn");
+                        username = Unique(txtUsername.Text,3,"Brukernavn");
                     if(txtEmail.Text != subscribers[index,5])
-                        uniqueEmail = unique(txtEmail.Text, 5, "E-Post");
+                        uniqueEmail = Unique(txtEmail.Text, 5, "E-Post");
 
                     if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
                     && email && (txtEmail.Text != "") && (txtConfirmEmail.Text != "") && (txtPassword.Text != "") && (txtConfirmPassword.Text != "")
@@ -145,6 +147,7 @@ namespace CabinTempArduino
         }
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            //Deletes the user from the database.
             try
             {
                 if (myDatabase.SearchUsername(cboSelectSubscriber.Text))
@@ -174,6 +177,7 @@ namespace CabinTempArduino
         #region Methods
         private void TextBoxesReadOnlyTrue()
         {
+            //Makes all textboxes ReadOnly.
             foreach (Control x in this.Controls)
             {
                 if (x is TextBox)
@@ -182,6 +186,7 @@ namespace CabinTempArduino
         }
         private void TextBoxesReadOnlyFalse()
         {
+            //Makes all textboxes not ReadOnly.
             foreach (Control x in this.Controls)
             {
                 if (x is TextBox)
@@ -190,14 +195,16 @@ namespace CabinTempArduino
         }
         private void ClearAllTextBoxes()
         {
+            //Clears all textboxes.
             foreach (Control x in this.Controls)
             {
                 if (x is TextBox)
                     ((TextBox)x).Clear();
             }
         }
-        private bool matchingValues(string valueN1, string valueN2, string valueTypeTested)
+        private bool MatchingValues(string valueN1, string valueN2, string valueTypeTested)
         {
+            //Checks if two values are matching. (Password and email)
             bool matching = false;
             try
             {
@@ -213,8 +220,9 @@ namespace CabinTempArduino
             return matching;
         }
 
-        private bool passwordLength(string password, string confirmPassword)
+        private bool PasswordLength(string password, string confirmPassword)
         {
+            //Checks if the password equal to or longer than 8 characters.
             bool length = false;
             try
             {
@@ -229,9 +237,10 @@ namespace CabinTempArduino
             }
             return length;
         }
-        private bool unique(string value, int col, string valueType)
+        private bool Unique(string value, int col, string valueType)
         {
-            bool isUnique = false;
+            //Checks if the value is not already in the database. (Username and email)
+            bool isUnique = false; 
             try
             {
                 for (int i = 0; i <= subscribers.GetUpperBound(0); i++)

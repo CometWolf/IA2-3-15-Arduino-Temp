@@ -37,6 +37,7 @@ namespace CabinTempArduino
 
         private void btnSetLimit_Click(object sender, EventArgs e)
         {
+            //Updates limits
             int interval = 0;
 
             int.TryParse(txtValue.Text, out interval);
@@ -72,6 +73,7 @@ namespace CabinTempArduino
 
         private void cboLimitType_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //Shows limits on textboxe when changing cboLimitType.
             txtValue.ReadOnly = false;
             btnSetLimit.Enabled = true;
             settings = myDatabase.GetSettings(0);

@@ -10,10 +10,7 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using System.Runtime.InteropServices;
 using System.Threading;
-<<<<<<< HEAD
-=======
 using System.Timers;
->>>>>>> origin/master
 
 namespace CabinTempArduino
 {
@@ -174,7 +171,7 @@ namespace CabinTempArduino
                     charging = true;
                 else if (prbBatteryStatus.Value <= 95 && charging)
                 {
-                    logAlarmAndSendEmail("PC Lader ikke", "PCen lader ikke lenger. Enten er støpselet dratt ut, strømmen gått eller laderen defekt.", "001");
+                    LogAlarmAndSendEmail("PC Lader ikke", "PCen lader ikke lenger. Enten er støpselet dratt ut, strømmen gått eller laderen defekt.", "001");
                     charging = false;
                 }
 
@@ -183,7 +180,7 @@ namespace CabinTempArduino
                     fiftyCharge = true;
                 else if (prbBatteryStatus.Value <= 50 && fiftyCharge && !charging)
                 {
-                    logAlarmAndSendEmail("PC har under 50% batteri igjen", "PCen har under 50% batteri igjen.", "002");
+                    LogAlarmAndSendEmail("PC har under 50% batteri igjen", "PCen har under 50% batteri igjen.", "002");
                     fiftyCharge = false;
                 }
                 //END 50% charge
@@ -194,13 +191,13 @@ namespace CabinTempArduino
 
                 else if (prbBatteryStatus.Value <= 15 && criticalCharge && !charging) //Critical
                 {
-                    logAlarmAndSendEmail("[Kritisk] PC har under 15% batteri igjen", "PCen har under 15% batteri igjen.", "003");
+                    LogAlarmAndSendEmail("[Kritisk] PC har under 15% batteri igjen", "PCen har under 15% batteri igjen.", "003");
                     criticalCharge = false;
                 }
             }
             catch(Exception ex)
             {
-                logAlarmAndSendEmail(ex.GetType().ToString(), ex.Message, "004");
+                LogAlarmAndSendEmail(ex.GetType().ToString(), ex.Message, "004");
             }
             //END CRITICAL
         }
@@ -251,13 +248,13 @@ namespace CabinTempArduino
 
                 if (checkAlarm == "ALARM_UP" && !alarmLogged)
                 {
-                    logAlarmAndSendEmail("Høy temperatur", "Den øvre alarmgrensen har blitt nådd", "010");
+                    LogAlarmAndSendEmail("Høy temperatur", "Den øvre alarmgrensen har blitt nådd", "010");
                     txtCurrent.BackColor = Color.Red;
                     alarmLogged = true;
                 }
                 else if (checkAlarm == "ALARM_LOW" && !alarmLogged)
                 {
-                    logAlarmAndSendEmail("Lav temperatur", "Den nedre alarmgrensen har blitt nådd", "020");
+                    LogAlarmAndSendEmail("Lav temperatur", "Den nedre alarmgrensen har blitt nådd", "020");
                     txtCurrent.BackColor = Color.Aqua;
                     alarmLogged = true;
                 }
@@ -275,16 +272,16 @@ namespace CabinTempArduino
                         (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 45))
                         && !logged) //Checks the system clock. Gets disabled by logged in temperatureLogging()
                     {
-                        temperatureLogging();
+                        TemperatureLogging();
                     }
                     else if (interval == 30 && ((Convert.ToInt32(DateTime.Now.ToString("mm")) == 00) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 30))
                         && !logged) //Checks the system clock. Gets disabled by logged in temperatureLogging()
                     {
-                        temperatureLogging();
+                        TemperatureLogging();
                     }
                     else if (interval == 60 && Convert.ToInt32(DateTime.Now.ToString("mm")) == 00 && !logged) //Checks the system clock. Gets disabled by logged in temperatureLogging()
                     {
-                        temperatureLogging();
+                        TemperatureLogging();
                     }
                     else if (((Convert.ToInt32(DateTime.Now.ToString("mm")) == 01) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 16) ||
                             (Convert.ToInt32(DateTime.Now.ToString("mm")) == 31) || (Convert.ToInt32(DateTime.Now.ToString("mm")) == 46))
@@ -297,7 +294,7 @@ namespace CabinTempArduino
                     {
                         if (DateTime.Now.ToString("HH:mm") == settings[6] && !logged)
                         {
-                            temperatureLogging();
+                            TemperatureLogging();
                             loggedMinute = Convert.ToInt32(DateTime.Now.ToString("mm"));
                         }
                         else if ((settings[8] == "true") && (Convert.ToInt32(DateTime.Now.ToString("mm")) == loggedMinute + 1))
@@ -305,31 +302,32 @@ namespace CabinTempArduino
                     }
                     else if (DateTime.Now.ToString("HH:mm") == settings[6] && interval != 1440)
                     {
-                        nextLogTime();
-                        temperatureLogging();
+                        NextLogTime();
+                        TemperatureLogging();
                     }
                 }
                 //END Logging
             }
             catch(NullReferenceException error)
             {
-                logAlarmAndSendEmail(error.GetType().ToString(), error.Message, "005");
+                LogAlarmAndSendEmail(error.GetType().ToString(), error.Message, "005");
                 throw error;
             }
             catch (System.IO.IOException IOex)
             {
+                LogAlarmAndSendEmail(IOex.GetType().ToString(), IOex.Message, "006");
                 throw IOex;
             }
             catch(Exception ex)
             {
-                logAlarmAndSendEmail(ex.GetType().ToString(), ex.Message, "006");
+                LogAlarmAndSendEmail(ex.GetType().ToString(), ex.Message, "007");
                 throw ex;
             }
         }
         #endregion
 
         #region Methods
-        private void temperatureLogging()
+        private void TemperatureLogging()
         {
             myDatabase.LogTemperature(Temp.GetTemp());
             if(continous)
@@ -340,25 +338,25 @@ namespace CabinTempArduino
             }
             logged = true;
         }
-        public void newInterval()
+        public void NewInterval()
         {
             //Logs a temperature when a new interval is set.
             myDatabase.LogTemperature(temp);
-            nextLogTime();
+            NextLogTime();
             logged = false;
         }
-        private void startUPlog()
+        private void StartUPlog()
         {
             //Logs a temperature at startUP.
             if (settings[7] != "1440")
             {
-                nextLogTime();
-                temperatureLogging();
+                NextLogTime();
+                TemperatureLogging();
             }
             else if (settings[7] == "1440") //If the interval is set to 24hrs it only needs to set a new log time, because next logtime is the same time as the program was started.
-                nextLogTime();
+                NextLogTime();
         }
-        public void nextLogTime()
+        public void NextLogTime()
         {
             //Sets the next time a log shall happen if the interval is custom. By using the system clock.
             settings = myDatabase.GetSettings(0);
@@ -421,7 +419,7 @@ namespace CabinTempArduino
             }
             chartFetchedValues.Refresh();
         }
-        private void logAlarmAndSendEmail(string subject, string message, string alarmID)
+        private void LogAlarmAndSendEmail(string subject, string message, string alarmID)
         {
             string[,] emails = myDatabase.GetSubscribers();
             for (int i = 0; i <= emails.GetUpperBound(0); i++)
@@ -436,7 +434,7 @@ namespace CabinTempArduino
             Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),
                              Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, port);
             arduinoPort = settings[9];
-            startUPlog();
+            StartUPlog();
             tmrLogTemperature.Start();
 
         }
@@ -449,17 +447,13 @@ namespace CabinTempArduino
                 Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),
                                              Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, settings[9]);
                 arduinoPort = settings[9];
-                startUPlog();
+                StartUPlog();
 
             }
             catch (Exception)
             {
-<<<<<<< HEAD
-                txtCurrent.Text = "Set port in settings";
                 tmrLogTemperature.Stop();
-=======
-                txtCurrent.Text = "Velg port";
->>>>>>> origin/master
+                txtCurrent.Text = "Velg port i innstillinger";
             }
         }
     }
