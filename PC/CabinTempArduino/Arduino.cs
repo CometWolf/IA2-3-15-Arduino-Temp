@@ -46,7 +46,14 @@ namespace CabinTempArduino
 
         public void Send(string text)
         {
-            port.WriteLine(text);
+            try
+            {
+                port.WriteLine(text);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
     }
