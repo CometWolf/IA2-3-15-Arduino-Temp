@@ -97,7 +97,9 @@ namespace CabinTempArduino
         private void btnFetch_Click(object sender, EventArgs e)
         {
             rtbDatabaseValues.Clear();
-            int fetchLast = Convert.ToInt32(txtFetchLast.Text);
+            int fetchLast = 0;
+            int.TryParse(txtFetchLast.Text, out fetchLast);
+
 
             switch (cboAnnotation.Text)
             {
@@ -111,7 +113,7 @@ namespace CabinTempArduino
                     else if (rbtError.Checked) FetchAlarm(myDatabase.GetAlarmDays(fetchLast));
                     else MessageBox.Show("Check off for temperature or error");
                     break;
-                case "Months(s)":
+                case "Month(s)":
                     if (rbtTemperature.Checked) FetchTemp(myDatabase.GetTemperatureMonths(fetchLast));
                     else if (rbtError.Checked) FetchAlarm(myDatabase.GetAlarmMonths(fetchLast));
                     else MessageBox.Show("Check off for temperature or error");
@@ -130,7 +132,7 @@ namespace CabinTempArduino
                     btnFetch.Text = "Stop";
                     cboAnnotation.Enabled = false;
                     rtbDatabaseValues.Clear();
-                    rtbDatabaseValues.Text = "Date \t Time \t Temperature \r\n";
+                    rtbDatabaseValues.Text = "Time" + "\t\t\t" + "Temperature" + "\r\n";
 
                 }
                 else if (btnFetch.Text == "Stop")
@@ -378,7 +380,7 @@ namespace CabinTempArduino
 
             myDatabase.UpdateSetting(nextLog, 6, 0);
         }
-        private void FetchTemp(string[,] values, string header = "Time" + "\t" + "Temperature" + "\r\n")
+        private void FetchTemp(string[,] values, string header = "Time" + "\t\t\t" + "Temperature" + "\r\n")
         {
             rtbDatabaseValues.Clear();
             rtbDatabaseValues.Text = header;
@@ -392,9 +394,26 @@ namespace CabinTempArduino
                 rtbDatabaseValues.AppendText("\r\n");
             }
         }
-        private void FetchAlarm(string[,] values, string header = "Time" + "\t" + "Temperature" + "\r\n")
+        private void FetchAlarm(string[,] values, string header = "Time" + "\t\t\t" + "ID" + "\t" + "Temp" + "\t" + "Description" + "\r\n")
         {
             FetchTemp(values, header);
+        }
+
+        private void ChartUpdateTemp(string[,] xy)
+        {
+            DateTime myDate;
+
+            chartFetchedValues.Series[0].Points.Clear();
+            chartFetchedValues.Series[0].Name = "Temperature";
+            chartFetchedValues.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            chartFetchedValues.Series[0].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Time;
+
+            for (int i = 0; i < xy.GetUpperBound(0); i++)
+            {
+                myDate = DateTime.ParseExact(xy[i, 0], "dd.MM.yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                chartFetchedValues.Series[0].Points.AddXY(myDate, Convert.ToDouble(xy[i, 1]));
+            }
+            chartFetchedValues.Refresh();
         }
         private void logAlarmAndSendEmail(string subject, string message, string alarmID)
         {
