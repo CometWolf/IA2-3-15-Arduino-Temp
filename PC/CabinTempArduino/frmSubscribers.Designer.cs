@@ -54,9 +54,9 @@
             this.lblFirstName.AutoSize = true;
             this.lblFirstName.Location = new System.Drawing.Point(9, 36);
             this.lblFirstName.Name = "lblFirstName";
-            this.lblFirstName.Size = new System.Drawing.Size(55, 13);
+            this.lblFirstName.Size = new System.Drawing.Size(46, 13);
             this.lblFirstName.TabIndex = 0;
-            this.lblFirstName.Text = "First name";
+            this.lblFirstName.Text = "Fornavn";
             // 
             // txtFirstName
             // 
@@ -69,12 +69,12 @@
             // 
             this.cboSelectSubscriber.FormattingEnabled = true;
             this.cboSelectSubscriber.Items.AddRange(new object[] {
-            "New"});
+            "Ny bruker"});
             this.cboSelectSubscriber.Location = new System.Drawing.Point(12, 12);
             this.cboSelectSubscriber.Name = "cboSelectSubscriber";
             this.cboSelectSubscriber.Size = new System.Drawing.Size(206, 21);
             this.cboSelectSubscriber.TabIndex = 1;
-            this.cboSelectSubscriber.Text = "Select subscriber";
+            this.cboSelectSubscriber.Text = "Velg bruker";
             this.cboSelectSubscriber.SelectedIndexChanged += new System.EventHandler(this.cboSelectSubscriber_SelectedIndexChanged);
             // 
             // lblSurname
@@ -82,9 +82,9 @@
             this.lblSurname.AutoSize = true;
             this.lblSurname.Location = new System.Drawing.Point(115, 36);
             this.lblSurname.Name = "lblSurname";
-            this.lblSurname.Size = new System.Drawing.Size(56, 13);
+            this.lblSurname.Size = new System.Drawing.Size(53, 13);
             this.lblSurname.TabIndex = 3;
-            this.lblSurname.Text = "Last name";
+            this.lblSurname.Text = "Etternavn";
             // 
             // txtSurName
             // 
@@ -105,9 +105,9 @@
             this.lblEmail.AutoSize = true;
             this.lblEmail.Location = new System.Drawing.Point(9, 114);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(32, 13);
+            this.lblEmail.Size = new System.Drawing.Size(38, 13);
             this.lblEmail.TabIndex = 6;
-            this.lblEmail.Text = "Email";
+            this.lblEmail.Text = "E-Post";
             // 
             // txtUsername
             // 
@@ -121,9 +121,9 @@
             this.lblUsername.AutoSize = true;
             this.lblUsername.Location = new System.Drawing.Point(9, 195);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(55, 13);
+            this.lblUsername.Size = new System.Drawing.Size(62, 13);
             this.lblUsername.TabIndex = 8;
-            this.lblUsername.Text = "Username";
+            this.lblUsername.Text = "Brukernavn";
             // 
             // txtPassword
             // 
@@ -146,18 +146,18 @@
             this.lblPassword.AutoSize = true;
             this.lblPassword.Location = new System.Drawing.Point(9, 234);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(53, 13);
+            this.lblPassword.Size = new System.Drawing.Size(45, 13);
             this.lblPassword.TabIndex = 11;
-            this.lblPassword.Text = "Password";
+            this.lblPassword.Text = "Passord";
             // 
             // lblConfirmPassword
             // 
             this.lblConfirmPassword.AutoSize = true;
             this.lblConfirmPassword.Location = new System.Drawing.Point(115, 234);
             this.lblConfirmPassword.Name = "lblConfirmPassword";
-            this.lblConfirmPassword.Size = new System.Drawing.Size(90, 13);
+            this.lblConfirmPassword.Size = new System.Drawing.Size(81, 13);
             this.lblConfirmPassword.TabIndex = 12;
-            this.lblConfirmPassword.Text = "Confirm password";
+            this.lblConfirmPassword.Text = "Bekreft passord";
             // 
             // btnSubmit
             // 
@@ -165,7 +165,7 @@
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(206, 23);
             this.btnSubmit.TabIndex = 10;
-            this.btnSubmit.Text = "Submit";
+            this.btnSubmit.Text = "Lagre";
             this.btnSubmit.UseVisualStyleBackColor = true;
             this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
             // 
@@ -175,7 +175,7 @@
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(206, 23);
             this.btnDelete.TabIndex = 11;
-            this.btnDelete.Text = "Delete";
+            this.btnDelete.Text = "Slett";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
@@ -191,9 +191,9 @@
             this.lblConfirmEmail.AutoSize = true;
             this.lblConfirmEmail.Location = new System.Drawing.Point(9, 153);
             this.lblConfirmEmail.Name = "lblConfirmEmail";
-            this.lblConfirmEmail.Size = new System.Drawing.Size(70, 13);
+            this.lblConfirmEmail.Size = new System.Drawing.Size(75, 13);
             this.lblConfirmEmail.TabIndex = 16;
-            this.lblConfirmEmail.Text = "Confirm Email";
+            this.lblConfirmEmail.Text = "Bekreft E-Post";
             // 
             // txtPhone
             // 
@@ -207,9 +207,9 @@
             this.lblPhone.AutoSize = true;
             this.lblPhone.Location = new System.Drawing.Point(9, 75);
             this.lblPhone.Name = "lblPhone";
-            this.lblPhone.Size = new System.Drawing.Size(78, 13);
+            this.lblPhone.Size = new System.Drawing.Size(43, 13);
             this.lblPhone.TabIndex = 18;
-            this.lblPhone.Text = "Phone Number";
+            this.lblPhone.Text = "Telefon";
             // 
             // frmSubscribers
             // 
@@ -240,7 +240,7 @@
             this.MaximizeBox = false;
             this.Name = "frmSubscribers";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Subscribers";
+            this.Text = "Brukere";
             this.ResumeLayout(false);
             this.PerformLayout();
 

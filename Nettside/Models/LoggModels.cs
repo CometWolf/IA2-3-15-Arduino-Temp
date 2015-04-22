@@ -9,13 +9,11 @@ namespace WebApplication6.Models
     {
         public string data;
         public string input;
-        //public string type;
         public class Unit
         {
             public string entity;
             public string day;
             public string month;
-            //public string type;
             
         }
         public Unit unit = new Unit();

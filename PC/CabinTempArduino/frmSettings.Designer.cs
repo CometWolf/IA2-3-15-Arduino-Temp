@@ -55,7 +55,7 @@
             this.groupBox1.Size = new System.Drawing.Size(223, 95);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Log interval";
+            this.groupBox1.Text = "Intervall logging";
             // 
             // btnInterval
             // 
@@ -63,7 +63,7 @@
             this.btnInterval.Name = "btnInterval";
             this.btnInterval.Size = new System.Drawing.Size(121, 40);
             this.btnInterval.TabIndex = 3;
-            this.btnInterval.Text = "Set interval";
+            this.btnInterval.Text = "Sett intervall";
             this.btnInterval.UseVisualStyleBackColor = true;
             this.btnInterval.Click += new System.EventHandler(this.btnInterval_Click);
             // 
@@ -72,10 +72,10 @@
             this.rbtMinutes.AutoSize = true;
             this.rbtMinutes.Location = new System.Drawing.Point(133, 69);
             this.rbtMinutes.Name = "rbtMinutes";
-            this.rbtMinutes.Size = new System.Drawing.Size(62, 17);
+            this.rbtMinutes.Size = new System.Drawing.Size(63, 17);
             this.rbtMinutes.TabIndex = 1;
             this.rbtMinutes.TabStop = true;
-            this.rbtMinutes.Text = "Minutes";
+            this.rbtMinutes.Text = "Minutter";
             this.rbtMinutes.UseVisualStyleBackColor = true;
             // 
             // rbtHours
@@ -83,10 +83,10 @@
             this.rbtHours.AutoSize = true;
             this.rbtHours.Location = new System.Drawing.Point(133, 46);
             this.rbtHours.Name = "rbtHours";
-            this.rbtHours.Size = new System.Drawing.Size(53, 17);
+            this.rbtHours.Size = new System.Drawing.Size(51, 17);
             this.rbtHours.TabIndex = 2;
             this.rbtHours.TabStop = true;
-            this.rbtHours.Text = "Hours";
+            this.rbtHours.Text = "Timer";
             this.rbtHours.UseVisualStyleBackColor = true;
             // 
             // txtCustomInterval
@@ -95,22 +95,22 @@
             this.txtCustomInterval.Name = "txtCustomInterval";
             this.txtCustomInterval.Size = new System.Drawing.Size(81, 20);
             this.txtCustomInterval.TabIndex = 1;
-            this.txtCustomInterval.Text = "Custom interval";
+            this.txtCustomInterval.Text = "Verdi";
             this.txtCustomInterval.Click += new System.EventHandler(this.txtCustomInterval_Click);
             // 
             // cboPreset
             // 
             this.cboPreset.FormattingEnabled = true;
             this.cboPreset.Items.AddRange(new object[] {
-            "60 minutes",
-            "30 minutes",
-            "15 minutes",
-            "Custom"});
+            "60 minutter",
+            "30 minutter",
+            "15 minutter",
+            "Egendefinert"});
             this.cboPreset.Location = new System.Drawing.Point(6, 19);
             this.cboPreset.Name = "cboPreset";
             this.cboPreset.Size = new System.Drawing.Size(121, 21);
             this.cboPreset.TabIndex = 0;
-            this.cboPreset.Text = "Preset";
+            this.cboPreset.Text = "Fohåndsinnstillinger";
             this.cboPreset.SelectedIndexChanged += new System.EventHandler(this.cboPreset_SelectedIndexChanged);
             // 
             // groupBox2
@@ -130,7 +130,7 @@
             this.btnComPort.Name = "btnComPort";
             this.btnComPort.Size = new System.Drawing.Size(81, 23);
             this.btnComPort.TabIndex = 1;
-            this.btnComPort.Text = "Set COM Port";
+            this.btnComPort.Text = "Sett COM Port";
             this.btnComPort.UseVisualStyleBackColor = true;
             this.btnComPort.Click += new System.EventHandler(this.btnComPort_Click);
             // 
@@ -141,7 +141,7 @@
             this.cboComPort.Name = "cboComPort";
             this.cboComPort.Size = new System.Drawing.Size(121, 21);
             this.cboComPort.TabIndex = 0;
-            this.cboComPort.Text = "Ports";
+            this.cboComPort.Text = "Port";
             this.cboComPort.SelectedIndexChanged += new System.EventHandler(this.cboComPort_SelectedIndexChanged);
             // 
             // frmSettings
@@ -155,7 +155,7 @@
             this.MaximizeBox = false;
             this.Name = "frmSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Settings";
+            this.Text = "Innstillinger";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

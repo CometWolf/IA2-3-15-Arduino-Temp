@@ -18,7 +18,7 @@ namespace WebApplication6.Controllers
         {
             if (!User.Identity.IsAuthenticated) { //Check if user is logged in
                 //Not logged in, redirect to login page
-                //Response.Redirect("~/Account/Login");
+                Response.Redirect("~/Account/Login");
             }
             ViewBag.Title = "Logg";
             ViewBag.Message = "Alarm og temperatur logg";
@@ -28,36 +28,48 @@ namespace WebApplication6.Controllers
         public void GetLogg(string input, string unit, string type) 
         {
             model = new LoggModel();
+            int inputInt;
+            int.TryParse(input, out inputInt);
             model.input = input;
-            //model.unit = type;
             model.unit.entity = (unit == "entity") ? "selected" : "";
             model.unit.day = (unit == "day") ? "selected" : "";
             model.unit.month = (unit == "month") ? "selected": "";
             model.type.temperature = (type == "Temperature") ? "checked" : "";
             model.type.alarm = (type == "Alarm") ? "checked" : "";
             string[,] tempArray = new string[0,0];
-            switch (unit)
+
+            if (!(input == "")) 
             {
-                case "entity":
-                    if (type == "Temperature") tempArray = database.GetTemperatureLast(Convert.ToInt32(input));
-                    else if (type == "Alarm") tempArray = database.GetAlarmLast(Convert.ToInt32(input));
-                    break;
-                case "day":
-                    if(type == "Temperature") tempArray = database.GetTemperatureDays(Convert.ToInt32(input));
-                    else if(type =="Alarm") tempArray = database.GetAlarmDays(Convert.ToInt32(input));
-                    break;
-                case "month":
-                    if(type == "Temperature") tempArray = database.GetTemperatureMonths(Convert.ToInt32(input));
-                    else if(type =="Alarm") tempArray = database.GetAlarmMonths(Convert.ToInt32(input));
-                    break;
-                default:
-                    tempArray = new string[0, 0];
-                    break;
-            }
-            for (int i = 0; i <= tempArray.GetUpperBound(0); i++)
-			{
-                model.data = model.data + tempArray[i, 0] + ": " + tempArray[i, 1] + "°C" + "<br />";
-			}
+                try
+                {
+                    switch (unit)
+                    {
+                        case "entity":
+                            if (type == "Temperature") tempArray = database.GetTemperatureLast(inputInt);
+                            else if (type == "Alarm") tempArray = database.GetAlarmLast(inputInt);
+                            break;
+                        case "day":
+                            if (type == "Temperature") tempArray = database.GetTemperatureDays(inputInt);
+                            else if (type == "Alarm") tempArray = database.GetAlarmDays(inputInt);
+                            break;
+                        case "month":
+                            if (type == "Temperature") tempArray = database.GetTemperatureMonths(inputInt);
+                            else if (type == "Alarm") tempArray = database.GetAlarmMonths(inputInt);
+                            break;
+                    }
+                    for (int i = 0; i <= tempArray.GetUpperBound(0); i++)
+                    {
+                        model.data = model.data + tempArray[i, 0] + ": " + tempArray[i, 1] + "°C" + "<br />";
+                    }
+                }
+                catch (Exception e)
+                {
+                    Response.Redirect("~/Home/Error?e=" + e.Message);
+                    return;
+                }
+
+
+            } 
             Response.Redirect("~/Logg/Index");
         }
     }
