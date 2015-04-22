@@ -75,6 +75,10 @@ namespace CabinTempArduino
             Thread.Sleep(50);
             temp = Received();
             temp = temp.Replace("\r", "");
+            if (temp.Substring(0,1) == " ")
+            {
+                temp = temp.Replace(" ", "");
+            }
             return temp;
         }
         public void AlarmReceived()
