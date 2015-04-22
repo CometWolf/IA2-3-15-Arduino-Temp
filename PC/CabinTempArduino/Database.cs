@@ -146,8 +146,8 @@ namespace CabinTempArduino
             }
             catch (Exception ex)
             {
-                subscribers = new string[0, 0];
-                subscribers[0, 0] = "N/A";
+                subscribers = new string[1, 1];
+                subscribers[0, 0] = "";
 
                 throw ex;
             }
@@ -355,9 +355,8 @@ namespace CabinTempArduino
             }
             catch (Exception ex)
             {
-                alarms = new string[0, 0];
-                alarms[0, 0] = "N/A";
-
+                alarms = new string[1, 1];
+                alarms[0, 0] = "";
                 throw ex;
             }
             finally
@@ -384,9 +383,8 @@ namespace CabinTempArduino
             }
             catch (Exception ex)
             {
-                alarms = new string[0, 0];
-                alarms[0, 0] = "N/A";
-
+                alarms = new string[1, 1];
+                alarms[0, 0] = "";
                 throw ex;
             }
             finally
@@ -417,8 +415,7 @@ namespace CabinTempArduino
             catch (Exception ex)
             {
                 alarms = new string[1, 1];
-                alarms[0, 0] = "N/A";
-
+                alarms[0, 0] = "";
                 throw ex;
             }
             finally
@@ -447,9 +444,8 @@ namespace CabinTempArduino
             }
             catch (Exception ex)
             {
-                alarms = new string[0, 0];
-                alarms[0, 0] = "N/A";
-
+                alarms = new string[1, 1];
+                alarms[0, 0] = "";
                 throw ex;
             }
             finally
@@ -479,9 +475,8 @@ namespace CabinTempArduino
             }
             catch (Exception ex)
             {
-                alarms = new string[0, 0];
-                alarms[0, 0] = "N/A";
-
+                alarms = new string[1, 1];
+                alarms[0, 0] = "";
                 throw ex;
             }
             finally
@@ -509,9 +504,8 @@ namespace CabinTempArduino
             }
             catch (Exception ex)
             {
-                alarms = new string[0, 0];
-                alarms[0, 0] = "N/A";
-
+                alarms = new string[1, 1];
+                alarms[0, 0] = "";
                 throw ex;
             }
             finally
@@ -540,9 +534,8 @@ namespace CabinTempArduino
             }
             catch (Exception ex)
             {
-                alarms = new string[0, 0];
-                alarms[0, 0] = "N/A";
-
+                alarms = new string[1, 1];
+                alarms[0, 0] = "";
                 throw ex;
             }
             finally
@@ -569,8 +562,8 @@ namespace CabinTempArduino
             }
             catch (Exception ex)
             {
-                alarms = new string[0, 0];
-                alarms[0, 0] = "N/A";
+                alarms = new string[1, 1];
+                alarms[0, 0] = "";
 
                 throw ex;
             }
@@ -661,8 +654,8 @@ namespace CabinTempArduino
             }
             catch (Exception ex)
             {
-                temperature = new string[0, 0];
-                temperature[0, 0] = "N/A";
+                temperature = new string[1,1];
+                temperature[0, 0] = "";
 
                 throw ex;
             }
@@ -694,7 +687,7 @@ namespace CabinTempArduino
             catch (Exception ex)
             {
                 temperature = new string[1, 1];
-                temperature[0, 0] = "N/A";
+                temperature[0, 0] = "";
 
                 throw ex;
             }
@@ -724,8 +717,8 @@ namespace CabinTempArduino
             }
             catch (Exception ex)
             {
-                temperature = new string[0, 0];
-                temperature[0, 0] = "N/A";
+                temperature = new string[1,1];
+                temperature[0, 0] = "";
 
                 throw ex;
             }
@@ -756,8 +749,8 @@ namespace CabinTempArduino
             }
             catch (Exception ex)
             {
-                temperature = new string[0, 0];
-                temperature[0, 0] = "N/A";
+                temperature = new string[1, 1];
+                temperature[0, 0] = "";
 
                 throw ex;
             }
@@ -786,8 +779,8 @@ namespace CabinTempArduino
             }
             catch (Exception ex)
             {
-                temperature = new string[0, 0];
-                temperature[0, 0] = "N/A";
+                temperature = new string[1, 1];
+                temperature[0, 0] = "";
 
                 throw ex;
             }
@@ -817,8 +810,8 @@ namespace CabinTempArduino
             }
             catch (Exception ex)
             {
-                temperature = new string[0, 0];
-                temperature[0, 0] = "N/A";
+                temperature = new string[1, 1];
+                temperature[0, 0] = "";
 
                 throw ex;
             }
@@ -854,8 +847,8 @@ namespace CabinTempArduino
             }
             catch (Exception ex)
             {
-                temperature = new string[0, 0];
-                temperature[0, 0] = "N/A";
+                temperature = new string[1, 1];
+                temperature[0, 0] = "";
 
                 throw ex;
             }
