@@ -244,19 +244,19 @@ namespace CabinTempArduino
                 Temp.FurnaceLowerLimit = Convert.ToDouble(settings[3]);
                 Temp.FurnaceUpperLimit = Convert.ToDouble(settings[2]);
 
-                if ((Temp.CheckAlarm() == "ALARM_UP\r") && !alarmLogged)
+                if ((Temp.CheckAlarm() == "ALARM_UP") && !alarmLogged)
                 {
                     logAlarmAndSendEmail("[ALARM] Øvre grense", "Den øvre alarmgrensen har blitt nådd", "010");
                     txtCurrent.BackColor = Color.Red;
                     alarmLogged = true;
                 }
-                else if (Temp.CheckAlarm() == "ALARM_LOW\r" && !alarmLogged)
+                else if (Temp.CheckAlarm() == "ALARM_LOW" && !alarmLogged)
                 {
                     logAlarmAndSendEmail("[ALARM] Nedre grense", "Den nedre alarmgrensen har blitt nådd", "010");
                     txtCurrent.BackColor = Color.Blue;
                     alarmLogged = true;
                 }
-                else if (Temp.CheckAlarm() == "NO_ALARM\r")
+                else if (Temp.CheckAlarm() == "NO_ALARM")
                 {
                     txtCurrent.BackColor = Color.White;
                     alarmLogged = false;
