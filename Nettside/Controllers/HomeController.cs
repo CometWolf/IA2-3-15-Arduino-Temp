@@ -26,17 +26,17 @@ namespace WebApplication6.Controllers {
                 model.temperature = database.GetTemperatureLast()[0,1];
                 //settings
                 string[] setting = database.GetSettings(0);
-                model.alarm.upperLimit = setting[1];
-                model.alarm.lowerLimit = setting[4];
-                model.updateInterval = setting[5];
-                model.furnace.upperLimit = setting[2];
-                model.furnace.lowerLimit = setting[3];
+                model.AlarmUpperLimit = setting[1];
+                model.AlarmLowerLimit = setting[4];
+                model.LogInterval = setting[5];
+                model.FurnaceUpperLimit = setting[2];
+                model.FurnaceLowerLimit = setting[3];
                 //alarm
                 string[,] alarm = database.GetAlarmLast(1);
                 if (alarm[0, 4] == "0") { //alarm not signed
-                    model.alarm.hide = false;
-                    model.alarm.id = alarm[0, 1];
-                    model.alarm.message = "\n" + alarm[0, 3];
+                    model.alarmHide = "";
+                    model.AlarmId = alarm[0, 1];
+                    model.alarmMessage = "\n" + alarm[0, 3];
                 } //else no unsigned alarm
                 return View(model);
             } catch (Exception e){
@@ -59,19 +59,20 @@ namespace WebApplication6.Controllers {
         }
 
         [HttpPost]
-        public void SignAlarm(string id) {
-            database.SignAlarm(id);
+        public void SignAlarm(HomeViewModel model) {
+            database.SignAlarm(model.AlarmId);
+            model.alarmHide = "hidden";
             Response.Redirect("~/");
         }
 
         [HttpPost]
         //upload settings to database
-        public void UpdateSettings(string aUpperLimit, string aLowerLimit, string updateInterval, string fUpperLimit, string fLowerLimit) {
-            database.UpdateSetting(aUpperLimit, 1, 0);
-            database.UpdateSetting(aLowerLimit, 4, 0);
-            database.UpdateSetting(updateInterval, 5, 0);
-            database.UpdateSetting(fUpperLimit, 2, 0);
-            database.UpdateSetting(fLowerLimit, 3, 0);
+        public void UpdateSettings(HomeViewModel model) {
+            database.UpdateSetting(model.AlarmUpperLimit, 1, 0);
+            database.UpdateSetting(model.AlarmLowerLimit, 4, 0);
+            database.UpdateSetting(model.LogInterval, 5, 0);
+            database.UpdateSetting(model.FurnaceUpperLimit, 2, 0);
+            database.UpdateSetting(model.FurnaceLowerLimit, 3, 0);
             Response.Redirect("~/");
         }
     }
