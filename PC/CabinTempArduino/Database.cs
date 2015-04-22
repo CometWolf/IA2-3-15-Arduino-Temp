@@ -168,7 +168,7 @@ namespace CabinTempArduino
             {
                 string connectionstring = String.Format((
                     "SELECT * FROM {0} WHERE '{2}' = {1}"), 
-                    alarmTable, "Brukernavn", username);
+                    subscriberTable, "Brukernavn", username);
 
                 OpenDbMan(connectionstring);
 
