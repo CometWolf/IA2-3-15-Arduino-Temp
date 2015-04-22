@@ -17,7 +17,7 @@ namespace CabinTempArduino
         {
             InitializeComponent();
 
-            if (cboSelectSubscriber.Text == "Select subscriber")
+            if (cboSelectSubscriber.Text == "Velg bruker")
             {
                 TextBoxesReadOnlyTrue();
                 btnDelete.Enabled = false; btnSubmit.Enabled = false;
@@ -39,19 +39,19 @@ namespace CabinTempArduino
         private void cboSelectSubscriber_SelectedIndexChanged(object sender, EventArgs e)
         {
             subscribers = myDatabase.GetSubscribers();
-            if (cboSelectSubscriber.Text != "New")
-                btnSubmit.Text = "Submit changes";
+            if (cboSelectSubscriber.Text != "Ny bruker")
+                btnSubmit.Text = "Lagre endringer";
 
-            if (cboSelectSubscriber.Text == "New")
+            if (cboSelectSubscriber.Text == "Ny bruker")
             {
                 TextBoxesReadOnlyFalse();
 
                 btnDelete.Enabled = false; btnSubmit.Enabled = true;
-                btnSubmit.Text = "Submit";
+                btnSubmit.Text = "Lagre";
 
                 ClearAllTextBoxes();
             }
-            else if (cboSelectSubscriber.Text != "new" && myDatabase.SearchUsername(cboSelectSubscriber.Text))
+            else if (cboSelectSubscriber.Text != "Ny bruker" && myDatabase.SearchUsername(cboSelectSubscriber.Text))
             {
                 TextBoxesReadOnlyFalse();
                 btnDelete.Enabled = true; btnSubmit.Enabled = true;
@@ -73,18 +73,18 @@ namespace CabinTempArduino
             bool username = false;
             bool lengthPassword = false;
             bool uniqueEmail = false;
-            bool email = matchingValues(txtEmail.Text, txtConfirmEmail.Text, "emails");
-            bool password = matchingValues(txtPassword.Text, txtConfirmPassword.Text, "passwords");
+            bool email = matchingValues(txtEmail.Text, txtConfirmEmail.Text, "E-Post");
+            bool password = matchingValues(txtPassword.Text, txtConfirmPassword.Text, "Passord");
             if (password)
             {
                 lengthPassword = passwordLength(txtPassword.Text, txtConfirmPassword.Text);
             }
             try
             {
-                if (cboSelectSubscriber.Text == "New")
+                if (cboSelectSubscriber.Text == "Ny bruker")
                 {
-                    username = unique(txtUsername.Text,3,"username");
-                    uniqueEmail = unique(txtEmail.Text, 5, "email");
+                    username = unique(txtUsername.Text,3,"Brukernavn");
+                    uniqueEmail = unique(txtEmail.Text, 5, "E-Post");
 
                     if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
                         && email && username && (txtEmail.Text != "") && (txtConfirmEmail.Text != "") && (txtPassword.Text != "") && (txtConfirmPassword.Text != "")
@@ -92,20 +92,20 @@ namespace CabinTempArduino
                     {
                         myDatabase.AddSubscriber(txtSurName.Text, txtFirstName.Text, txtUsername.Text, txtPassword.Text, txtEmail.Text, txtPhone.Text);
                         ClearAllTextBoxes();
-                        MessageBox.Show("Subscriber successfully added.");
+                        MessageBox.Show("Ny bruker lagret");
 
                         subscribers = myDatabase.GetSubscribers();
                         cboSelectSubscriber.Items.Clear();
-                        cboSelectSubscriber.Items.Add("New");
+                        cboSelectSubscriber.Items.Add("Ny bruker");
                         for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
                         {
                             cboSelectSubscriber.Items.Add(subscribers[i, 3]);
                         }
-                        cboSelectSubscriber.Text = "New";
+                        cboSelectSubscriber.Text = "Ny bruker";
                     }
                     else if ((txtFirstName.Text == "") || (txtSurName.Text == "") || (txtPhone.Text == "") || (txtUsername.Text == "") ||
                         (txtEmail.Text == "") || (txtConfirmEmail.Text == "") || (txtPassword.Text == "") || (txtConfirmPassword.Text == ""))
-                        MessageBox.Show("Fill all textboxes.");
+                        MessageBox.Show("Fyll i alle tekstbokser");
                 }
                 else if (myDatabase.SearchUsername(cboSelectSubscriber.Text))
                 {
@@ -113,20 +113,20 @@ namespace CabinTempArduino
                     int index = myDatabase.GetIndex(cboSelectSubscriber.Text);
 
                     if (txtUsername.Text != subscribers[index, 3])
-                        username = unique(txtUsername.Text,3,"username");
+                        username = unique(txtUsername.Text,3,"Brukernavn");
                     if(txtEmail.Text != subscribers[index,5])
-                        uniqueEmail = unique(txtEmail.Text, 5, "email");
+                        uniqueEmail = unique(txtEmail.Text, 5, "E-Post");
 
                     if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
                     && email && (txtEmail.Text != "") && (txtConfirmEmail.Text != "") && (txtPassword.Text != "") && (txtConfirmPassword.Text != "")
                     && lengthPassword && (txtUsername.Text == subscribers[index, 3] || username))
                     {
                         myDatabase.UpdateSubscriber(userID, txtSurName.Text, txtFirstName.Text, txtUsername.Text, txtPassword.Text, txtEmail.Text, txtPhone.Text);
-                        MessageBox.Show("Subscriber successfully changed.");
+                        MessageBox.Show("Endringer lagret");
 
                         subscribers = myDatabase.GetSubscribers();
                         cboSelectSubscriber.Items.Clear();
-                        cboSelectSubscriber.Items.Add("New");
+                        cboSelectSubscriber.Items.Add("Ny bruker");
                         for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
                         {
                             cboSelectSubscriber.Items.Add(subscribers[i, 3]);
@@ -135,7 +135,7 @@ namespace CabinTempArduino
                     }
                     else if ((txtFirstName.Text == "") || (txtSurName.Text == "") || (txtPhone.Text == "") || (txtUsername.Text == "") ||
                         (txtEmail.Text == "") || (txtConfirmEmail.Text == "") || (txtPassword.Text == "") || (txtConfirmPassword.Text == ""))
-                        MessageBox.Show("Fill all textboxes.");
+                        MessageBox.Show("Ftll i alle tekstbokser");
                 }
             }
             catch(Exception ex)
@@ -155,7 +155,7 @@ namespace CabinTempArduino
 
                 subscribers = myDatabase.GetSubscribers();
                 cboSelectSubscriber.Items.Clear();
-                cboSelectSubscriber.Items.Add("New");
+                cboSelectSubscriber.Items.Add("Ny bruker");
                 for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
                 {
                     cboSelectSubscriber.Items.Add(subscribers[i, 3]);
@@ -163,8 +163,8 @@ namespace CabinTempArduino
 
 
                 ClearAllTextBoxes();
-                cboSelectSubscriber.Text = "New";
-                MessageBox.Show("User successfully deleted!");
+                cboSelectSubscriber.Text = "Ny bruker";
+                MessageBox.Show("Bruker slettet");
             }
             catch(Exception ex)
             {
@@ -204,7 +204,7 @@ namespace CabinTempArduino
                 if (valueN1 == valueN2)
                     matching = true;
                 else
-                    throw new Exception("The " + valueTypeTested + " are not matching");
+                    throw new Exception(valueTypeTested + " er ulik");
             }
             catch (Exception ex)
             {
@@ -221,7 +221,7 @@ namespace CabinTempArduino
                 if (password.Length >7 && confirmPassword.Length >7)
                     length = true;
                 else
-                    throw new Exception("The password must be 8 characters or longer");
+                    throw new Exception("Passordet må være 8 tegn eller større");
             }
             catch (Exception ex)
             {
@@ -242,7 +242,7 @@ namespace CabinTempArduino
                         isUnique = false;
                 }
                 if (!isUnique)
-                    throw new Exception("The "+ valueType +" is already in use");
+                    throw new Exception(valueType +" er i bruk");
             }
             catch(Exception ex)
             {

@@ -30,7 +30,7 @@ namespace CabinTempArduino
         private void txtValue_Click(object sender, EventArgs e)
         {
             //GUI
-            if (txtValue.Text == "Value (C)")
+            if (txtValue.Text == "Verdi (C)")
                 txtValue.Text = "";
             //END GUI
         }
@@ -45,29 +45,29 @@ namespace CabinTempArduino
             {
                 try
                 {
-                    switch (cboLimitType.Text)
+                    switch (cboLimitType.SelectedIndex)
                     {
-                        case "Lower limit":
+                        case 2:
                             myDatabase.UpdateSetting(txtValue.Text, 3, 0);
                             break;
-                        case "Upper limit":
+                        case 1:
                             myDatabase.UpdateSetting(txtValue.Text, 2, 0);
                             break;
-                        case "High alarm":
+                        case 0:
                             myDatabase.UpdateSetting(txtValue.Text, 1, 0);
                             break;
-                        case "Low alarm":
+                        case 3:
                             myDatabase.UpdateSetting(txtValue.Text, 4, 0);
                             break;
                     }
-                    MessageBox.Show("Limit successfully changed.");
+                    MessageBox.Show("Grense satt");
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
             }
-            else MessageBox.Show("Limit must be a whole number greater than 0");
+            else MessageBox.Show("Verdi må være et heltall større enn 0");
         }
 
         private void cboLimitType_SelectedIndexChanged(object sender, EventArgs e)
@@ -78,18 +78,18 @@ namespace CabinTempArduino
 
             try
             {
-                switch (cboLimitType.Text)
+                switch (cboLimitType.SelectedIndex)
                 {
-                    case "Lower limit":
+                    case 2:
                         txtValue.Text = settings[3];
                         break;
-                    case "Upper limit":
+                    case 1:
                         txtValue.Text = settings[2];
                         break;
-                    case "High alarm":
+                    case 0:
                         txtValue.Text = settings[1];
                         break;
-                    case "Low alarm":
+                    case 3:
                         txtValue.Text = settings[4];
                         break;
                 }

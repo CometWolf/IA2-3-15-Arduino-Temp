@@ -37,15 +37,15 @@
             // 
             this.cboLimitType.FormattingEnabled = true;
             this.cboLimitType.Items.AddRange(new object[] {
-            "High alarm",
-            "Upper limit",
-            "Lower limit",
-            "Low alarm"});
+            "Høy alarm",
+            "Stopp fyring",
+            "Start fyring",
+            "Lav alarm"});
             this.cboLimitType.Location = new System.Drawing.Point(12, 12);
             this.cboLimitType.Name = "cboLimitType";
             this.cboLimitType.Size = new System.Drawing.Size(77, 21);
             this.cboLimitType.TabIndex = 0;
-            this.cboLimitType.Text = "Limit type";
+            this.cboLimitType.Text = "Type grense";
             this.cboLimitType.SelectedIndexChanged += new System.EventHandler(this.cboLimitType_SelectedIndexChanged);
             // 
             // txtValue
@@ -54,7 +54,7 @@
             this.txtValue.Name = "txtValue";
             this.txtValue.Size = new System.Drawing.Size(56, 20);
             this.txtValue.TabIndex = 1;
-            this.txtValue.Text = "Value (C)";
+            this.txtValue.Text = "Verdi (C)";
             this.txtValue.Click += new System.EventHandler(this.txtValue_Click);
             // 
             // btnSetLimit
@@ -63,7 +63,7 @@
             this.btnSetLimit.Name = "btnSetLimit";
             this.btnSetLimit.Size = new System.Drawing.Size(139, 23);
             this.btnSetLimit.TabIndex = 2;
-            this.btnSetLimit.Text = "Set limit";
+            this.btnSetLimit.Text = "Sett grense";
             this.btnSetLimit.UseVisualStyleBackColor = true;
             this.btnSetLimit.Click += new System.EventHandler(this.btnSetLimit_Click);
             // 
@@ -80,7 +80,7 @@
             this.MaximizeBox = false;
             this.Name = "frmLimits";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Limits";
+            this.Text = "Grenser";
             this.ResumeLayout(false);
             this.PerformLayout();
 

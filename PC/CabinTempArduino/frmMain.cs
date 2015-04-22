@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Timers.Timer;
+using System.Timers;
 
 namespace CabinTempArduino
 {
@@ -55,7 +55,7 @@ namespace CabinTempArduino
             SetWindowTheme(prbBatteryStatus.Handle, "", ""); //Disable Visual Styles ProgressBar
 
             //GUI
-            if (cboAnnotation.Text == "Annotation")
+            if (cboAnnotation.Text == "Benevning")
             {
                 btnFetch.Enabled = false;
                 rbtError.Enabled = false;
@@ -102,50 +102,45 @@ namespace CabinTempArduino
             int.TryParse(txtFetchLast.Text, out fetchLast);
 
 
-            switch (cboAnnotation.Text)
+            switch (cboAnnotation.SelectedIndex)
             {
-                case "Entries":
+                case 0:
                     if (rbtTemperature.Checked) FetchTemp(myDatabase.GetTemperatureLast(fetchLast));
                     else if (rbtError.Checked) FetchAlarm(myDatabase.GetAlarmLast(fetchLast));
-                    else MessageBox.Show("Check off for temperature or error");
+                    else MessageBox.Show("Velg Temperatur eller Alarm");
                     break;
-                case "Day(s)":
+                case 1:
                     if (rbtTemperature.Checked) FetchTemp(myDatabase.GetTemperatureDays(fetchLast));
                     else if (rbtError.Checked) FetchAlarm(myDatabase.GetAlarmDays(fetchLast));
-                    else MessageBox.Show("Check off for temperature or error");
+                    else MessageBox.Show("Velg Temperatur eller Alarm");
                     break;
-                case "Month(s)":
+                case 2:
                     if (rbtTemperature.Checked) FetchTemp(myDatabase.GetTemperatureMonths(fetchLast));
                     else if (rbtError.Checked) FetchAlarm(myDatabase.GetAlarmMonths(fetchLast));
-                    else MessageBox.Show("Check off for temperature or error");
+                    else MessageBox.Show("Velg Temperatur eller Alarm");
                     break;
+                case 3:
+                    if (btnFetch.Text == "Start")
+                    {
+                        continous = true;
+                        btnFetch.Text = "Stopp";
+                        cboAnnotation.Enabled = false;
+                        rtbDatabaseValues.Clear();
+                        rtbDatabaseValues.Text = "Tid" + "\t\t\t" + "Temperatur" + "\r\n";
 
+                    }
+                    else if (btnFetch.Text == "Stopp")
+                    {
+                        continous = false;
+                        btnFetch.Text = "Start";
+                        cboAnnotation.Enabled = true;
+                        rbtError.Enabled = true;
+                        rbtTemperature.Enabled = true;
+                    }
+                    break;
                 default:
                     break;
             }
-
-
-            if (cboAnnotation.Text == "Continous")
-            {
-                if (btnFetch.Text == "Start")
-                {
-                    continous = true;
-                    btnFetch.Text = "Stop";
-                    cboAnnotation.Enabled = false;
-                    rtbDatabaseValues.Clear();
-                    rtbDatabaseValues.Text = "Time" + "\t\t\t" + "Temperature" + "\r\n";
-
-                }
-                else if (btnFetch.Text == "Stop")
-                {
-                    continous = false;
-                    btnFetch.Text = "Start";
-                    cboAnnotation.Enabled = true;
-                    rbtError.Enabled = true;
-                    rbtTemperature.Enabled = true;
-                }
-            }
-
         }
         #region BatterySurveillance
         private void tmrBatteryStatus_Tick(object sender, EventArgs e)
@@ -203,7 +198,7 @@ namespace CabinTempArduino
         #endregion BatterySurvailence
         private void cboAnnotation_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboAnnotation.Text == "Continous")
+            if (cboAnnotation.SelectedIndex == 3)
             {
                 rbtError.Enabled = true;
                 rbtTemperature.Enabled = true;
@@ -219,7 +214,7 @@ namespace CabinTempArduino
                 rbtError.Enabled = true;
                 rbtTemperature.Enabled = true;
                 txtFetchLast.ReadOnly = false;
-                btnFetch.Text = "Fetch values";
+                btnFetch.Text = "Hent";
             }
         }
         #region TemperatureLogging
@@ -339,7 +334,6 @@ namespace CabinTempArduino
             nextLogTime();
             logged = false;
         }
-
         private void startUPlog()
         {
             //Logs a temperature at startUP.
@@ -379,7 +373,12 @@ namespace CabinTempArduino
 
             myDatabase.UpdateSetting(nextLog, 6, 0);
         }
-        private void FetchTemp(string[,] values, string header = "Time" + "\t\t\t" + "Temperature" + "\r\n")
+        private void FetchTemp(string[,] values, string header = "Tid" + "\t\t\t" + "Temperatur" + "\r\n")
+        {
+            FetchAlarm(values, header);
+            ChartUpdateTemp(values);
+        }
+        private void FetchAlarm(string[,] values, string header = "Tid" + "\t\t\t" + "ID" + "\t" + "Temp" + "\t" + "Beskrivelse" + "\r\n")
         {
             rtbDatabaseValues.Clear();
             rtbDatabaseValues.Text = header;
@@ -393,17 +392,12 @@ namespace CabinTempArduino
                 rtbDatabaseValues.AppendText("\r\n");
             }
         }
-        private void FetchAlarm(string[,] values, string header = "Time" + "\t\t\t" + "ID" + "\t" + "Temp" + "\t" + "Description" + "\r\n")
-        {
-            FetchTemp(values, header);
-        }
-
         private void ChartUpdateTemp(string[,] xy)
         {
             DateTime myDate;
 
             chartFetchedValues.Series[0].Points.Clear();
-            chartFetchedValues.Series[0].Name = "Temperature";
+            chartFetchedValues.Series[0].Name = "Temperatur";
             chartFetchedValues.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
             chartFetchedValues.Series[0].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Time;
 
@@ -437,7 +431,7 @@ namespace CabinTempArduino
             }
             catch (Exception)
             {
-                txtCurrent.Text = "Set port in settings";
+                txtCurrent.Text = "Velg port";
             }
         }
     }
