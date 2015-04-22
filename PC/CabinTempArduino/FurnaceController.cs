@@ -74,6 +74,7 @@ namespace CabinTempArduino
             Send("TEMP");
             Thread.Sleep(50);
             temp = Received();
+            temp = temp.Replace("\r", "");
             return temp;
         }
         public void AlarmReceived()
@@ -87,6 +88,7 @@ namespace CabinTempArduino
             Send("CHAL");
             Thread.Sleep(50);
             message = Received();
+            message = message.Replace("\r", "");
             return message;
         }
         //public void SetAlarmUpper(string alarmName)
