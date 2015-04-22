@@ -141,7 +141,7 @@ namespace CabinTempArduino
                                 else if (value * 60 == 1440)
                                 {
                                     settings.UpdateSetting("1440", 5, 0);
-                                    main.nextLogTime();
+                                    main.NextLogTime();
                                     settings.UpdateSetting("true", 7, 0);
                                     MessageBox.Show("Interval successfully changed.");
                                 }
@@ -159,7 +159,7 @@ namespace CabinTempArduino
                                 else if (value == 1440)
                                 {
                                     settings.UpdateSetting("1440", 5, 0);
-                                    main.nextLogTime();
+                                    main.NextLogTime();
                                     settings.UpdateSetting("true", 7, 0);
                                     MessageBox.Show("Interval successfully changed.");
                                 }
@@ -183,7 +183,7 @@ namespace CabinTempArduino
         {
             settings.UpdateSetting(newInterval, 5, 0);
             settings.UpdateSetting(custom, 7, 0);
-            main.newInterval();
+            main.NewInterval();
             MessageBox.Show("Interval successfully changed.");
         }
     }

@@ -406,6 +406,7 @@ namespace CabinTempArduino
         private void ChartUpdateTemp(string[,] xy)
         {
             DateTime myDate;
+            double temp;
 
             chartFetchedValues.Series[0].Points.Clear();
             chartFetchedValues.Series[0].Name = "Temperatur";
@@ -415,7 +416,12 @@ namespace CabinTempArduino
             for (int i = 0; i < xy.GetUpperBound(0); i++)
             {
                 myDate = DateTime.ParseExact(xy[i, 0], "dd.MM.yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                chartFetchedValues.Series[0].Points.AddXY(myDate, Convert.ToDouble(xy[i, 1]));
+                xy[i, 1] = xy[i, 1].Replace('.', ',');
+
+                double.TryParse(xy[i, 1], out temp);
+
+
+                chartFetchedValues.Series[0].Points.AddXY(myDate, temp);
             }
             chartFetchedValues.Refresh();
         }
