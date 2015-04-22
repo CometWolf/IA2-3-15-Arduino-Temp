@@ -38,7 +38,7 @@ namespace WebApplication6.Controllers
             model.type.alarm = (type == "Alarm") ? "checked" : "";
             string[,] tempArray = new string[0,0];
 
-            if (!(input == ""||inputInt <= 0))
+            if (!(input == "")) 
             {
                 try
                 {

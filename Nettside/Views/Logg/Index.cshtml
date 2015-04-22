@@ -11,7 +11,7 @@
 
 <form action='@Url.Action("GetLogg","Logg")' method='post'>
     <p>Hent verdier:</p>
-    <input type="number" name="input" value="@Model.input"/>                                       
+    <input type="number" name="input" value="@Model.input" min="1"/>                                       
     <select name="unit">
         <option value="entity" @Model.unit.entity>Celler</option>
         <option value="day" @Model.unit.day>Dager</option>
