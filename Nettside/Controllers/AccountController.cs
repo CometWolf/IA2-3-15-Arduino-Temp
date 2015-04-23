@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+  Written by: Haakon N. Unelsrød
+  Login page controller. Handles user credentials and authorization.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;

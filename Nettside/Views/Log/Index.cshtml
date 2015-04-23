@@ -1,14 +1,14 @@
-﻿<head>      
-    <title></title>
-    
-</head>
+﻿<!--
+    Written by: Gustav Carlsen
+    Html page for viewing stored temperature and alarm logs in a connected database.
+    Database path may be set in the Log Controller class.
+-->
 @{
     ViewBag.Title = "Logg";
-    }
+}
 
 <h1>Logg</h1>
-
-<form action='@Url.Action("GetLogg","Logg")' method='post'>
+<form action='@Url.Action("GetLogg","Log")' method='post'>
     <p>Hent verdier:</p>
     <input type="number" name="input" value="@Model.input" min="1"/>                                       
     <select name="unit">

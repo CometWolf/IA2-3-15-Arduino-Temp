@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+  Written by: Haakon N. Unelsrød
+  Static user class. Handles Account login and logoff.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
