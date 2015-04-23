@@ -10,46 +10,49 @@ namespace CabinTempArduino
 {
     class E_post
     {
-        string reciverMail;
+        string receiverMail;
         string mailSubject;
         string mailText;
-        string programMail = "IA2.3.2015@gmail.com";      // Prog. mailadresse - konstant 
-        string programMailPassword = "arduino2015";       // Prog. mail passord - konstant
+        string programEmail = "IA2.3.2015@gmail.com";       // The progam's emailaddress 
+        string programEmailPassword = "arduino2015";        // and emailpassword
 
-        MailAddress to;
-        MailAddress from;
-        MailMessage message;
+        MailAddress to;                                     // mailaddresses, message and smtpclient  
+        MailAddress from;                                   // objects initialized outside of methode 
+        MailMessage message;                                // to prevent duplicates
         SmtpClient smtpclient;
 
-        public void Send(string emailReciver, string emailTheme, string emailMessage)                                      
-            // Metode for å sende mail med mottageradresse, emne og hovedtekst som parametere
+        public E_post() { }
+
+        public void Send(string emailReceiver, string emailTheme, string emailMessage)                                      
+            // Methode for sending email with recipient, theme/subject and message as parameters
         {
-            reciverMail = emailReciver;
+            receiverMail = emailReceiver;
             mailSubject = emailTheme;
             mailText = emailMessage;
 
-            to = new MailAddress(reciverMail);                  // Mailadresse objekt for mottager
-            from = new MailAddress(programMail);                // Mailadresse objekt for avsender
-            message = new MailMessage(from, to);                // Mail objekt, med avsender og mottager som parametere
-            message.Subject = mailSubject;                      // Legger inn tema i mailobjektet
-            message.Body = mailText;                            // Legger inn hovedteksten i mailobjektet 
+            to = new MailAddress(receiverMail);             // Declaration of emailaddresses  
+            from = new MailAddress(programEmail);           // and emailmessage
+            message = new MailMessage(from, to);            
+            message.Subject = mailSubject;                  
+            message.Body = mailText;                        
 
-            smtpclient = new SmtpClient();                      // SMTP innstillinger for Gmail
+            smtpclient = new SmtpClient();                  // SMTP settings for Gmail
             smtpclient.Host = "smtp.gmail.com";
             smtpclient.Port = 587;
             smtpclient.EnableSsl = true;
             smtpclient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpclient.UseDefaultCredentials = false;
-            smtpclient.Credentials = new NetworkCredential(from.Address, programMailPassword);
+            smtpclient.Credentials = new NetworkCredential(from.Address, programEmailPassword);
 
-            smtpclient.Send(message);                           // Sender mail
-            smtpclient.Dispose();                               // Avslutter oppkoblingen mot Gmail
+            smtpclient.Send(message);                       // Sends email
+            smtpclient.Dispose();                           // Ends the SMTP connection to Gmail
         }
+        #region Properties
         public string ReciverMail
         {
             get
             {
-                return reciverMail;
+                return receiverMail;
             }
             set
             {
@@ -82,7 +85,7 @@ namespace CabinTempArduino
         {
             get
             {
-                return programMail;
+                return programEmail;
             }
             set
             {
@@ -93,23 +96,13 @@ namespace CabinTempArduino
         {
             get
             {
-                return programMailPassword;
+                return programEmailPassword;
             }
             set
             {
                 ProgramMailPassword = value;
             }
         }
-        public bool MailSent
-        {
-            get
-            {
-                return mailSent;
-            }
-            set
-            {
-                MailSent = value;
-            }
-        }
+        #endregion
     }
 }
