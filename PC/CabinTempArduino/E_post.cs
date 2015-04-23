@@ -10,24 +10,23 @@ namespace CabinTempArduino
 {
     class E_post
     {
-        static string reciverMail;
-        static string mailSubject;
-        static string mailText;
-        static string programMail = "IA2.3.2015@gmail.com";      // Programmets mailadresse - konstant 
-        static string programMailPassword = "arduino2015";       // Prog. mail passord - konstant
-        static bool mailSent = false;
+        string reciverMail;
+        string mailSubject;
+        string mailText;
+        string programMail = "IA2.3.2015@gmail.com";      // Prog. mailadresse - konstant 
+        string programMailPassword = "arduino2015";       // Prog. mail passord - konstant
 
-        static MailAddress to;
-        static MailAddress from;
-        static MailMessage message;
-        static SmtpClient smtpclient;
+        MailAddress to;
+        MailAddress from;
+        MailMessage message;
+        SmtpClient smtpclient;
 
-        public void Send(string epostMottaker, string epostTema, string epostMelding)                                      
+        public void Send(string emailReciver, string emailTheme, string emailMessage)                                      
             // Metode for å sende mail med mottageradresse, emne og hovedtekst som parametere
         {
-            reciverMail = epostMottaker;
-            mailSubject = epostTema;
-            mailText = epostMelding;
+            reciverMail = emailReciver;
+            mailSubject = emailTheme;
+            mailText = emailMessage;
 
             to = new MailAddress(reciverMail);                  // Mailadresse objekt for mottager
             from = new MailAddress(programMail);                // Mailadresse objekt for avsender
@@ -45,14 +44,12 @@ namespace CabinTempArduino
 
             smtpclient.Send(message);                           // Sender mail
             smtpclient.Dispose();                               // Avslutter oppkoblingen mot Gmail
-            //return (mailSent = true);
         }
         public string ReciverMail
         {
             get
             {
                 return reciverMail;
-
             }
             set
             {
