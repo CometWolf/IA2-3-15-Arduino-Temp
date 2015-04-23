@@ -13,8 +13,5 @@ namespace WebApplication6.Models
         [DataType(DataType.Password)]
         [Display(Name = "Passord")]
         public string Password { get; set; }
-
-        [Display(Name = "Husk meg")]
-        public bool RememberMe { get; set; }
     }
 }

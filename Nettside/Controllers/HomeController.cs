@@ -6,6 +6,8 @@ using System.Web.Services;
 using System.Web.Mvc;
 using WebApplication6.Models;
 using WebApplication6.Classes;
+using WebApplication6.Properties;
+using Account;
 
 namespace WebApplication6.Controllers {
     public class HomeController : Controller {
@@ -14,10 +16,9 @@ namespace WebApplication6.Controllers {
         
         //index view
         public ActionResult Index() {
-            if (!User.Identity.IsAuthenticated) { //Check if user is logged in
+            if (!Account.User.Authorized) { //Check if user is logged in
                 //Not logged in, redirect to login page
-                Response.Redirect("~/Account/Login",true);
-                return null;
+                return RedirectToAction("Login", "Account");
             }
             ViewBag.Title = "Hovedside";
             HomeViewModel model = new HomeViewModel();
