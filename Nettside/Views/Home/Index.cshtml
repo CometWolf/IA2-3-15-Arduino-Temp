@@ -1,9 +1,14 @@
-﻿@using WebApplication6.Models;
+﻿<!--
+    Written by: Haakon N. Unelsrød
+    Main website page. Displays latest temperature logged in the database, dynamically updated every minute.
+    Program settings such as alarm and furnace limits may also be changed here.
+    Database path may be set in the Home Controller class.
+-->
+
+@using WebApplication6.Models;
 @model HomeViewModel
 <head>
-     <Title>
-        ""
-     </Title>
+     <Title></Title>
 
     <script type="text/javascript">
         //Sets the temperature element to the lastest temperature reading from the database
@@ -26,7 +31,7 @@
             return false;
         }
 
-        setInterval(updateTemp, 60000); //recheck temp every minute dynamically
+        setInterval(updateTemp, 60000); //recheck temp every minute
         updateTemp();
     </script>
 
@@ -40,8 +45,6 @@
             display: table-row;
             text-align: center;
         }
-
-
     </style>
 </head>
 
@@ -54,7 +57,6 @@
             @Html.HiddenFor(m => m.AlarmId, new { @id="AlarmId" })
             <input type='submit' value='Kvitèr alarm' @Model.alarmHide />
         }
-
         @using (Html.BeginForm("UpdateSettings","Home",new {},FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
             <h3>Varslingsgrenser</h3>
             @Html.LabelFor(m => m.AlarmUpperLimit, new { @class = "control-label" })

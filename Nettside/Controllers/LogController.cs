@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+  Written by: Gustav Carlsen
+  Log page controller. Handles the user input from the log page, and returns the desired database logs.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +13,16 @@ using WebApplication6.Models;
 
 namespace WebApplication6.Controllers
 {
-    public class LoggController : Controller
+    public class LogController : Controller
     {
+<<<<<<< HEAD:Nettside/Controllers/LoggController.cs
         Database database = new Database("C:\\Users\\Martin\\Documents\\GitHub\\IA2-3-15-Arduino-Temp\\PC\\CabinTempArduino\\bin\\debug\\ArduinoTemperaturmåling.accdb");
         static LoggModel model = new LoggModel();
+=======
+        //database path
+        Database database = new Database("C:\\Users\\Gustav\\Documents\\GitHub\\IA2-3-15-Arduino-Temp\\Nettside\\ArduinoTemperaturmåling.accdb");
+        static LogModel model = new LogModel();
+>>>>>>> origin/master:Nettside/Controllers/LogController.cs
        
         // GET: Logg
         public ActionResult Index()
@@ -25,9 +36,9 @@ namespace WebApplication6.Controllers
             return View(model);
         }
 
-        public void GetLogg(string input, string unit, string type) 
+        public ActionResult GetLogg(string input, string unit, string type) 
         {
-            model = new LoggModel();
+            model = new LogModel();
             int inputInt;
             int.TryParse(input, out inputInt);
             model.input = input;
@@ -65,12 +76,12 @@ namespace WebApplication6.Controllers
                 catch (Exception e)
                 {
                     Response.Redirect("~/Home/Error?e=" + e.Message);
-                    return;
+                    return null;
                 }
 
 
             } 
-            Response.Redirect("~/Logg/Index");
+            return RedirectToAction("Index","Log");
         }
     }
 }

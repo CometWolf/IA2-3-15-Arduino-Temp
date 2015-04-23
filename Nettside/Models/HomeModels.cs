@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+  Written by: Haakon N. Unelsrød
+  Data model for the home page.
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;

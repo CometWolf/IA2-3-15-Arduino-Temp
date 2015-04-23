@@ -1,4 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/*
+  Written by: Haakon N. Unelsrød
+  Data model for the login page.
+*/
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication6.Models
 {

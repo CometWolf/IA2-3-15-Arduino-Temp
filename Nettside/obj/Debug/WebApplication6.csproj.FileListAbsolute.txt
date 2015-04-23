@@ -69,3 +69,4 @@ C:\Users\Jørund\Documents\GitHub\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.W
 C:\Users\Jørund\Documents\GitHub\IA2-3-15-Arduino-Temp\Nettside\bin\Newtonsoft.Json.dll
 C:\Users\Jørund\Documents\GitHub\IA2-3-15-Arduino-Temp\Nettside\bin\Microsoft.Web.Infrastructure.xml
 C:\Users\Jørund\Documents\GitHub\IA2-3-15-Arduino-Temp\Nettside\obj\Debug\WebApplication6.pdb
+C:\Users\Haakon\Desktop\IA2-3-15-Arduino-Temp\Nettside\obj\Debug\WebApplication6.csprojResolveAssemblyReference.cache

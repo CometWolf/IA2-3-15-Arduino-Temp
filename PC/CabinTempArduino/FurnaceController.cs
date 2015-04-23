@@ -25,6 +25,8 @@ namespace CabinTempArduino
         private double alarmUpperLimit;
         private double furnaceLowerLimit;
         private double furnaceUpperlimit;
+        private string temp;
+        private string alarmStatus;
         #endregion  
 
         #region Properties
@@ -64,6 +66,14 @@ namespace CabinTempArduino
                 Send("FUUP" + furnaceUpperlimit);
             }
         }
+        public string Temp 
+        {
+            get { return temp; }
+        }
+        public string AlarmStatus
+        {
+            get { return alarmStatus; }
+        }
         #endregion
 
         #region Methods
@@ -71,7 +81,6 @@ namespace CabinTempArduino
         {
             try
             {
-                string temp;
                 Send("TEMP");
                 Thread.Sleep(50);
                 temp = Received();
@@ -87,19 +96,14 @@ namespace CabinTempArduino
                 throw ex;
             }
         }
-        public void AlarmReceived()
-        {
-                Send("ALOK");
-        }
 
         public string CheckAlarm()
         {
-                string message;
                 Send("CHAL");
                 Thread.Sleep(50);
-                message = Received();
-                message = message.Replace("\r", "");
-                return message;
+                alarmStatus = Received();
+                alarmStatus = alarmStatus.Replace("\r", "");
+                return alarmStatus;
         }
         #endregion
     }
