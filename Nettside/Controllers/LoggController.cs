@@ -16,9 +16,9 @@ namespace WebApplication6.Controllers
         // GET: Logg
         public ActionResult Index()
         {
-            if (!User.Identity.IsAuthenticated) { //Check if user is logged in
+            if (!Account.User.Authorized) { //Check if user is logged in
                 //Not logged in, redirect to login page
-                Response.Redirect("~/Account/Login");
+                return RedirectToAction("Login", "Account");
             }
             ViewBag.Title = "Logg";
             ViewBag.Message = "Alarm og temperatur logg";

@@ -8,7 +8,6 @@
 
 <h1>Logg</h1>
 
-
 <form action='@Url.Action("GetLogg","Logg")' method='post'>
     <p>Hent verdier:</p>
     <input type="number" name="input" value="@Model.input" min="1"/>                                       
@@ -20,12 +19,11 @@
     <br />
     <input type="submit" value="Hent">
     <br />
-    <form action="">
-        <input type="radio" name="type" value="Temperature" @Model.type.temperature>Temperatur                       
-        <br />
-        <input type="radio" name="type" value="Alarm" @Model.type.alarm>Alarm
-        <br />
-    </form>
+    <input type="radio" name="type" value="Temperature" @Model.type.temperature>Temperatur                       
+    <br />
+    <input type="radio" name="type" value="Alarm" @Model.type.alarm>Alarm
+    <br />
+</form>
 <div id="text">
     @Html.Raw(Model.data)
 </div>
