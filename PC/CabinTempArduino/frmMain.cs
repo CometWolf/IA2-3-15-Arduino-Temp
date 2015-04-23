@@ -349,7 +349,7 @@ namespace CabinTempArduino
             {
                 string[,] lastValue;
                 lastValue = myDatabase.GetTemperatureLast();
-                FetchTemp(lastValue);
+                FetchContinous(lastValue, "Tid" + "\t\t\t" + "Temperatur" + "\r\n");
                 ChartAddPoint(lastValue[0, 0], lastValue[0, 1]);
             }
             logged = true;
@@ -421,12 +421,28 @@ namespace CabinTempArduino
                 rtbDatabaseValues.AppendText("\r\n");
             }
         }
+        private void FetchContinous(string[,] addValues, string header)
+        {
+            rtbDatabaseValues.Lines[0] = header;
+            for (int i = 0; i < addValues.GetUpperBound(0); i++)
+            {
+                for (int j = 0; j < addValues.GetUpperBound(1); j++)
+                {
+                    rtbDatabaseValues.AppendText(addValues[i, j]);
+                    rtbDatabaseValues.AppendText("\t");
+                }
+                rtbDatabaseValues.AppendText("\r\n");
+            }
+        }
         private void ChartUpdateTemp(string[,] xy)
         {
             DateTime myDate;
             double temp;
 
             chartFetchedValues.Series[0].Points.Clear();
+
+
+            chartFetchedValues.Series[0].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
 
 
             for (int i = 0; i < xy.GetUpperBound(0); i++)
@@ -439,7 +455,13 @@ namespace CabinTempArduino
 
                 chartFetchedValues.Series[0].Points.AddXY(myDate, temp);
             }
+
+
             chartFetchedValues.Series[0].Sort(System.Windows.Forms.DataVisualization.Charting.PointSortOrder.Ascending, "X");
+            //if (chartFetchedValues.Series[0].Points.Count > 0)
+            //{
+                //if (chartFetchedValues.Series[0].Points[0].XValue > DateTime.Now.AddDays(-2.0).ToOADate()) chartFetchedValues.Series[0].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Time;
+            //}
             chartFetchedValues.Refresh();
         }
         private void ChartAddPoint(string x, string y)
