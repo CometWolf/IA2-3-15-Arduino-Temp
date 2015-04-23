@@ -64,7 +64,6 @@ namespace CabinTempArduino
             //END GUI
 
             settings = myDatabase.GetSettings(0);
-            //arduinoPort = settings[9];
         }
         #endregion
         #region Objects
@@ -96,6 +95,7 @@ namespace CabinTempArduino
         #endregion
         private void btnFetch_Click(object sender, EventArgs e)
         {
+            //Fetches values from the database.
             rtbDatabaseValues.Clear();
             int fetchLast = 1;
             int.TryParse(txtFetchLast.Text, out fetchLast);
@@ -144,6 +144,7 @@ namespace CabinTempArduino
         #region BatterySurveillance
         private void tmrBatteryStatus_Tick(object sender, EventArgs e)
         {
+            //Checks the batterylevel
             try
             {
                 prbBatteryStatus.Value = Convert.ToInt32(SystemInformation.PowerStatus.BatteryLifePercent * 100);
@@ -152,6 +153,7 @@ namespace CabinTempArduino
                 string[,] emails = myDatabase.GetSubscribers();
 
                 #region GUI
+                //Changing color and text in status.
                 if (prbBatteryStatus.Value <= 50)
                     prbBatteryStatus.ForeColor = Color.Yellow;
                 else if (prbBatteryStatus.Value <= 30)
@@ -169,16 +171,16 @@ namespace CabinTempArduino
                     (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "High, Charging") ||
                     (SystemInformation.PowerStatus.BatteryChargeStatus.ToString() == "Low, Charging"))
                     charging = true;
-                else if (prbBatteryStatus.Value <= 95 && charging)
+                else if (prbBatteryStatus.Value <= 95 && charging) //Checks if the battery is not charging, and sends emails and logs it in the database.
                 {
                     LogAlarmAndSendEmail("PC Lader ikke", "PCen lader ikke lenger. Enten er støpselet dratt ut, strømmen gått eller laderen defekt.", "001");
-                    charging = false;
+                    charging = false; 
                 }
 
                 //50% charge
                 if (prbBatteryStatus.Value > 50)
                     fiftyCharge = true;
-                else if (prbBatteryStatus.Value <= 50 && fiftyCharge && !charging)
+                else if (prbBatteryStatus.Value <= 50 && fiftyCharge && !charging) //Checks if the battery is under 50%, and sends emails and logs it in the database.
                 {
                     LogAlarmAndSendEmail("PC har under 50% batteri igjen", "PCen har under 50% batteri igjen.", "002");
                     fiftyCharge = false;
@@ -189,7 +191,7 @@ namespace CabinTempArduino
                 if (prbBatteryStatus.Value > 15)
                     criticalCharge = true;
 
-                else if (prbBatteryStatus.Value <= 15 && criticalCharge && !charging) //Critical
+                else if (prbBatteryStatus.Value <= 15 && criticalCharge && !charging) //Checks if the battery is at a critical level, and sends emails and logs it in the database.
                 {
                     LogAlarmAndSendEmail("[Kritisk] PC har under 15% batteri igjen", "PCen har under 15% batteri igjen.", "003");
                     criticalCharge = false;
@@ -232,6 +234,8 @@ namespace CabinTempArduino
                 int interval = Convert.ToInt32(settings[5]);
 
                 //Arduino
+
+                //Gets the temperature from the arduino.
                 if(Temp != null)
                 {
                     temp = Temp.GetTemp();
@@ -239,6 +243,7 @@ namespace CabinTempArduino
                 
                 txtCurrent.Text = temp;
 
+                //Send new limits to the Arduino.
                 Temp.AlarmLowerLimit = Convert.ToDouble(settings[4]);
                 Temp.AlarmUpperLimit = Convert.ToDouble(settings[1]);
                 Temp.FurnaceLowerLimit = Convert.ToDouble(settings[3]);
@@ -246,6 +251,7 @@ namespace CabinTempArduino
 
                 string checkAlarm = Temp.CheckAlarm();
 
+                //Checks if any alarms are active in the arduino.
                 if (checkAlarm == "ALARM_UP" && !alarmLogged)
                 {
                     LogAlarmAndSendEmail("Høy temperatur", "Den øvre alarmgrensen har blitt nådd", "010");
@@ -311,19 +317,21 @@ namespace CabinTempArduino
             catch(NullReferenceException error)
             {
                 LogAlarmAndSendEmailException(error.GetType().ToString(), error.Message, "005");
-                throw error;
+                tmrLogTemperature.Stop();
+                MessageBox.Show(error.GetType().ToString() + "\r\n" + error.Message + "\r\n" + "Vennligst restart programmet");
             }
             catch (System.IO.IOException IOex)
             {
                 LogAlarmAndSendEmailException(IOex.GetType().ToString(), IOex.Message, "006");
                 txtCurrent.Text = "Mistet kontakt";
-                arduinoPort = "";
                 tmrLogTemperature.Stop();
+                MessageBox.Show("Det har oppstått en feil i forbindelsen mellom Arduinoen og datamaskinen.\r\nSjekk kabelen og restart programmet.");
             }
             catch(Exception ex)
             {
                 LogAlarmAndSendEmailException(ex.GetType().ToString(), ex.Message, "007");
-                throw ex;
+                tmrLogTemperature.Stop();
+                MessageBox.Show(ex.GetType().ToString() +"\r\n"+ ex.Message + "\r\n" + "Vennligst restart programmet");
             }
         }
         #endregion
@@ -388,11 +396,13 @@ namespace CabinTempArduino
         }
         private void FetchTemp(string[,] values, string header = "Tid" + "\t\t\t" + "Temperatur" + "\r\n")
         {
+            //Fetches temperatures from the database, by using the FetchAlarm method.
             FetchAlarm(values, header);
             ChartUpdateTemp(values);
         }
         private void FetchAlarm(string[,] values, string header = "Tid" + "\t\t\t" + "ID" + "\t" + "Temp" + "\t" + "Beskrivelse" + "\r\n")
         {
+            //Fetches alarms from the database.
             rtbDatabaseValues.Clear();
             rtbDatabaseValues.Text = header;
             for (int i = 0; i <= values.GetUpperBound(0); i++)
@@ -429,6 +439,7 @@ namespace CabinTempArduino
         }
         private void LogAlarmAndSendEmail(string subject, string message, string alarmID)
         {
+            //Sends email and logs alarms.
             string[,] emails = myDatabase.GetSubscribers();
             for (int i = 0; i <= emails.GetUpperBound(0); i++)
             {
@@ -441,6 +452,7 @@ namespace CabinTempArduino
         }
         private void LogAlarmAndSendEmailException(string subject, string message, string alarmID)
         {
+            //Sends email and logs alarm/Exception. Where Temp.GetTemp() would be null.
             string[,] emails = myDatabase.GetSubscribers();
             for (int i = 0; i <= emails.GetUpperBound(0); i++)
             {
@@ -450,9 +462,10 @@ namespace CabinTempArduino
         }
         public void SetPortArduino(string port)
         {
+            //Sets the comPort for the arduino, if the has not been set before.
             Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),
                              Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, port);
-            arduinoPort = settings[9];
+            arduinoPort = settings[8];
             StartUPlog();
             tmrLogTemperature.Start();
 
@@ -461,11 +474,12 @@ namespace CabinTempArduino
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            //Sets the comPort, if the correct comPort is in the database.
             try
             {
                 Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),
-                                             Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, settings[9]);
-                arduinoPort = settings[9];
+                                             Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, settings[8]);
+                arduinoPort = settings[8];
                 StartUPlog();
 
             }

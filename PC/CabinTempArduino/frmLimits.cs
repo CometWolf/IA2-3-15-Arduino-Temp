@@ -22,9 +22,11 @@ namespace CabinTempArduino
 
         public frmLimits()
         {
+            //GUI
             InitializeComponent();
             txtValue.ReadOnly = true;
             btnSetLimit.Enabled = false;
+            //END GUI
         }
 
         private void txtValue_Click(object sender, EventArgs e)
