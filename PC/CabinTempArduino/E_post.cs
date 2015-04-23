@@ -104,7 +104,7 @@ namespace CabinTempArduino
         {
             get
             {
-                return mailSent;
+                return MailSent;
             }
             set
             {
