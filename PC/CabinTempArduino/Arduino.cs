@@ -27,14 +27,21 @@ namespace CabinTempArduino
 
         public string Received()
         {
-            string received = "";
-            if (receivedData)
+            try
             {
+                string received = "";
+                if (receivedData)
+                {
 
-                receivedData = false;
-                received = indata;
+                    receivedData = false;
+                    received = indata;
+                }
+                return received;
             }
-            return received;
+            catch(System.IO.IOException ex)
+            {
+                throw ex;
+            }
         }
 
         private void DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -55,6 +62,5 @@ namespace CabinTempArduino
                 throw ex;
             }
         }
-
     }
 }

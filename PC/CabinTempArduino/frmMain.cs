@@ -426,7 +426,10 @@ namespace CabinTempArduino
             {
                 mail.Send(emails[i, 5], subject, message);
             }
-            myDatabase.LogAlarm(subject, alarmID, Temp.GetTemp());
+            if (temp != null)
+                myDatabase.LogAlarm(subject, alarmID, Temp.GetTemp());
+            else if (temp == null)
+                myDatabase.LogAlarm(subject, alarmID, "0");
         }
 
         public void SetPortArduino(string port)

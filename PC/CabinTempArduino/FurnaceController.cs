@@ -70,30 +70,30 @@ namespace CabinTempArduino
         #region Methods
         public string GetTemp()
         {
-            string temp;
-            Send("TEMP");
-            Thread.Sleep(50);
-            temp = Received();
-            temp = temp.Replace("\r", "");
-            if (temp.Substring(0,1) == " ")
-            {
-                temp = temp.Replace(" ", "");
-            }
-            return temp;
+                string temp;
+                Send("TEMP");
+                Thread.Sleep(50);
+                temp = Received();
+                temp = temp.Replace("\r", "");
+                if (temp.Substring(0, 1) == " ")
+                {
+                    temp = temp.Replace(" ", "");
+                }
+                return temp;
         }
         public void AlarmReceived()
         {
-            Send("ALOK");
+                Send("ALOK");
         }
 
         public string CheckAlarm()
         {
-            string message;
-            Send("CHAL");
-            Thread.Sleep(50);
-            message = Received();
-            message = message.Replace("\r", "");
-            return message;
+                string message;
+                Send("CHAL");
+                Thread.Sleep(50);
+                message = Received();
+                message = message.Replace("\r", "");
+                return message;
         }
         //public void SetAlarmUpper(string alarmName)
         //{
