@@ -25,7 +25,6 @@ namespace CabinTempArduino
         private double alarmUpperLimit;
         private double furnaceLowerLimit;
         private double furnaceUpperlimit;
-        private bool furnaceActive;
         #endregion  
 
         #region Properties
@@ -95,22 +94,6 @@ namespace CabinTempArduino
             message = message.Replace("\r", "");
             return message;
         }
-        //public void SetAlarmUpper(string alarmName)
-        //{
-        //    Send(alarmName + alarmUpperLimit);
-        //}
-        //public void SetAlarmLower(string alarmName)
-        //{
-        //    Send(alarmName + alarmLowerLimit);
-        //}
-        //public void SetFurnaceUpper(string alarmName)
-        //{
-        //    Send(alarmName + furnaceUpperlimit);
-        //}
-        //public void SetFurnaceLower(string alarmName)
-        //{
-        //    Send(alarmName + furnaceLowerLimit);
-        //}
         #endregion
     }
 }
