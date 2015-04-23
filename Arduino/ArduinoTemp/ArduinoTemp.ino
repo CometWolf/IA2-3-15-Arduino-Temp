@@ -1,3 +1,6 @@
+/*
+Written by: Øystein Lorentzen Rød
+*/
 #include<Furnace.h>
 #include<PC.h>
 #include<TempSensor.h>
@@ -28,6 +31,9 @@ LiquidCrystal lcd(5,6,9,10,11,12);
 void setup() 
 {
   pc.begin(9600);
+  /*
+  Sets the place and text on the display. 
+  */
   lcd.begin(16,2);
   lcd.print("IA 2-3-15");
   lcd.setCursor(0,1);
@@ -47,14 +53,28 @@ void loop()
   furnace.upperLimit = furnaceUpperLimit;
   furnace.lowerLimit = furnaceLowerLimit;
   
+  /*
+  handling takes the first 4 characters from pc.receive,
+  while value stores the 5 last characters. 
+  */
   String motatt = pc.receive('\n');
   String handling = motatt.substring(0,4);
   String value = motatt.substring(4,9);
   
+  /*
+  tempValue gets the temperature from getTemp method,
+  the float value gets turned into a array of char (temp[]).
+  */
   tempValue = tempSensor.getTemp();
   dtostrf(tempValue, 5, 1, temp); 
   furnace.update(tempValue);
   
+  /*
+  If the arduino receives any type of string from the 
+  pc.receive method, it reacts accrdingly. It either sends
+  the temperature, sets alarm and furnace limits, or 
+  sends alarm status.
+  */
   if (motatt != "")
   {
     if(handling == "TEMP")
@@ -98,6 +118,12 @@ void loop()
     }
   }
   
+  /*
+  These lines of code makes sure that the temp numbers 
+  on the display does not jump up and down, and only display
+  .0 or .5. This does not affect the temp numbers sent to the
+  pc. 
+  */
   int tempFloor = floor(tempValue);
   float rest = tempValue - tempFloor;
   
