@@ -192,11 +192,7 @@ namespace CabinTempArduino
             settings.UpdateSetting(newInterval, 5, 0);
             settings.UpdateSetting(custom, 7, 0);
             main.NewInterval();
-<<<<<<< HEAD
             MessageBox.Show("Intervall endret.");
-=======
-            MessageBox.Show("Interval successfully changed.");
->>>>>>> origin/master
         }
     }
 }
