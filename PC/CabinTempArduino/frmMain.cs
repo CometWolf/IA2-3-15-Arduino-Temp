@@ -64,6 +64,8 @@ namespace CabinTempArduino
             //END GUI
 
             settings = myDatabase.GetSettings(0);
+            chartFetchedValues.Series[0].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            chartFetchedValues.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
         }
         #endregion
         #region Objects
@@ -345,6 +347,7 @@ namespace CabinTempArduino
                 string[,] lastValue;
                 lastValue = myDatabase.GetTemperatureLast();
                 FetchTemp(lastValue);
+                ChartAddPoint(lastValue[0, 0], lastValue[0, 1]);
             }
             logged = true;
         }
@@ -421,9 +424,7 @@ namespace CabinTempArduino
             double temp;
 
             chartFetchedValues.Series[0].Points.Clear();
-            chartFetchedValues.Series[0].Name = "Temperatur";
-            chartFetchedValues.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            chartFetchedValues.Series[0].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Time;
+
 
             for (int i = 0; i < xy.GetUpperBound(0); i++)
             {
@@ -435,6 +436,19 @@ namespace CabinTempArduino
 
                 chartFetchedValues.Series[0].Points.AddXY(myDate, temp);
             }
+            chartFetchedValues.Series[0].Sort(System.Windows.Forms.DataVisualization.Charting.PointSortOrder.Ascending, "X");
+            chartFetchedValues.Refresh();
+        }
+        private void ChartAddPoint(string x, string y)
+        {
+            double myDouble;
+            double.TryParse(y, out myDouble);
+
+            chartFetchedValues.Series[0].Points.AddXY(
+                DateTime.ParseExact(x, "dd.MM.yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
+                myDouble);
+
+            chartFetchedValues.Series[0].Sort(System.Windows.Forms.DataVisualization.Charting.PointSortOrder.Ascending, "X");
             chartFetchedValues.Refresh();
         }
         private void LogAlarmAndSendEmail(string subject, string message, string alarmID)
