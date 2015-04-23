@@ -1,3 +1,8 @@
+/*
+  Written by: Pauline Mittag Sandersen
+  Arduino relay class. Simplifies relay control operations.
+*/
+
 #include "Relay.h"
 #include "Arduino.h"
 
