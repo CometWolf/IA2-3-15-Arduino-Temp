@@ -7,7 +7,7 @@ using WebApplication6.Classes;
 
 namespace Account {
     public static class User {
-        private static Database database = new Database("");
+        private static Database database = new Database("C:\\Users\\Martin\\Documents\\GitHub\\IA2-3-15-Arduino-Temp\\PC\\CabinTempArduino\\bin\\debug\\ArduinoTemperaturmåling.accdb");
         private static string username;
         public static string Username { get {return User.username;} }
         private static string password;

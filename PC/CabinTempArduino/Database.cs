@@ -277,6 +277,7 @@ namespace CabinTempArduino
                 row["Feilmelding"] = message;
                 row["AlarmID"] = alarmID;
                 row["Temperatur"] = temp;
+                row["Status"] = "0";
 
                 myDatatable.AcceptChanges();
                 myDatatable.Rows.Add(row);

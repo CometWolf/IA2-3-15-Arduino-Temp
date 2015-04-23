@@ -12,7 +12,7 @@ using Account;
 namespace WebApplication6.Controllers {
     public class HomeController : Controller {
         //path to database
-        private Database database = new Database("C:\\Users\\Haakon\\Desktop\\IA2-3-15-Arduino-Temp\\Nettside\\ArduinoTemperaturmåling.accdb");
+        private Database database = new Database("C:\\Users\\Martin\\Documents\\GitHub\\IA2-3-15-Arduino-Temp\\PC\\CabinTempArduino\\bin\\debug\\ArduinoTemperaturmåling.accdb");
         
         //index view
         public ActionResult Index() {

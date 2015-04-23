@@ -36,7 +36,7 @@ namespace CabinTempArduino
         #region ArduinoTemp
         private static string arduinoPort = "";
         private static bool alarmLogged = false;
-        private static string temp = "COM1";
+        private static string temp;
         #endregion
 
         #endregion
@@ -208,6 +208,7 @@ namespace CabinTempArduino
         #endregion BatterySurvailence
         private void cboAnnotation_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //GUI
             if (cboAnnotation.SelectedIndex == 3)
             {
                 rbtError.Enabled = true;
@@ -226,6 +227,7 @@ namespace CabinTempArduino
                 txtFetchLast.ReadOnly = false;
                 btnFetch.Text = "Hent";
             }
+            //END GUI
         }
         #region TemperatureLogging
         private void tmrLogTemperature_Tick(object sender, EventArgs e)
@@ -298,7 +300,7 @@ namespace CabinTempArduino
                 }
                 else if (settings[7] == "true") //Checks if a custom interval has been used.
                 {
-                    if (interval == 1440)
+                    if (interval == 1440) //Checks if the interval is equal to 24hrs.
                     {
                         if (DateTime.Now.ToString("HH:mm") == settings[6] && !logged)
                         {
@@ -308,7 +310,7 @@ namespace CabinTempArduino
                         else if ((settings[8] == "true") && (Convert.ToInt32(DateTime.Now.ToString("mm")) == loggedMinute + 1))
                             logged = false;
                     }
-                    else if (DateTime.Now.ToString("HH:mm") == settings[6] && interval != 1440)
+                    else if (DateTime.Now.ToString("HH:mm") == settings[6] && interval != 1440) //Normal custom logging.
                     {
                         NextLogTime();
                         TemperatureLogging();
@@ -341,6 +343,7 @@ namespace CabinTempArduino
         #region Methods
         private void TemperatureLogging()
         {
+            //Logs a temperature and puts the temperature into the rich textbox if continous is chosen.
             myDatabase.LogTemperature(Temp.GetTemp());
             if(continous)
             {
@@ -354,7 +357,7 @@ namespace CabinTempArduino
         public void NewInterval()
         {
             //Logs a temperature when a new interval is set.
-            myDatabase.LogTemperature(temp);
+            myDatabase.LogTemperature(Temp.GetTemp());
             NextLogTime();
             logged = false;
         }
@@ -442,6 +445,7 @@ namespace CabinTempArduino
         private void ChartAddPoint(string x, string y)
         {
             double myDouble;
+            y = y.Replace('.', ',');
             double.TryParse(y, out myDouble);
 
             chartFetchedValues.Series[0].Points.AddXY(
