@@ -21,7 +21,7 @@ char temp[5];
 char displayChar[5];
 
 PC pc = PC();
-TempSensor tempSensor(tempPin,-50, 100);
+TempSensor tempSensor(tempPin);
 Furnace furnace(0, -10, furnacePin);
 LiquidCrystal lcd(5,6,9,10,11,12);
 
