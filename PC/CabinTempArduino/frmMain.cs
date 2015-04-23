@@ -310,17 +310,19 @@ namespace CabinTempArduino
             }
             catch(NullReferenceException error)
             {
-                LogAlarmAndSendEmail(error.GetType().ToString(), error.Message, "005");
+                LogAlarmAndSendEmailException(error.GetType().ToString(), error.Message, "005");
                 throw error;
             }
             catch (System.IO.IOException IOex)
             {
-                LogAlarmAndSendEmail(IOex.GetType().ToString(), IOex.Message, "006");
-                throw IOex;
+                LogAlarmAndSendEmailException(IOex.GetType().ToString(), IOex.Message, "006");
+                txtCurrent.Text = "Mistet kontakt";
+                arduinoPort = "";
+                tmrLogTemperature.Stop();
             }
             catch(Exception ex)
             {
-                LogAlarmAndSendEmail(ex.GetType().ToString(), ex.Message, "007");
+                LogAlarmAndSendEmailException(ex.GetType().ToString(), ex.Message, "007");
                 throw ex;
             }
         }
@@ -432,9 +434,20 @@ namespace CabinTempArduino
             {
                 mail.Send(emails[i, 5], subject, message);
             }
-            myDatabase.LogAlarm(subject, alarmID, Temp.GetTemp());
+            if (Temp.GetTemp() != null)
+                myDatabase.LogAlarm(subject, alarmID, Temp.GetTemp());
+            else if (Temp.GetTemp() == null)
+                myDatabase.LogAlarm(subject, alarmID, "0");
         }
-
+        private void LogAlarmAndSendEmailException(string subject, string message, string alarmID)
+        {
+            string[,] emails = myDatabase.GetSubscribers();
+            for (int i = 0; i <= emails.GetUpperBound(0); i++)
+            {
+                mail.Send(emails[i, 5], subject, message);
+            }
+            myDatabase.LogAlarm(subject, alarmID, temp);
+        }
         public void SetPortArduino(string port)
         {
             Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),

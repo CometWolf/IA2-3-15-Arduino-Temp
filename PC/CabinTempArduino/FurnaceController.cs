@@ -25,7 +25,6 @@ namespace CabinTempArduino
         private double alarmUpperLimit;
         private double furnaceLowerLimit;
         private double furnaceUpperlimit;
-        private bool furnaceActive;
         #endregion  
 
         #region Properties
@@ -70,47 +69,38 @@ namespace CabinTempArduino
         #region Methods
         public string GetTemp()
         {
-            string temp;
-            Send("TEMP");
-            Thread.Sleep(50);
-            temp = Received();
-            temp = temp.Replace("\r", "");
-            if (temp.Substring(0,1) == " ")
+            try
             {
-                temp = temp.Replace(" ", "");
+                string temp;
+                Send("TEMP");
+                Thread.Sleep(50);
+                temp = Received();
+                temp = temp.Replace("\r", "");
+                if (temp.Substring(0, 1) == " ")
+                {
+                    temp = temp.Replace(" ", "");
+                }
+                return temp;
             }
-            return temp;
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
         public void AlarmReceived()
         {
-            Send("ALOK");
+                Send("ALOK");
         }
 
         public string CheckAlarm()
         {
-            string message;
-            Send("CHAL");
-            Thread.Sleep(50);
-            message = Received();
-            message = message.Replace("\r", "");
-            return message;
+                string message;
+                Send("CHAL");
+                Thread.Sleep(50);
+                message = Received();
+                message = message.Replace("\r", "");
+                return message;
         }
-        //public void SetAlarmUpper(string alarmName)
-        //{
-        //    Send(alarmName + alarmUpperLimit);
-        //}
-        //public void SetAlarmLower(string alarmName)
-        //{
-        //    Send(alarmName + alarmLowerLimit);
-        //}
-        //public void SetFurnaceUpper(string alarmName)
-        //{
-        //    Send(alarmName + furnaceUpperlimit);
-        //}
-        //public void SetFurnaceLower(string alarmName)
-        //{
-        //    Send(alarmName + furnaceLowerLimit);
-        //}
         #endregion
     }
 }

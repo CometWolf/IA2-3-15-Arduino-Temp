@@ -12,7 +12,6 @@ String alarmUpper = "50";
 String alarmLower = "-1";
 String furnaceLower = "4";
 String furnaceUpper = "20";
-String checkAlarm = "NOAL";
 float alarmUpperLimit;
 float alarmLowerLimit;
 float furnaceUpperLimit;
@@ -48,7 +47,6 @@ void loop()
   furnace.upperLimit = furnaceUpperLimit;
   furnace.lowerLimit = furnaceLowerLimit;
   
-  
   String motatt = pc.receive('\n');
   String handling = motatt.substring(0,4);
   String value = motatt.substring(4,9);
@@ -56,53 +54,6 @@ void loop()
   tempValue = tempSensor.getTemp();
   dtostrf(tempValue, 5, 1, temp); 
   furnace.update(tempValue);
-  
-  if (checkAlarm == "NOAL")
-  {
-    if (((tempValue > alarmUpperLimit)||(tempValue < alarmLowerLimit))&&(motatt == ""))
-  {
-    if((tempValue < alarmLowerLimit)&&(handling != "ALOK"))
-      {
-        pc.send("ALARM_LOW");  
-      }
-      else if((tempValue < alarmLowerLimit)&&(handling == "ALOK"))
-      {
-        checkAlarm = "ALOK";
-      }
-      
-      else if ((tempValue > alarmUpperLimit)&&(handling != "ALOK"))
-      {
-        pc.send("ALARM_UP");
-      }
-      else if ((tempValue > alarmUpperLimit)&&(handling == "ALOK"))
-      {
-        checkAlarm = "ALOK";
-      }
-    }
-  }
-  else if (checkAlarm == "ALOK")
-  {
-    if (((tempValue > alarmUpperLimit)||(tempValue < alarmLowerLimit))&&(handling == "CHAL"))
-    {
-      if (tempValue > alarmUpperLimit)
-      {
-        pc.send("ALARM_UP");
-      }
-      else if (tempValue < alarmLowerLimit)
-      {
-        pc.send("ALARM_LOW");
-      }
-    }
-    else if(((tempValue < alarmUpperLimit)||(tempValue > alarmLowerLimit))&&((handling == "CHAL")&&(value == "NOAL")))
-    {
-      checkAlarm = "NOAL";
-    }
-    else if(((tempValue < alarmUpperLimit)||(tempValue > alarmLowerLimit))&&((handling == "CHAL")&&(value == "")))
-    {
-      pc.send("NOAL");
-    }
-    
-  }
   
   if (motatt != "")
   {
@@ -125,6 +76,25 @@ void loop()
     else if(handling == "FULO")
     {
       furnaceLower = value;
+    }
+    else if (handling == "CHAL")
+    {
+      if ((tempValue > alarmUpperLimit)||(tempValue < alarmLowerLimit))
+      {
+        if(tempValue < alarmLowerLimit)
+        {
+          pc.send("ALARM_LOW");  
+        }
+        
+        else if (tempValue > alarmUpperLimit)
+        {
+          pc.send("ALARM_UP");
+        }
+      }
+      else
+      {
+        pc.send("NO_ALARM");
+      }
     }
   }
   

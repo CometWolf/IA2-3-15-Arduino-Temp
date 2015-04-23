@@ -37,7 +37,7 @@ namespace CabinTempArduino
         private void cboPreset_SelectedIndexChanged(object sender, EventArgs e)
         {
             //GUI
-            if (cboPreset.Text != "Custom")
+            if (cboPreset.SelectedIndex != 3)
             { 
                 txtCustomInterval.Enabled = false;
                 rbtHours.Enabled = false;
@@ -57,21 +57,26 @@ namespace CabinTempArduino
         private void txtCustomInterval_Click(object sender, EventArgs e)
         {
             //GUI
-            if (txtCustomInterval.Text == "Custom interval")
+            if (txtCustomInterval.Text == "Verdi")
                 txtCustomInterval.Text = "";
             //END GUI
         }
 
         private void btnComPort_Click(object sender, EventArgs e)
         {
+            //Changes the port.
             try
             {
-                if (cboComPort.Text != "Ports")
+                if (cboComPort.Text != "Port")
                 {
                     settings.UpdateSetting(cboComPort.Text, 9, 0);
                     main.SetPortArduino(cboComPort.Text);
-                    MessageBox.Show("Port successfully changed");
+                    MessageBox.Show("Port endret.");
                 }
+            }
+            catch(UnauthorizedAccessException)
+            {
+                MessageBox.Show("Porten er allerede i bruk.");
             }
             catch(Exception ex)
             {
@@ -81,97 +86,100 @@ namespace CabinTempArduino
 
         private void cboComPort_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboComPort.Text == "Ports")
+            //GUI
+            if (cboComPort.Text == "Port")
                 btnComPort.Enabled = false;
             else
                 btnComPort.Enabled = true;
+            //END GUI
         }
 
         private void btnInterval_Click(object sender, EventArgs e)
         {
+            //Changes the interval.
             try
             {
                 string[] usedValue = settings.GetSettings(0);
 
-                if (cboPreset.Text == "60 minutes")
+                if (cboPreset.SelectedIndex == 0)
                 {
                     if (usedValue[5] == "60")
-                        MessageBox.Show("Interval already in use.");
+                        MessageBox.Show("Intervall allerede i bruk.");
                     else
                     {
-                        setNewInterval("60", "false");
+                        SetNewInterval("60", "false");
                     }
 
                 }
-                else if (cboPreset.Text == "30 minutes")
+                else if (cboPreset.SelectedIndex == 1)
                 {
                     if (usedValue[5] == "30")
-                        MessageBox.Show("Interval already in use.");
+                        MessageBox.Show("Intervall allerede i bruk.");
                     else
                     {
-                        setNewInterval("30", "false");
+                        SetNewInterval("30", "false");
                     }
                 }
-                else if (cboPreset.Text == "15 minutes")
+                else if (cboPreset.SelectedIndex == 2)
                 {
                     if (usedValue[5] == "15")
-                        MessageBox.Show("Interval already in use.");
+                        MessageBox.Show("Intervall allerede i bruk");
                     else
                     {
-                        setNewInterval("15", "false");
+                        SetNewInterval("15", "false");
                     }
                 }
-                else if (cboPreset.Text == "Custom")
+                else if (cboPreset.SelectedIndex == 3)
                 {
                     int value = 0;
                     if (rbtHours.Checked || rbtMinutes.Checked)
                     {
                         if (!int.TryParse(txtCustomInterval.Text, out value) || txtCustomInterval.Text == "0")
                         {
-                            MessageBox.Show("Do not use decimal numbers, text or zero.");
+                            MessageBox.Show("Ikke bruk desimaltall, null eller tekst.");
                         }
                         else
                         {
                             if (rbtHours.Checked)
                             {
                                 if (value > 24)
-                                    MessageBox.Show("Do not go above 24 hours.");
+                                    MessageBox.Show("Ikke gå over 24 timer.");
                                 else if (Convert.ToString(value * 60) == usedValue[5])
-                                    MessageBox.Show("Interval already in use.");
+                                    MessageBox.Show("Intervall allerede i bruk.");
                                 else if (value * 60 == 1440)
                                 {
                                     settings.UpdateSetting("1440", 5, 0);
                                     main.NextLogTime();
                                     settings.UpdateSetting("true", 7, 0);
-                                    MessageBox.Show("Interval successfully changed.");
+                                    MessageBox.Show("Intervall endret.");
                                 }
                                 else
                                 {
-                                    setNewInterval(Convert.ToString(value * 60), "true");
+                                    SetNewInterval(Convert.ToString(value * 60), "true");
                                 }
                             }
                             else if (rbtMinutes.Checked)
                             {
                                 if (value > 1440)
-                                    MessageBox.Show("Do not go above 24 hours.");
+                                    MessageBox.Show("Ikke gå over 24 timer.");
                                 else if (Convert.ToString(value) == usedValue[5])
-                                    MessageBox.Show("Interval already in use.");
+                                    MessageBox.Show("Intervall allerede i bruk.");
                                 else if (value == 1440)
                                 {
                                     settings.UpdateSetting("1440", 5, 0);
                                     main.NextLogTime();
                                     settings.UpdateSetting("true", 7, 0);
-                                    MessageBox.Show("Interval successfully changed.");
+                                    MessageBox.Show("Intervall endret.");
                                 }
                                 else
                                 {
-                                    setNewInterval(Convert.ToString(value), "true");
+                                    SetNewInterval(Convert.ToString(value), "true");
                                 }
                             }
                         }
                     }
                     else
-                        MessageBox.Show("Check off 'Hours' og 'Minutes'.");
+                        MessageBox.Show("Huk av for 'Timer' eller 'Minutter'");
                 }
             }
             catch(Exception ex)
@@ -179,12 +187,12 @@ namespace CabinTempArduino
                 MessageBox.Show(ex.Message);
             }
         }
-        private void setNewInterval(string newInterval, string custom)
+        private void SetNewInterval(string newInterval, string custom)
         {
             settings.UpdateSetting(newInterval, 5, 0);
             settings.UpdateSetting(custom, 7, 0);
             main.NewInterval();
-            MessageBox.Show("Interval successfully changed.");
+            MessageBox.Show("Intervall endret.");
         }
     }
 }
