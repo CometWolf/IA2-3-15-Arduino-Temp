@@ -1,3 +1,9 @@
+/*
+  Written by: Haakon N. Unelsrød
+  Arduino class for controlling a connected furnace. Temperature limits may be changed by accessing the variables directly from the object.
+  Call the update function with the current temperature to update the state  of the furnace.
+*/
+
 #include "Furnace.h"
 //Constructor
 Furnace::Furnace(float upperLimit, float lowerLimit, byte pin) : Relay(pin) {
