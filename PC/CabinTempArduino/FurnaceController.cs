@@ -69,6 +69,8 @@ namespace CabinTempArduino
         #region Methods
         public string GetTemp()
         {
+            try
+            {
                 string temp;
                 Send("TEMP");
                 Thread.Sleep(50);
@@ -79,6 +81,11 @@ namespace CabinTempArduino
                     temp = temp.Replace(" ", "");
                 }
                 return temp;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
         public void AlarmReceived()
         {
