@@ -262,6 +262,16 @@ namespace CabinTempArduino
                     txtCurrent.Text = "Temp. feil";
                     throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
                 }
+                else if (Convert.ToDouble(temp.Replace(".", ",")) < -50) //If the temperature is lower than 50, the plus connector on the sensor has been broken.
+                {
+                    txtCurrent.Text = "Temp. feil";
+                    throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
+                }
+                else if (Convert.ToDouble(temp.Replace(".", ",")) > 100) //If the temperature is higher than 100, the minus og analog connector on the sensor is broken.
+                {
+                    txtCurrent.Text = "Temp. feil";
+                    throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
+                }
 
                 
                 txtCurrent.Text = temp;
@@ -286,10 +296,6 @@ namespace CabinTempArduino
                     LogAlarmAndSendEmail("Lav temperatur", "Den nedre alarmgrensen har blitt nådd", "020");
                     txtCurrent.BackColor = Color.Aqua;
                     alarmLogged = true;
-                }
-                else if (checkAlarm == "TEMP_ERROR")
-                {
-                    throw new Exception("Det har skjedd en feil med temperaturføleren på arduinoen.");
                 }
                 else if (checkAlarm == "NO_ALARM")
                 {
