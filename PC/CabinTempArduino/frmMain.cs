@@ -37,6 +37,8 @@ namespace CabinTempArduino
         private static string arduinoPort = "";
         private static bool alarmLogged = false;
         private static string temp;
+        string prevTemp = "";
+        double differenceTemp = 0;
         #endregion
 
         #endregion
@@ -243,7 +245,24 @@ namespace CabinTempArduino
                 if(Temp != null)
                 {
                     temp = Temp.GetTemp();
-                }   
+                }
+
+
+                if (prevTemp == "") 
+                    prevTemp = temp;
+                differenceTemp = Convert.ToDouble(prevTemp.Replace(".",",")) - Convert.ToDouble(temp.Replace(".",",")); //Calulates the difference between the new temperature and the previous one.
+
+                if (differenceTemp > 10) //If the difference is higher than 10, the temperaturesensor is inaccurate and possibly damaged.
+                {
+                    txtCurrent.Text = "Temp. feil";
+                    throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
+                }
+                else if (differenceTemp < -10) //If the difference is lower than -10, the temperaturesensor is inaccurate and possibly damaged.
+                {
+                    txtCurrent.Text = "Temp. feil";
+                    throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
+                }
+
                 
                 txtCurrent.Text = temp;
 
@@ -267,6 +286,10 @@ namespace CabinTempArduino
                     LogAlarmAndSendEmail("Lav temperatur", "Den nedre alarmgrensen har blitt nådd", "020");
                     txtCurrent.BackColor = Color.Aqua;
                     alarmLogged = true;
+                }
+                else if (checkAlarm == "TEMP_ERROR")
+                {
+                    throw new Exception("Det har skjedd en feil med temperaturføleren på arduinoen.");
                 }
                 else if (checkAlarm == "NO_ALARM")
                 {
@@ -322,7 +345,7 @@ namespace CabinTempArduino
             {
                 LogAlarmAndSendEmailException(error.GetType().ToString(), error.Message, "005");
                 tmrLogTemperature.Stop();
-                MessageBox.Show(error.GetType().ToString() + "\r\n" + error.Message + "\r\n" + "Vennligst restart programmet");
+                MessageBox.Show(error.GetType().ToString() + "\r\n" + error.Message + "\r\n" + "Programmet må restartes før videre bruk.");
             }
             catch (System.IO.IOException IOex)
             {
@@ -335,7 +358,7 @@ namespace CabinTempArduino
             {
                 LogAlarmAndSendEmailException(ex.GetType().ToString(), ex.Message, "007");
                 tmrLogTemperature.Stop();
-                MessageBox.Show(ex.GetType().ToString() +"\r\n"+ ex.Message + "\r\n" + "Vennligst restart programmet");
+                MessageBox.Show(ex.GetType().ToString() +"\r\n"+ ex.Message + "\r\n" + "Programmet må restartes før videre bruk.");
             }
         }
         #endregion
@@ -498,7 +521,7 @@ namespace CabinTempArduino
             {
                 mail.Send(emails[i, 5], subject, message);
             }
-            myDatabase.LogAlarm(subject, alarmID, temp);
+            myDatabase.LogAlarm(subject + ": " + message, alarmID, temp);
         }
         public void SetPortArduino(string port)
         {

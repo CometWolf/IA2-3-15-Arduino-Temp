@@ -57,9 +57,9 @@ namespace CabinTempArduino
             {
                 port.WriteLine(text);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                throw ex;
+                throw new System.IO.IOException("Forbindelsen mellom PC og arduino er brutt.");
             }
         }
     }
