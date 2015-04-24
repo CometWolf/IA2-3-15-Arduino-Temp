@@ -262,7 +262,7 @@ namespace CabinTempArduino
                     txtCurrent.Text = "Temp. feil";
                     throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
                 }
-                else if (Convert.ToDouble(temp.Replace(".", ",")) < -50) //If the temperature is lower than 50, the plus connector on the sensor has been broken.
+                else if (Convert.ToDouble(temp.Replace(".", ",")) <= -50) //If the temperature is lower than 50, the plus connector on the sensor has been broken.
                 {
                     txtCurrent.Text = "Temp. feil";
                     throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
