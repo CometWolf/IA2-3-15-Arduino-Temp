@@ -537,7 +537,6 @@ namespace CabinTempArduino
             arduinoPort = settings[8];
             StartUPlog();
             tmrLogTemperature.Start();
-
         }
         #endregion
 

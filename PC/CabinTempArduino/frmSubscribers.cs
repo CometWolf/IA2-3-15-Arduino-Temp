@@ -96,13 +96,7 @@ namespace CabinTempArduino
                         ClearAllTextBoxes();
                         MessageBox.Show("Ny bruker lagret");
 
-                        subscribers = myDatabase.GetSubscribers();
-                        cboSelectSubscriber.Items.Clear();
-                        cboSelectSubscriber.Items.Add("Ny bruker");
-                        for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
-                        {
-                            cboSelectSubscriber.Items.Add(subscribers[i, 3]);
-                        }
+                        FillCboWithUsers();
                         cboSelectSubscriber.Text = "Ny bruker";
                     }
                     else if ((txtFirstName.Text == "") || (txtSurName.Text == "") || (txtPhone.Text == "") || (txtUsername.Text == "") ||
@@ -126,13 +120,7 @@ namespace CabinTempArduino
                         myDatabase.UpdateSubscriber(userID, txtSurName.Text, txtFirstName.Text, txtUsername.Text, txtPassword.Text, txtEmail.Text, txtPhone.Text);
                         MessageBox.Show("Endringer lagret");
 
-                        subscribers = myDatabase.GetSubscribers();
-                        cboSelectSubscriber.Items.Clear();
-                        cboSelectSubscriber.Items.Add("Ny bruker");
-                        for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
-                        {
-                            cboSelectSubscriber.Items.Add(subscribers[i, 3]);
-                        }
+                        FillCboWithUsers();
                         cboSelectSubscriber.Text = txtUsername.Text;
                     }
                     else if ((txtFirstName.Text == "") || (txtSurName.Text == "") || (txtPhone.Text == "") || (txtUsername.Text == "") ||
@@ -156,13 +144,7 @@ namespace CabinTempArduino
                     myDatabase.DeleteSubscriber(index);
                 }
 
-                subscribers = myDatabase.GetSubscribers();
-                cboSelectSubscriber.Items.Clear();
-                cboSelectSubscriber.Items.Add("Ny bruker");
-                for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
-                {
-                    cboSelectSubscriber.Items.Add(subscribers[i, 3]);
-                }
+                FillCboWithUsers();
 
 
                 ClearAllTextBoxes();
@@ -258,6 +240,16 @@ namespace CabinTempArduino
                 MessageBox.Show(ex.Message);
             }
             return isUnique;
+        }
+        private void FillCboWithUsers()
+        {
+            subscribers = myDatabase.GetSubscribers();
+            cboSelectSubscriber.Items.Clear();
+            cboSelectSubscriber.Items.Add("Ny bruker");
+            for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+            {
+                cboSelectSubscriber.Items.Add(subscribers[i, 3]);
+            }
         }
         #endregion
     }
