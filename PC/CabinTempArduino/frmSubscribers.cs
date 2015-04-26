@@ -85,7 +85,7 @@ namespace CabinTempArduino
             {
                 if (cboSelectSubscriber.Text == "Ny bruker")
                 {
-                    username = Unique(txtUsername.Text,3,"Brukernavn");
+                    username = Unique(txtUsername.Text,3,"Brukernavn"); //Checks the uniqueness of Username and email.
                     uniqueEmail = Unique(txtEmail.Text, 5, "E-Post");
 
                     if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
@@ -108,9 +108,9 @@ namespace CabinTempArduino
                     int userID = myDatabase.GetUserID(cboSelectSubscriber.Text);
                     int index = myDatabase.GetIndex(cboSelectSubscriber.Text);
 
-                    if (txtUsername.Text != subscribers[index, 3])
-                        username = Unique(txtUsername.Text,3,"Brukernavn");
-                    if(txtEmail.Text != subscribers[index,5])
+                    if (txtUsername.Text != subscribers[index, 3]) //Checks if the same username is being used.
+                        username = Unique(txtUsername.Text,3,"Brukernavn"); //If not a unique test is perfomed.
+                    if(txtEmail.Text != subscribers[index,5]) //The same happens with email.
                         uniqueEmail = Unique(txtEmail.Text, 5, "E-Post");
 
                     if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
@@ -125,7 +125,7 @@ namespace CabinTempArduino
                     }
                     else if ((txtFirstName.Text == "") || (txtSurName.Text == "") || (txtPhone.Text == "") || (txtUsername.Text == "") ||
                         (txtEmail.Text == "") || (txtConfirmEmail.Text == "") || (txtPassword.Text == "") || (txtConfirmPassword.Text == ""))
-                        MessageBox.Show("Ftll i alle tekstbokser");
+                        MessageBox.Show("Fyll i alle tekstbokser");
                 }
             }
             catch(Exception ex)
@@ -243,6 +243,7 @@ namespace CabinTempArduino
         }
         private void FillCboWithUsers()
         {
+            //Fills cboSelectSubsribers with updated usernames.
             subscribers = myDatabase.GetSubscribers();
             cboSelectSubscriber.Items.Clear();
             cboSelectSubscriber.Items.Add("Ny bruker");

@@ -30,7 +30,7 @@ namespace CabinTempArduino
             string[] serialPortNames = SerialPort.GetPortNames();
             foreach (string port in serialPortNames)
             {
-                cboComPort.Items.Add(port);
+                cboComPort.Items.Add(port); //Adds ports with serialCom attached to the combobox.
             }
             //END Valid ports
         }
@@ -76,7 +76,7 @@ namespace CabinTempArduino
             }
             catch(UnauthorizedAccessException)
             {
-                MessageBox.Show("Porten er allerede i bruk.");
+                MessageBox.Show("Porten er allerede i bruk."+"\r\n"+"Hvis dette er feil: Restart og eventuelt sett inn USB-kabel på nytt.");
             }
             catch(Exception ex)
             {
@@ -149,7 +149,7 @@ namespace CabinTempArduino
                                 else if (value * 60 == 1440)
                                 {
                                     settings.UpdateSetting("1440", 5, 0);
-                                    main.NextLogTime();
+                                    main.NextLogTime(); //Since it's 24hrs to next log only a log time is needed, a log will automatically be executed since it's the same time as now the next day.
                                     settings.UpdateSetting("true", 7, 0);
                                     MessageBox.Show("Intervall endret.");
                                 }
@@ -189,6 +189,7 @@ namespace CabinTempArduino
         }
         private void SetNewInterval(string newInterval, string custom)
         {
+            //Sets the new interval and makes sure the temperature is logged at the same time. 
             settings.UpdateSetting(newInterval, 5, 0);
             settings.UpdateSetting(custom, 7, 0);
             main.NewInterval();

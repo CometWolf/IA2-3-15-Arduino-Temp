@@ -210,7 +210,7 @@ namespace CabinTempArduino
         #endregion BatterySurvailence
         private void cboAnnotation_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //GUI
+            //GUI //Changes GUI depeding on what cboAnnotation shows.
             if (cboAnnotation.SelectedIndex == 3)
             {
                 rbtError.Enabled = true;
@@ -262,12 +262,12 @@ namespace CabinTempArduino
                     txtCurrent.Text = "Temp. feil";
                     throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
                 }
-                else if (Convert.ToDouble(temp.Replace(".", ",")) <= -50) //If the temperature is lower than 50, the plus connector on the sensor has been broken.
+                else if (Convert.ToDouble(temp.Replace(".", ",")) <= -50) //If the temperature is lower or equal to the lowest value possible, the plus connector on the sensor has been broken.
                 {
                     txtCurrent.Text = "Temp. feil";
                     throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
                 }
-                else if (Convert.ToDouble(temp.Replace(".", ",")) > 100) //If the temperature is higher than 100, the minus og analog connector on the sensor is broken.
+                else if (Convert.ToDouble(temp.Replace(".", ",")) > 100) //If the temperature is higher than the highest value possible, the minus or analog connector on the sensor is broken.
                 {
                     txtCurrent.Text = "Temp. feil";
                     throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
@@ -353,7 +353,7 @@ namespace CabinTempArduino
                 tmrLogTemperature.Stop();
                 MessageBox.Show(error.GetType().ToString() + "\r\n" + error.Message + "\r\n" + "Programmet må restartes før videre bruk.");
             }
-            catch (System.IO.IOException IOex)
+            catch (System.IO.IOException IOex) //The connection between the computer and the Arduino is broken.
             {
                 LogAlarmAndSendEmailException(IOex.GetType().ToString(), IOex.Message, "006");
                 txtCurrent.Text = "Mistet kontakt";
@@ -421,11 +421,11 @@ namespace CabinTempArduino
             if (Convert.ToInt32(nextMinutes) >= 60)
                 nextMinutes = (Convert.ToInt32(nextMinutes) % 60).ToString();
             if (nextHours.Length == 1)
-                nextHours = "0" + nextHours;
+                nextHours = "0" + nextHours; //Checks if the value it less than two digits and inserts a zero if it is.
             if (nextMinutes.Length == 1)
                 nextMinutes = "0" + nextMinutes;
 
-            nextLog = nextHours + ":" + nextMinutes;
+            nextLog = nextHours + ":" + nextMinutes; //Puts a time togheter with the right format.
 
             myDatabase.UpdateSetting(nextLog, 6, 0);
         }
@@ -452,6 +452,7 @@ namespace CabinTempArduino
         }
         private void FetchContinous(string[,] addValues, string header)
         {
+            //Fetches values continously.
             rtbDatabaseValues.Lines[0] = header;
             for (int i = 0; i <= addValues.GetUpperBound(0); i++)
             {
@@ -465,6 +466,7 @@ namespace CabinTempArduino
         }
         private void ChartUpdateTemp(string[,] xy)
         {
+            //Shows fetched values in the chart.
             DateTime myDate;
             double temp;
 
@@ -495,6 +497,7 @@ namespace CabinTempArduino
         }
         private void ChartAddPoint(string x, string y)
         {
+            //Adds points to the chart continously.
             double myDouble;
             y = y.Replace('.', ',');
             double.TryParse(y, out myDouble);
@@ -514,10 +517,7 @@ namespace CabinTempArduino
             {
                 mail.Send(emails[i, 5], subject, message);
             }
-            if (Temp.GetTemp() != null)
-                myDatabase.LogAlarm(subject, alarmID, Temp.GetTemp());
-            else if (Temp.GetTemp() == null)
-                myDatabase.LogAlarm(subject, alarmID, "0");
+            myDatabase.LogAlarm(subject, alarmID, temp);
         }
         private void LogAlarmAndSendEmailException(string subject, string message, string alarmID)
         {
@@ -536,7 +536,7 @@ namespace CabinTempArduino
                              Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, port);
             arduinoPort = settings[8];
             StartUPlog();
-            tmrLogTemperature.Start();
+            tmrLogTemperature.Start(); //Logging starts.
         }
         #endregion
 
@@ -553,7 +553,7 @@ namespace CabinTempArduino
             }
             catch (Exception)
             {
-                tmrLogTemperature.Stop();
+                tmrLogTemperature.Stop(); //If not, the port must be manually entered in frmSettings.
                 txtCurrent.Text = "Velg port i innstillinger";
             }
         }
