@@ -1,3 +1,6 @@
+/*
+Written by: Øystein Lorentzen Rød
+*/
 #include<Furnace.h>
 #include<PC.h>
 #include<TempSensor.h>
@@ -20,6 +23,11 @@ float tempValue;
 char temp[5];
 char displayChar[5];
 
+
+float previousMillis = 0;
+float interval = 1000;
+float previousTemp; 
+
 PC pc = PC();
 TempSensor tempSensor(tempPin);
 Furnace furnace(0, -10, furnacePin);
@@ -28,6 +36,9 @@ LiquidCrystal lcd(5,6,9,10,11,12);
 void setup() 
 {
   pc.begin(9600);
+  /*
+  Sets position of the display's text.
+  */
   lcd.begin(16,2);
   lcd.print("IA 2-3-15");
   lcd.setCursor(0,1);
@@ -39,45 +50,53 @@ void setup()
 void loop() 
 {
   
+  float currentMillis = millis();
+  
   alarmUpperLimit = alarmUpper.toFloat();
   alarmLowerLimit = alarmLower.toFloat();
-  
   furnaceUpperLimit = furnaceUpper.toFloat();
   furnaceLowerLimit = furnaceLower.toFloat();
   furnace.upperLimit = furnaceUpperLimit;
   furnace.lowerLimit = furnaceLowerLimit;
   
-  String motatt = pc.receive('\n');
-  String handling = motatt.substring(0,4);
-  String value = motatt.substring(4,9);
+  
+  String received = pc.receive('\n');
+  String action = received.substring(0,4);
+  String value = received.substring(4,9);
   
   tempValue = tempSensor.getTemp();
-  dtostrf(tempValue, 5, 1, temp); 
-  furnace.update(tempValue);
+  dtostrf(tempValue, 5, 1, temp);   //the characters from tempValue is inserted to the temp array.
+  furnace.update(tempValue); 
   
-  if (motatt != "")
+  /*
+  If the arduino receives any type of string from the 
+  pc.receive method, it reacts accordingly. It either sends
+  the temperature, sets alarm or furnace limits, or 
+  sends alarm status.
+  */
+  if (received != "")
   {
-    if(handling == "TEMP")
+    if(action == "TEMP")
     {
       pc.send(temp);
     }
-    else if(handling == "ALUP")
+    else if(action == "ALUP")
     {
       alarmUpper = value;
     }
-    else if(handling == "ALLO")
+    else if(action == "ALLO")
     {
       alarmLower = value;
     }
-    else if(handling == "FUUP")
+    else if(action == "FUUP")
     {
       furnaceUpper = value;
     }
-    else if(handling == "FULO")
+    else if(action == "FULO")
     {
       furnaceLower = value;
     }
-    else if (handling == "CHAL")
+    else if (action == "CHAL")
     {
       if ((tempValue > alarmUpperLimit)||(tempValue < alarmLowerLimit))
       {
@@ -98,23 +117,25 @@ void loop()
     }
   }
   
-  int tempFloor = floor(tempValue);
-  float rest = tempValue - tempFloor;
-  
-  if(rest >= 0.75)
-  {
-    tempValue = ceil(tempValue);
-  }
-  else if ((rest >= 0.25)&&(rest < 0.75)){
-    tempValue = tempFloor + 0.5;
-  }
-  else if (rest < 0.25)
-  {
-    tempValue = tempFloor;
-  }
-  
-  dtostrf(tempValue, 5, 1, displayChar); 
-  String tempDisplay(displayChar);
+  String tempDisplay(temp);
   lcd.setCursor(6,1);
-  lcd.print(tempDisplay);
+  /*
+  Every second the lcd displays the temperature. If the 
+  temperature changes are irregular, there might be a 
+  problem with the temperature sensor. The furnace limits
+  is set to -51 (tempValue is is never lower than -51), 
+  so that the furnace does not turn on. 
+  */
+  if (currentMillis - previousMillis > interval)
+  {
+    lcd.print(tempDisplay);
+    if((abs(tempValue - previousTemp) > 30)||(tempValue == -50))
+    {
+      furnace.update(25.0);
+      furnaceLower = "-51.0";
+      furnaceUpper = "-51.0";
+    }
+    previousMillis = currentMillis;
+    previousTemp = tempValue;
+  }
 }
