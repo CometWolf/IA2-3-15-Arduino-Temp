@@ -8,28 +8,31 @@ Written by: Øystein Lorentzen Rød
 #include<stdlib.h>
 #include<LiquidCrystal.h>
 
-const int tempPin = A0; 
+const byte tempPin = A0; 
 const byte furnacePin = 3;
 
 String alarmUpper = "50";
-String alarmLower = "-1";
-String furnaceLower = "4";
-String furnaceUpper = "20";
+String alarmLower = "-20";
+String furnaceLower = "-10";
+String furnaceUpper = "0";
+String received;
+String action;
+String value;
+
+float currentMillis;
 float alarmUpperLimit;
 float alarmLowerLimit;
 float furnaceUpperLimit;
 float furnaceLowerLimit;
 float tempValue;
-char temp[5];
-char displayChar[5];
-
-
 float previousMillis = 0;
 float interval = 1000;
 float previousTemp; 
 
+char temp[5];
+
 PC pc = PC();
-TempSensor tempSensor(tempPin);
+TempSensor tempSensor(tempPin,-50,450);
 Furnace furnace(0, -10, furnacePin);
 LiquidCrystal lcd(5,6,9,10,11,12);
 
@@ -49,23 +52,18 @@ void setup()
 
 void loop() 
 {
-  
-  float currentMillis = millis();
-  
   alarmUpperLimit = alarmUpper.toFloat();
   alarmLowerLimit = alarmLower.toFloat();
   furnaceUpperLimit = furnaceUpper.toFloat();
   furnaceLowerLimit = furnaceLower.toFloat();
   furnace.upperLimit = furnaceUpperLimit;
   furnace.lowerLimit = furnaceLowerLimit;
-  
-  
-  String received = pc.receive('\n');
-  String action = received.substring(0,4);
-  String value = received.substring(4,9);
-  
+  currentMillis = millis();
+  received = pc.receive('\n');
+  action = received.substring(0,4);   //action stores the 4 first characters in the received string.
+  value = received.substring(4,9);    //value stores the 5 last characters in the received string.
   tempValue = tempSensor.getTemp();
-  dtostrf(tempValue, 5, 1, temp);   //the characters from tempValue is inserted to the temp array.
+  dtostrf(tempValue, 5, 1, temp);     //the characters from tempValue is inserted to the temp array.
   furnace.update(tempValue); 
   
   /*
@@ -123,7 +121,7 @@ void loop()
   Every second the lcd displays the temperature. If the 
   temperature changes are irregular, there might be a 
   problem with the temperature sensor. The furnace limits
-  is set to -51 (tempValue is is never lower than -51), 
+  is set to -51 (tempValue is never lower than -51), 
   so that the furnace does not turn on. 
   */
   if (currentMillis - previousMillis > interval)
