@@ -8,7 +8,7 @@ Written by: Øystein Lorentzen Rød
 #include<stdlib.h>
 #include<LiquidCrystal.h>
 
-const int tempPin = A0; 
+const byte tempPin = A0; 
 const byte furnacePin = 3;
 
 String alarmUpper = "50";
@@ -32,7 +32,7 @@ float previousTemp;
 char temp[5];
 
 PC pc = PC();
-TempSensor tempSensor(tempPin);
+TempSensor tempSensor(tempPin,-50,450);
 Furnace furnace(0, -10, furnacePin);
 LiquidCrystal lcd(5,6,9,10,11,12);
 
@@ -121,7 +121,7 @@ void loop()
   Every second the lcd displays the temperature. If the 
   temperature changes are irregular, there might be a 
   problem with the temperature sensor. The furnace limits
-  is set to -51 (tempValue is is never lower than -51), 
+  is set to -51 (tempValue is never lower than -51), 
   so that the furnace does not turn on. 
   */
   if (currentMillis - previousMillis > interval)
