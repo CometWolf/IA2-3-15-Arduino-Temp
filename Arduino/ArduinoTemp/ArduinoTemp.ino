@@ -1,5 +1,6 @@
 /*
 Written by: Øystein Lorentzen Rød
+Main arduino code
 */
 #include<Furnace.h>
 #include<PC.h>
