@@ -12,7 +12,7 @@ namespace CabinTempArduino
 {
     /*
         Wrtitten by: Martin Terjesen  
-        Changes the limits of the Arduino.
+        Change the limits of the Arduino.
     */
     public partial class frmLimits : Form
     {
@@ -76,7 +76,7 @@ namespace CabinTempArduino
 
         private void cboLimitType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //Shows limits on textboxe when changing cboLimitType.
+            //Shows limits in textboxes when changing cboLimitType.
             txtValue.ReadOnly = false;
             btnSetLimit.Enabled = true;
             settings = myDatabase.GetSettings(0);

@@ -15,7 +15,7 @@ using System.Timers;
 namespace CabinTempArduino
 {   /*
         Wrtitten by: Martin Terjesen
-        The main part of the program, with temperature logging and battery surveillance.
+        The main part of the program, with temperature logging, battery surveillance and fetching of values.
     */
 
     public partial class frmMain : Form
@@ -437,7 +437,7 @@ namespace CabinTempArduino
             FetchAlarm(values, header);
             ChartUpdateTemp(values);
         }
-        private void FetchAlarm(string[,] values, string header = "Tid" + "\t\t\t" + "ID" + "\t" + "Temp" + "\t" + "Beskrivelse" + "\r\n")
+        private void FetchAlarm(string[,] values, string header = "Tid" + "\t\t\t" + "ID" + "\t" + "Temp" + "\t" + "Status" + "\t" + "Beskrivelse" + "\r\n")
         {
             //Written by: Jørund Marthinsen
             //Fetches alarms from the database.
@@ -457,7 +457,6 @@ namespace CabinTempArduino
         {
             //Written by: Jørund Marthinsen
             //Fetches values continously.
-            rtbDatabaseValues.Lines[0] = header;
             for (int i = 0; i <= addValues.GetUpperBound(0); i++)
             {
                 for (int j = 0; j <= addValues.GetUpperBound(1); j++)
@@ -477,9 +476,7 @@ namespace CabinTempArduino
 
             chartFetchedValues.Series[0].Points.Clear();
 
-
             chartFetchedValues.Series[0].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-
 
             for (int i = 0; i < xy.GetUpperBound(0); i++)
             {
@@ -488,16 +485,10 @@ namespace CabinTempArduino
 
                 double.TryParse(xy[i, 1], out temp);
 
-
                 chartFetchedValues.Series[0].Points.AddXY(myDate, temp);
             }
 
-
             chartFetchedValues.Series[0].Sort(System.Windows.Forms.DataVisualization.Charting.PointSortOrder.Ascending, "X");
-            //if (chartFetchedValues.Series[0].Points.Count > 0)
-            //{
-                //if (chartFetchedValues.Series[0].Points[0].XValue > DateTime.Now.AddDays(-2.0).ToOADate()) chartFetchedValues.Series[0].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Time;
-            //}
             chartFetchedValues.Refresh();
         }
         private void ChartAddPoint(string x, string y)
@@ -537,7 +528,7 @@ namespace CabinTempArduino
         }
         public void SetPortArduino(string port)
         {
-            //Sets the comPort for the arduino, if the has not been set before.
+            //Sets the comPort for the arduino, if the has not been set in the startup.
             Temp = new FurnaceController(Convert.ToDouble(settings[1]), Convert.ToDouble(settings[4]),
                              Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, port);
             arduinoPort = settings[8];
@@ -555,7 +546,6 @@ namespace CabinTempArduino
                                              Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, settings[8]);
                 arduinoPort = settings[8];
                 StartUPlog();
-
             }
             catch (System.IO.IOException)
             {

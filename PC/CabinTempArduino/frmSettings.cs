@@ -13,7 +13,7 @@ namespace CabinTempArduino
 {
     /*
         Wrtitten by: Martin Terjesen  
-        Changes Arduino port and interval.
+        Change Arduino port and interval.
     */
     public partial class frmSettings : Form
     {
