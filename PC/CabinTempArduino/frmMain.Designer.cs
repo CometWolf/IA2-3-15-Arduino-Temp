@@ -120,6 +120,7 @@
             // 
             // txtFetchLast
             // 
+            this.txtFetchLast.AcceptsReturn = true;
             resources.ApplyResources(this.txtFetchLast, "txtFetchLast");
             this.txtFetchLast.Name = "txtFetchLast";
             // 
@@ -266,6 +267,7 @@
             // 
             // frmMain
             // 
+            this.AcceptButton = this.btnFetch;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tabControl1);

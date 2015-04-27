@@ -295,10 +295,13 @@
     <value>350, 300</value>
   </data>
   <data name="rtbDatabaseValues.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>10</value>
   </data>
   <data name="rtbDatabaseValues.Text" xml:space="preserve">
     <value />
+  </data>
+  <data name="rtbDatabaseValues.WordWrap" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;rtbDatabaseValues.Name" xml:space="preserve">
     <value>rtbDatabaseValues</value>
@@ -346,7 +349,7 @@
     <value>101, 20</value>
   </data>
   <data name="txtFetchLast.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;txtFetchLast.Name" xml:space="preserve">
     <value>txtFetchLast</value>
@@ -499,7 +502,7 @@
     <value>51, 17</value>
   </data>
   <data name="rbtError.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
+    <value>5</value>
   </data>
   <data name="rbtError.Text" xml:space="preserve">
     <value>Alarm</value>
@@ -526,7 +529,7 @@
     <value>85, 17</value>
   </data>
   <data name="rbtTemperature.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
+    <value>4</value>
   </data>
   <data name="rbtTemperature.Text" xml:space="preserve">
     <value>Temperature</value>
@@ -562,7 +565,7 @@
     <value>101, 21</value>
   </data>
   <data name="cboAnnotation.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
+    <value>3</value>
   </data>
   <data name="cboAnnotation.Text" xml:space="preserve">
     <value>Benevning</value>
@@ -610,7 +613,7 @@
     <value>101, 23</value>
   </data>
   <data name="btnSettings.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
+    <value>7</value>
   </data>
   <data name="btnSettings.Text" xml:space="preserve">
     <value>Innstillinger</value>
@@ -691,7 +694,7 @@
     <value>353, 300</value>
   </data>
   <data name="chartFetchedValues.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
+    <value>11</value>
   </data>
   <data name="&gt;&gt;chartFetchedValues.Name" xml:space="preserve">
     <value>chartFetchedValues</value>

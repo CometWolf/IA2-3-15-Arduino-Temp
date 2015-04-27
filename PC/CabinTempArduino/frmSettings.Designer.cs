@@ -62,7 +62,7 @@
             this.btnInterval.Location = new System.Drawing.Point(6, 46);
             this.btnInterval.Name = "btnInterval";
             this.btnInterval.Size = new System.Drawing.Size(121, 40);
-            this.btnInterval.TabIndex = 3;
+            this.btnInterval.TabIndex = 2;
             this.btnInterval.Text = "Sett intervall";
             this.btnInterval.UseVisualStyleBackColor = true;
             this.btnInterval.Click += new System.EventHandler(this.btnInterval_Click);
@@ -73,7 +73,7 @@
             this.rbtMinutes.Location = new System.Drawing.Point(133, 69);
             this.rbtMinutes.Name = "rbtMinutes";
             this.rbtMinutes.Size = new System.Drawing.Size(63, 17);
-            this.rbtMinutes.TabIndex = 1;
+            this.rbtMinutes.TabIndex = 4;
             this.rbtMinutes.TabStop = true;
             this.rbtMinutes.Text = "Minutter";
             this.rbtMinutes.UseVisualStyleBackColor = true;
@@ -84,7 +84,7 @@
             this.rbtHours.Location = new System.Drawing.Point(133, 46);
             this.rbtHours.Name = "rbtHours";
             this.rbtHours.Size = new System.Drawing.Size(51, 17);
-            this.rbtHours.TabIndex = 2;
+            this.rbtHours.TabIndex = 3;
             this.rbtHours.TabStop = true;
             this.rbtHours.Text = "Timer";
             this.rbtHours.UseVisualStyleBackColor = true;
@@ -129,7 +129,7 @@
             this.btnComPort.Location = new System.Drawing.Point(133, 19);
             this.btnComPort.Name = "btnComPort";
             this.btnComPort.Size = new System.Drawing.Size(81, 23);
-            this.btnComPort.TabIndex = 1;
+            this.btnComPort.TabIndex = 6;
             this.btnComPort.Text = "Sett COM Port";
             this.btnComPort.UseVisualStyleBackColor = true;
             this.btnComPort.Click += new System.EventHandler(this.btnComPort_Click);
@@ -140,12 +140,13 @@
             this.cboComPort.Location = new System.Drawing.Point(6, 19);
             this.cboComPort.Name = "cboComPort";
             this.cboComPort.Size = new System.Drawing.Size(121, 21);
-            this.cboComPort.TabIndex = 0;
+            this.cboComPort.TabIndex = 5;
             this.cboComPort.Text = "Port";
             this.cboComPort.SelectedIndexChanged += new System.EventHandler(this.cboComPort_SelectedIndexChanged);
             // 
             // frmSettings
             // 
+            this.AcceptButton = this.btnInterval;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(250, 178);

@@ -103,7 +103,8 @@ namespace CabinTempArduino
         private void btnFetch_Click(object sender, EventArgs e)
         {
             //Fetches values from the database.
-            rtbDatabaseValues.Clear();
+            if(btnFetch.Text != "Stopp")
+                rtbDatabaseValues.Clear();
             int fetchLast = 1;
             int.TryParse(txtFetchLast.Text, out fetchLast);
 
@@ -133,7 +134,7 @@ namespace CabinTempArduino
                         cboAnnotation.Enabled = false;
                         rtbDatabaseValues.Clear();
                         rtbDatabaseValues.Text = "Tid" + "\t\t\t" + "Temperatur" + "\r\n";
-
+                        chartFetchedValues.Series[0].Points.Clear();
                     }
                     else if (btnFetch.Text == "Stopp")
                     {
@@ -387,7 +388,7 @@ namespace CabinTempArduino
         public void NewInterval()
         {
             //Logs a temperature when a new interval is set.
-            myDatabase.LogTemperature(Temp.GetTemp());
+            TemperatureLogging();
             NextLogTime();
             logged = false;
         }
@@ -442,6 +443,7 @@ namespace CabinTempArduino
             //Written by: Jørund Marthinsen
             //Fetches alarms from the database.
             rtbDatabaseValues.Clear();
+            chartFetchedValues.Series[0].Points.Clear();
             rtbDatabaseValues.Text = header;
             for (int i = 0; i <= values.GetUpperBound(0); i++)
             {
