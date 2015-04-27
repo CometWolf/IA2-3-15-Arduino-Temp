@@ -13,7 +13,7 @@ namespace WebApplication6.Models {
         public string temperature;
         [Display(Name = "Logging interval")]
         [Required]
-        [Range(minimum:1,maximum:99999)]
+        [Range(minimum:1,maximum:1440)]
         public string LogInterval { get; set; }
         [Display(Name = "Øvre grense")]
         [Required]
