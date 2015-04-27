@@ -10,6 +10,10 @@ namespace CabinTempArduino
 {
     class OLEdb
     {
+        //      Written by Jørund Martinsen
+        //     -----------------------------
+
+
         protected static OleDbConnection myAccessConnection;
         protected static OleDbCommand myAccessCommand;
         protected static OleDbCommand myCommand;

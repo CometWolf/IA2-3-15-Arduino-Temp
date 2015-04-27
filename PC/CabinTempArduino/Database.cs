@@ -8,6 +8,9 @@ using System.Data.OleDb;
 
 namespace CabinTempArduino
 {
+//      Written by Jørund Martinsen
+//     -----------------------------
+
     /// <summary>
     /// Connects to a database and simplifies communication
     /// </summary>
