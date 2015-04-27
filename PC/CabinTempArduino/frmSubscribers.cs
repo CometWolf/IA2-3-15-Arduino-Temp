@@ -10,6 +10,10 @@ using System.Windows.Forms;
 
 namespace CabinTempArduino
 {
+    /*
+        Wrtitten by: Martin Terjesen
+        Adds, edits and deletes subscribers.
+    */
     public partial class frmSubscribers : Form
     {
         #region Initial
@@ -75,8 +79,8 @@ namespace CabinTempArduino
             bool username = false;
             bool lengthPassword = false;
             bool uniqueEmail = false;
-            bool email = MatchingValues(txtEmail.Text, txtConfirmEmail.Text, "E-Post");
-            bool password = MatchingValues(txtPassword.Text, txtConfirmPassword.Text, "Passord");
+            bool email = MatchingValues(txtEmail.Text, txtConfirmEmail.Text, "E-Post"); //Checks if the emails are matching
+            bool password = MatchingValues(txtPassword.Text, txtConfirmPassword.Text, "Passord"); //Checks if the password are matching
             if (password)
             {
                 lengthPassword = PasswordLength(txtPassword.Text, txtConfirmPassword.Text);
@@ -145,7 +149,6 @@ namespace CabinTempArduino
                 }
 
                 FillCboWithUsers();
-
 
                 ClearAllTextBoxes();
                 cboSelectSubscriber.Text = "Ny bruker";

@@ -10,6 +10,10 @@ using System.Windows.Forms;
 
 namespace CabinTempArduino
 {
+    /*
+        Wrtitten by: Martin Terjesen  
+        Changes the limits of the Arduino.
+    */
     public partial class frmLimits : Form
     {
         #region Objects
