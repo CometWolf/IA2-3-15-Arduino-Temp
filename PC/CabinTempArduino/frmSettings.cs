@@ -1,4 +1,6 @@
 ﻿/*
+    Settings form
+
     Wrtitten by: Martin Terjesen  
     Change Arduino port and interval.
 */

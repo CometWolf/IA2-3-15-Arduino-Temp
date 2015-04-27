@@ -1,4 +1,6 @@
 ﻿/*
+    Subscribers form
+
     Wrtitten by: Martin Terjesen
     Adds, edits and deletes subscribers.
 */

@@ -1,4 +1,6 @@
 ﻿/*
+    Limits form
+
     Wrtitten by: Martin Terjesen  
     Change the limits of the Arduino.
 */
@@ -40,7 +42,6 @@ namespace CabinTempArduino
                 txtValue.Text = "";
             //END GUI
         }
-
         private void btnSetLimit_Click(object sender, EventArgs e)
         {
             //Updates limits
@@ -73,7 +74,6 @@ namespace CabinTempArduino
             }
             else MessageBox.Show("Verdi må være et tall");
         }
-
         private void cboLimitType_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Shows limits in textboxes when changing cboLimitType.

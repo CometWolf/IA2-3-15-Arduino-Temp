@@ -1,5 +1,7 @@
 ﻿/*
-     Wrtitten by: Martin Terjesen
+     Main form
+
+     Written by: Martin Terjesen
      The main part of the program, with temperature logging, battery surveillance and fetching of values.
  */
 using System;
