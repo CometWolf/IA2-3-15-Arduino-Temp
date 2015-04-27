@@ -7,6 +7,11 @@ using System.IO.Ports;
 
 namespace CabinTempArduino
 {
+        /*
+        * Written by: Pauline Mittag Sandersen
+        * 
+        * This class receives, sends and retrieves information. 
+        */
     public class Arduino
     {
         int baudrate;
@@ -22,10 +27,10 @@ namespace CabinTempArduino
                 {
                     port.Open();
                 }
-                port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
+                port.DataReceived += new SerialDataReceivedEventHandler(DataReceived); //sends information to the method DataReceived
         }
 
-        public string Received()
+        public string Received() //Return information when you ask for it. 
         {
             try
             {
@@ -38,20 +43,20 @@ namespace CabinTempArduino
                 }
                 return received;
             }
-            catch(System.IO.IOException ex)
+            catch(System.IO.IOException ex) 
             {
                 throw ex;
             }
         }
 
-        private void DataReceived(object sender, SerialDataReceivedEventArgs e)
+        private void DataReceived(object sender, SerialDataReceivedEventArgs e) //Received data and stored it in indata.
         {
             SerialPort sp = (SerialPort)sender;
             indata = sp.ReadLine();
             receivedData = true;
         }
 
-        public void Send(string text)
+        public void Send(string text) //Sending out information.
         {
             try
             {
