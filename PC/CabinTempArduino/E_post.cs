@@ -8,6 +8,9 @@ using System.Net.Mail;
 
 namespace CabinTempArduino
 {
+     //Written by: Gustav Carlsen
+     //This class holds a methode for sending alarm emails 
+     
     class E_post
     {
         string receiverMail;
@@ -21,7 +24,7 @@ namespace CabinTempArduino
         MailMessage message;                                // to prevent duplicates
         SmtpClient smtpclient;
 
-        public E_post() { }
+        public E_post() { }                                 // Unnecessary, but there for visual aid
 
         public void Send(string emailReceiver, string emailTheme, string emailMessage)
         // Methode for sending email with recipient, theme/subject and message as parameters
