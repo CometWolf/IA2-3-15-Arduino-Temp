@@ -141,8 +141,6 @@ namespace CabinTempArduino
                         continous = false;
                         btnFetch.Text = "Start";
                         cboAnnotation.Enabled = true;
-                        rbtError.Enabled = true;
-                        rbtTemperature.Enabled = true;
                     }
                     break;
                 default:
