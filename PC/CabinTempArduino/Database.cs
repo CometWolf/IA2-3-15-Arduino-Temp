@@ -221,6 +221,7 @@ namespace CabinTempArduino
         /// <returns>UserId</returns>
         public int GetUserID(string username)
         {
+            //Written by: Martin Terjesen
             int index = 0;
             string[,] subscribers = GetSubscribers();
             for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
@@ -241,6 +242,7 @@ namespace CabinTempArduino
         /// <returns>Index</returns>
         public int GetIndex(string username)
         {
+            //Written by: Martin Terjesen
             int index = 0;
             string[,] subscribers = GetSubscribers(); 
             for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
@@ -277,6 +279,7 @@ namespace CabinTempArduino
                 row["Feilmelding"] = message;
                 row["AlarmID"] = alarmID;
                 row["Temperatur"] = temp;
+                row["Status"] = "0";
 
                 myDatatable.AcceptChanges();
                 myDatatable.Rows.Add(row);

@@ -1,7 +1,7 @@
 #include "Relay.h"
 #include "Arduino.h"
 
-byte pin; 
+int pin; 
 bool state; 
 
 bool Relay :: getState() 
@@ -9,7 +9,7 @@ bool Relay :: getState()
 	return state;
 }
 
-Relay :: Relay(byte pin)
+Relay :: Relay(int pin)
 {	
 	this-> pin = pin;
 	pinMode(pin, OUTPUT);

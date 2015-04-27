@@ -13,7 +13,11 @@ using System.Threading;
 using System.Timers;
 
 namespace CabinTempArduino
-{
+{   /*
+        Wrtitten by: Martin Terjesen
+        The main part of the program, with temperature logging and battery surveillance.
+    */
+
     public partial class frmMain : Form
     {
         #region Variables
@@ -36,22 +40,24 @@ namespace CabinTempArduino
         #region ArduinoTemp
         private static string arduinoPort = "";
         private static bool alarmLogged = false;
-        private static string temp = "COM1";
+        private static string temp;
+        string prevTemp = "";
+        double differenceTemp = 0;
         #endregion
 
         #endregion
         #region Disable Visual Styles
         [DllImport("uxtheme", ExactSpelling = true, CharSet = CharSet.Unicode)]
         public extern static Int32 SetWindowTheme(IntPtr hWnd,
-                      String textSubAppName, String textSubIdList);
-
+                      String textSubAppName, String textSubIdList); //Used for reverting back to win98 visual style.
+        
         //Source: http://stackoverflow.com/questions/3893622/windows-98-style-progress-bar 
         #endregion
         #region Initial
         public frmMain()
         {
             InitializeComponent();
-            SetWindowTheme(prbBatteryStatus.Handle, "", ""); //Disable Visual Styles ProgressBar
+            SetWindowTheme(prbBatteryStatus.Handle, "", ""); //Reverts the style of the progressbar to win98, this allows us to change the color of the progressbar.
 
             //GUI
             if (cboAnnotation.Text == "Benevning")
@@ -72,7 +78,6 @@ namespace CabinTempArduino
         Database myDatabase = new Database("ArduinoTemperaturMåling.accdb");
         FurnaceController Temp;
         E_post mail = new E_post();
-        Random rand = new Random();
         #endregion
         #region Open Limits
         private void btnLimits_Click(object sender, EventArgs e)
@@ -146,7 +151,7 @@ namespace CabinTempArduino
         #region BatterySurveillance
         private void tmrBatteryStatus_Tick(object sender, EventArgs e)
         {
-            //Checks the batterylevel
+            //Checks the batterypercentage. Logs alarm and sends emails if the percentage goes under certain points.
             try
             {
                 prbBatteryStatus.Value = Convert.ToInt32(SystemInformation.PowerStatus.BatteryLifePercent * 100);
@@ -201,13 +206,14 @@ namespace CabinTempArduino
             }
             catch(Exception ex)
             {
-                LogAlarmAndSendEmail(ex.GetType().ToString(), ex.Message, "004");
+                LogAlarmAndSendEmailException(ex.GetType().ToString(), ex.Message, "004");
             }
             //END CRITICAL
         }
         #endregion BatterySurvailence
         private void cboAnnotation_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //GUI //Changes GUI depeding on what cboAnnotation shows.
             if (cboAnnotation.SelectedIndex == 3)
             {
                 rbtError.Enabled = true;
@@ -226,6 +232,7 @@ namespace CabinTempArduino
                 txtFetchLast.ReadOnly = false;
                 btnFetch.Text = "Hent";
             }
+            //END GUI
         }
         #region TemperatureLogging
         private void tmrLogTemperature_Tick(object sender, EventArgs e)
@@ -241,8 +248,33 @@ namespace CabinTempArduino
                 if(Temp != null)
                 {
                     temp = Temp.GetTemp();
-                }   
-                
+                }
+
+                if (prevTemp == "") 
+                    prevTemp = temp;
+                differenceTemp = Convert.ToDouble(prevTemp.Replace(".",",")) - Convert.ToDouble(temp.Replace(".",",")); //Calulates the difference between the new temperature and the previous one.
+
+                if (differenceTemp > 10) //If the difference is higher than 10, the temperaturesensor is inaccurate and possibly damaged.
+                {
+                    txtCurrent.Text = "Temp. feil";
+                    throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
+                }
+                else if (differenceTemp < -10) //If the difference is lower than -10, the temperaturesensor is inaccurate and possibly damaged.
+                {
+                    txtCurrent.Text = "Temp. feil";
+                    throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
+                }
+                else if (Convert.ToDouble(temp.Replace(".", ",")) <= -50) //If the temperature is lower or equal to the lowest value possible, the plus connector on the sensor has been broken.
+                {
+                    txtCurrent.Text = "Temp. feil";
+                    throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
+                }
+                else if (Convert.ToDouble(temp.Replace(".", ",")) > 100) //If the temperature is higher than the highest value possible, the minus or analog connector on the sensor is broken.
+                {
+                    txtCurrent.Text = "Temp. feil";
+                    throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
+                }
+
                 txtCurrent.Text = temp;
 
                 //Send new limits to the Arduino.
@@ -298,7 +330,7 @@ namespace CabinTempArduino
                 }
                 else if (settings[7] == "true") //Checks if a custom interval has been used.
                 {
-                    if (interval == 1440)
+                    if (interval == 1440) //Checks if the interval is equal to 24hrs.
                     {
                         if (DateTime.Now.ToString("HH:mm") == settings[6] && !logged)
                         {
@@ -308,7 +340,7 @@ namespace CabinTempArduino
                         else if ((settings[8] == "true") && (Convert.ToInt32(DateTime.Now.ToString("mm")) == loggedMinute + 1))
                             logged = false;
                     }
-                    else if (DateTime.Now.ToString("HH:mm") == settings[6] && interval != 1440)
+                    else if (DateTime.Now.ToString("HH:mm") == settings[6] && interval != 1440) //Normal custom logging.
                     {
                         NextLogTime();
                         TemperatureLogging();
@@ -316,13 +348,13 @@ namespace CabinTempArduino
                 }
                 //END Logging
             }
-            catch(NullReferenceException error)
+            catch(NullReferenceException error) //Temp = null
             {
                 LogAlarmAndSendEmailException(error.GetType().ToString(), error.Message, "005");
                 tmrLogTemperature.Stop();
-                MessageBox.Show(error.GetType().ToString() + "\r\n" + error.Message + "\r\n" + "Vennligst restart programmet");
+                MessageBox.Show(error.GetType().ToString() + "\r\n" + error.Message + "\r\n" + "Programmet må restartes før videre bruk.");
             }
-            catch (System.IO.IOException IOex)
+            catch (System.IO.IOException IOex) //The connection between the computer and the Arduino is broken.
             {
                 LogAlarmAndSendEmailException(IOex.GetType().ToString(), IOex.Message, "006");
                 txtCurrent.Text = "Mistet kontakt";
@@ -333,7 +365,7 @@ namespace CabinTempArduino
             {
                 LogAlarmAndSendEmailException(ex.GetType().ToString(), ex.Message, "007");
                 tmrLogTemperature.Stop();
-                MessageBox.Show(ex.GetType().ToString() +"\r\n"+ ex.Message + "\r\n" + "Vennligst restart programmet");
+                MessageBox.Show(ex.GetType().ToString() +"\r\n"+ ex.Message + "\r\n" + "Programmet må restartes før videre bruk.");
             }
         }
         #endregion
@@ -341,12 +373,13 @@ namespace CabinTempArduino
         #region Methods
         private void TemperatureLogging()
         {
+            //Logs a temperature and puts the temperature into the rich textbox if continous is chosen.
             myDatabase.LogTemperature(Temp.GetTemp());
             if(continous)
             {
                 string[,] lastValue;
                 lastValue = myDatabase.GetTemperatureLast();
-                FetchTemp(lastValue);
+                FetchContinous(lastValue, "Tid" + "\t\t\t" + "Temperatur" + "\r\n");
                 ChartAddPoint(lastValue[0, 0], lastValue[0, 1]);
             }
             logged = true;
@@ -354,7 +387,7 @@ namespace CabinTempArduino
         public void NewInterval()
         {
             //Logs a temperature when a new interval is set.
-            myDatabase.LogTemperature(temp);
+            myDatabase.LogTemperature(Temp.GetTemp());
             NextLogTime();
             logged = false;
         }
@@ -384,27 +417,29 @@ namespace CabinTempArduino
             nextHours = Convert.ToString(hoursNow + hours);
             nextMinutes = Convert.ToString(minutesNow + minutes);
 
-            if (Convert.ToInt32(nextHours) >= 24)
-                nextHours = (Convert.ToInt32(nextHours) % 24).ToString();
+            if (Convert.ToInt32(nextHours) >= 24) 
+                nextHours = (Convert.ToInt32(nextHours) % 24).ToString(); //Resets the hours if it goes above 24:00, and sets the new time as the rest value.
             if (Convert.ToInt32(nextMinutes) >= 60)
-                nextMinutes = (Convert.ToInt32(nextMinutes) % 60).ToString();
+                nextMinutes = (Convert.ToInt32(nextMinutes) % 60).ToString(); //Resets the minutes if it goes above 60, and sets the new time as the rest value.
             if (nextHours.Length == 1)
-                nextHours = "0" + nextHours;
+                nextHours = "0" + nextHours; //Checks if the value it less than two digits and inserts a zero if it is.
             if (nextMinutes.Length == 1)
                 nextMinutes = "0" + nextMinutes;
 
-            nextLog = nextHours + ":" + nextMinutes;
+            nextLog = nextHours + ":" + nextMinutes; //Puts a time togheter with the right format.
 
             myDatabase.UpdateSetting(nextLog, 6, 0);
         }
         private void FetchTemp(string[,] values, string header = "Tid" + "\t\t\t" + "Temperatur" + "\r\n")
         {
+            //Written by: Jørund Marthinsen
             //Fetches temperatures from the database, by using the FetchAlarm method.
             FetchAlarm(values, header);
             ChartUpdateTemp(values);
         }
         private void FetchAlarm(string[,] values, string header = "Tid" + "\t\t\t" + "ID" + "\t" + "Temp" + "\t" + "Beskrivelse" + "\r\n")
         {
+            //Written by: Jørund Marthinsen
             //Fetches alarms from the database.
             rtbDatabaseValues.Clear();
             rtbDatabaseValues.Text = header;
@@ -418,12 +453,32 @@ namespace CabinTempArduino
                 rtbDatabaseValues.AppendText("\r\n");
             }
         }
+        private void FetchContinous(string[,] addValues, string header)
+        {
+            //Written by: Jørund Marthinsen
+            //Fetches values continously.
+            rtbDatabaseValues.Lines[0] = header;
+            for (int i = 0; i <= addValues.GetUpperBound(0); i++)
+            {
+                for (int j = 0; j <= addValues.GetUpperBound(1); j++)
+                {
+                    rtbDatabaseValues.AppendText(addValues[i, j]);
+                    rtbDatabaseValues.AppendText("\t");
+                }
+                rtbDatabaseValues.AppendText("\r\n");
+            }
+        }
         private void ChartUpdateTemp(string[,] xy)
         {
+            //Written by: Jørund Marthinsen
+            //Shows fetched values in the chart.
             DateTime myDate;
             double temp;
 
             chartFetchedValues.Series[0].Points.Clear();
+
+
+            chartFetchedValues.Series[0].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
 
 
             for (int i = 0; i < xy.GetUpperBound(0); i++)
@@ -436,12 +491,21 @@ namespace CabinTempArduino
 
                 chartFetchedValues.Series[0].Points.AddXY(myDate, temp);
             }
+
+
             chartFetchedValues.Series[0].Sort(System.Windows.Forms.DataVisualization.Charting.PointSortOrder.Ascending, "X");
+            //if (chartFetchedValues.Series[0].Points.Count > 0)
+            //{
+                //if (chartFetchedValues.Series[0].Points[0].XValue > DateTime.Now.AddDays(-2.0).ToOADate()) chartFetchedValues.Series[0].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Time;
+            //}
             chartFetchedValues.Refresh();
         }
         private void ChartAddPoint(string x, string y)
         {
+            //Written by: Jørund Marthinsen
+            //Adds points to the chart continously.
             double myDouble;
+            y = y.Replace('.', ',');
             double.TryParse(y, out myDouble);
 
             chartFetchedValues.Series[0].Points.AddXY(
@@ -459,20 +523,17 @@ namespace CabinTempArduino
             {
                 mail.Send(emails[i, 5], subject, message);
             }
-            if (Temp.GetTemp() != null)
-                myDatabase.LogAlarm(subject, alarmID, Temp.GetTemp());
-            else if (Temp.GetTemp() == null)
-                myDatabase.LogAlarm(subject, alarmID, "0");
+            myDatabase.LogAlarm(subject, alarmID, temp);
         }
         private void LogAlarmAndSendEmailException(string subject, string message, string alarmID)
         {
-            //Sends email and logs alarm/Exception. Where Temp.GetTemp() would be null.
+            //Sends email and logs alarm/Exception.
             string[,] emails = myDatabase.GetSubscribers();
             for (int i = 0; i <= emails.GetUpperBound(0); i++)
             {
                 mail.Send(emails[i, 5], subject, message);
             }
-            myDatabase.LogAlarm(subject, alarmID, temp);
+            myDatabase.LogAlarm(subject + ": " + message, alarmID, temp);
         }
         public void SetPortArduino(string port)
         {
@@ -481,8 +542,7 @@ namespace CabinTempArduino
                              Convert.ToDouble(settings[2]), Convert.ToDouble(settings[3]), 9600, port);
             arduinoPort = settings[8];
             StartUPlog();
-            tmrLogTemperature.Start();
-
+            tmrLogTemperature.Start(); //Logging starts.
         }
         #endregion
 
@@ -497,9 +557,9 @@ namespace CabinTempArduino
                 StartUPlog();
 
             }
-            catch (Exception)
+            catch (System.IO.IOException)
             {
-                tmrLogTemperature.Stop();
+                tmrLogTemperature.Stop(); //If not, the port must be manually entered in frmSettings.
                 txtCurrent.Text = "Velg port i innstillinger";
             }
         }

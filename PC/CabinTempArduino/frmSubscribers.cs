@@ -10,6 +10,10 @@ using System.Windows.Forms;
 
 namespace CabinTempArduino
 {
+    /*
+        Wrtitten by: Martin Terjesen
+        Adds, edits and deletes subscribers.
+    */
     public partial class frmSubscribers : Form
     {
         #region Initial
@@ -75,8 +79,8 @@ namespace CabinTempArduino
             bool username = false;
             bool lengthPassword = false;
             bool uniqueEmail = false;
-            bool email = MatchingValues(txtEmail.Text, txtConfirmEmail.Text, "E-Post");
-            bool password = MatchingValues(txtPassword.Text, txtConfirmPassword.Text, "Passord");
+            bool email = MatchingValues(txtEmail.Text, txtConfirmEmail.Text, "E-Post"); //Checks if the emails are matching
+            bool password = MatchingValues(txtPassword.Text, txtConfirmPassword.Text, "Passord"); //Checks if the password are matching
             if (password)
             {
                 lengthPassword = PasswordLength(txtPassword.Text, txtConfirmPassword.Text);
@@ -85,7 +89,7 @@ namespace CabinTempArduino
             {
                 if (cboSelectSubscriber.Text == "Ny bruker")
                 {
-                    username = Unique(txtUsername.Text,3,"Brukernavn");
+                    username = Unique(txtUsername.Text,3,"Brukernavn"); //Checks the uniqueness of Username and email.
                     uniqueEmail = Unique(txtEmail.Text, 5, "E-Post");
 
                     if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
@@ -96,13 +100,7 @@ namespace CabinTempArduino
                         ClearAllTextBoxes();
                         MessageBox.Show("Ny bruker lagret");
 
-                        subscribers = myDatabase.GetSubscribers();
-                        cboSelectSubscriber.Items.Clear();
-                        cboSelectSubscriber.Items.Add("Ny bruker");
-                        for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
-                        {
-                            cboSelectSubscriber.Items.Add(subscribers[i, 3]);
-                        }
+                        FillCboWithUsers();
                         cboSelectSubscriber.Text = "Ny bruker";
                     }
                     else if ((txtFirstName.Text == "") || (txtSurName.Text == "") || (txtPhone.Text == "") || (txtUsername.Text == "") ||
@@ -114,9 +112,9 @@ namespace CabinTempArduino
                     int userID = myDatabase.GetUserID(cboSelectSubscriber.Text);
                     int index = myDatabase.GetIndex(cboSelectSubscriber.Text);
 
-                    if (txtUsername.Text != subscribers[index, 3])
-                        username = Unique(txtUsername.Text,3,"Brukernavn");
-                    if(txtEmail.Text != subscribers[index,5])
+                    if (txtUsername.Text != subscribers[index, 3]) //Checks if the same username is being used.
+                        username = Unique(txtUsername.Text,3,"Brukernavn"); //If not a unique test is perfomed.
+                    if(txtEmail.Text != subscribers[index,5]) //The same happens with email.
                         uniqueEmail = Unique(txtEmail.Text, 5, "E-Post");
 
                     if ((txtFirstName.Text != "") && (txtSurName.Text != "") && (txtPhone.Text != "") && (txtUsername.Text != "") && password
@@ -126,18 +124,12 @@ namespace CabinTempArduino
                         myDatabase.UpdateSubscriber(userID, txtSurName.Text, txtFirstName.Text, txtUsername.Text, txtPassword.Text, txtEmail.Text, txtPhone.Text);
                         MessageBox.Show("Endringer lagret");
 
-                        subscribers = myDatabase.GetSubscribers();
-                        cboSelectSubscriber.Items.Clear();
-                        cboSelectSubscriber.Items.Add("Ny bruker");
-                        for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
-                        {
-                            cboSelectSubscriber.Items.Add(subscribers[i, 3]);
-                        }
+                        FillCboWithUsers();
                         cboSelectSubscriber.Text = txtUsername.Text;
                     }
                     else if ((txtFirstName.Text == "") || (txtSurName.Text == "") || (txtPhone.Text == "") || (txtUsername.Text == "") ||
                         (txtEmail.Text == "") || (txtConfirmEmail.Text == "") || (txtPassword.Text == "") || (txtConfirmPassword.Text == ""))
-                        MessageBox.Show("Ftll i alle tekstbokser");
+                        MessageBox.Show("Fyll i alle tekstbokser");
                 }
             }
             catch(Exception ex)
@@ -156,14 +148,7 @@ namespace CabinTempArduino
                     myDatabase.DeleteSubscriber(index);
                 }
 
-                subscribers = myDatabase.GetSubscribers();
-                cboSelectSubscriber.Items.Clear();
-                cboSelectSubscriber.Items.Add("Ny bruker");
-                for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
-                {
-                    cboSelectSubscriber.Items.Add(subscribers[i, 3]);
-                }
-
+                FillCboWithUsers();
 
                 ClearAllTextBoxes();
                 cboSelectSubscriber.Text = "Ny bruker";
@@ -258,6 +243,17 @@ namespace CabinTempArduino
                 MessageBox.Show(ex.Message);
             }
             return isUnique;
+        }
+        private void FillCboWithUsers()
+        {
+            //Fills cboSelectSubsribers with updated usernames.
+            subscribers = myDatabase.GetSubscribers();
+            cboSelectSubscriber.Items.Clear();
+            cboSelectSubscriber.Items.Add("Ny bruker");
+            for (int i = 0; i <= subscribers.GetUpperBound(0); i++)
+            {
+                cboSelectSubscriber.Items.Add(subscribers[i, 3]);
+            }
         }
         #endregion
     }

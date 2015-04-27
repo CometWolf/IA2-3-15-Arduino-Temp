@@ -15,9 +15,14 @@ namespace WebApplication6.Controllers
 {
     public class LogController : Controller
     {
+<<<<<<< HEAD:Nettside/Controllers/LoggController.cs
+        Database database = new Database("C:\\Users\\Martin\\Documents\\GitHub\\IA2-3-15-Arduino-Temp\\PC\\CabinTempArduino\\bin\\debug\\ArduinoTemperaturmåling.accdb");
+        static LoggModel model = new LoggModel();
+=======
         //database path
         Database database = new Database("C:\\Users\\Gustav\\Documents\\GitHub\\IA2-3-15-Arduino-Temp\\Nettside\\ArduinoTemperaturmåling.accdb");
         static LogModel model = new LogModel();
+>>>>>>> origin/master:Nettside/Controllers/LogController.cs
        
         // GET: Logg
         public ActionResult Index()

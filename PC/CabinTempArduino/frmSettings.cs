@@ -11,10 +11,14 @@ using System.IO.Ports;
 
 namespace CabinTempArduino
 {
+    /*
+        Wrtitten by: Martin Terjesen  
+        Changes Arduino port and interval.
+    */
     public partial class frmSettings : Form
     {
         Database settings = new Database("ArduinoTemperaturMåling.accdb");
-        frmMain main = (frmMain)Application.OpenForms["frmMain"];
+        frmMain main = (frmMain)Application.OpenForms["frmMain"]; //Allows the use of methods in frmMain without creating a new instance.
         public frmSettings()
         {
             InitializeComponent();
@@ -30,7 +34,7 @@ namespace CabinTempArduino
             string[] serialPortNames = SerialPort.GetPortNames();
             foreach (string port in serialPortNames)
             {
-                cboComPort.Items.Add(port);
+                cboComPort.Items.Add(port); //Adds ports with serialCom attached in the combobox.
             }
             //END Valid ports
         }
@@ -69,14 +73,14 @@ namespace CabinTempArduino
             {
                 if (cboComPort.Text != "Port")
                 {
-                    settings.UpdateSetting(cboComPort.Text, 8, 0);
+                    settings.UpdateSetting(cboComPort.Text, 8, 0); //Saves the port in the database, for use the next time the program starts.
                     main.SetPortArduino(cboComPort.Text);
                     MessageBox.Show("Port endret.");
                 }
             }
             catch(UnauthorizedAccessException)
             {
-                MessageBox.Show("Porten er allerede i bruk.");
+                MessageBox.Show("Porten er allerede i bruk."+"\r\n"+"Hvis dette er feil: Restart og eventuelt sett inn USB-kabel på nytt.");
             }
             catch(Exception ex)
             {
@@ -103,7 +107,7 @@ namespace CabinTempArduino
 
                 if (cboPreset.SelectedIndex == 0)
                 {
-                    if (usedValue[5] == "60")
+                    if (usedValue[5] == "60" && usedValue[7] == "false")
                         MessageBox.Show("Intervall allerede i bruk.");
                     else
                     {
@@ -113,7 +117,7 @@ namespace CabinTempArduino
                 }
                 else if (cboPreset.SelectedIndex == 1)
                 {
-                    if (usedValue[5] == "30")
+                    if (usedValue[5] == "30" && usedValue[7] == "false")
                         MessageBox.Show("Intervall allerede i bruk.");
                     else
                     {
@@ -122,7 +126,7 @@ namespace CabinTempArduino
                 }
                 else if (cboPreset.SelectedIndex == 2)
                 {
-                    if (usedValue[5] == "15")
+                    if (usedValue[5] == "15" && usedValue[7] == "false")
                         MessageBox.Show("Intervall allerede i bruk");
                     else
                     {
@@ -144,12 +148,12 @@ namespace CabinTempArduino
                             {
                                 if (value > 24)
                                     MessageBox.Show("Ikke gå over 24 timer.");
-                                else if (Convert.ToString(value * 60) == usedValue[5])
+                                else if (Convert.ToString(value * 60) == usedValue[5] && usedValue[7] == "true")
                                     MessageBox.Show("Intervall allerede i bruk.");
                                 else if (value * 60 == 1440)
                                 {
                                     settings.UpdateSetting("1440", 5, 0);
-                                    main.NextLogTime();
+                                    main.NextLogTime(); //Since it's 24hrs to next log only a log time is needed, a log will automatically be executed since it's the same time as now the next day.
                                     settings.UpdateSetting("true", 7, 0);
                                     MessageBox.Show("Intervall endret.");
                                 }
@@ -162,12 +166,12 @@ namespace CabinTempArduino
                             {
                                 if (value > 1440)
                                     MessageBox.Show("Ikke gå over 24 timer.");
-                                else if (Convert.ToString(value) == usedValue[5])
+                                else if (Convert.ToString(value) == usedValue[5] && usedValue[7] == "true")
                                     MessageBox.Show("Intervall allerede i bruk.");
                                 else if (value == 1440)
                                 {
                                     settings.UpdateSetting("1440", 5, 0);
-                                    main.NextLogTime();
+                                    main.NextLogTime(); //Since it's 24hrs to next log only a log time is needed, a log will automatically be executed since it's the same time as now the next day.
                                     settings.UpdateSetting("true", 7, 0);
                                     MessageBox.Show("Intervall endret.");
                                 }
@@ -182,13 +186,18 @@ namespace CabinTempArduino
                         MessageBox.Show("Huk av for 'Timer' eller 'Minutter'");
                 }
             }
+            catch(NullReferenceException)
+            {
+                MessageBox.Show("Arduino må kobles til og port må settes før logging starter.");
+            }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.GetType().ToString() + "\r\n" + ex.Message);
             }
         }
         private void SetNewInterval(string newInterval, string custom)
         {
+            //Sets the new interval and makes sure the temperature is logged at the same time. 
             settings.UpdateSetting(newInterval, 5, 0);
             settings.UpdateSetting(custom, 7, 0);
             main.NewInterval();

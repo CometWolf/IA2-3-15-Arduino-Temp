@@ -1,9 +1,4 @@
-﻿/*
-  Written by: Haakon N. Unelsrød
-  Home page controller. Handles retrieval and updates of program settings in the database.
-*/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,10 +12,9 @@ using Account;
 namespace WebApplication6.Controllers {
     public class HomeController : Controller {
         //path to database
-        private Database database = new Database("C:\\Users\\Haakon\\Desktop\\IA2-3-15-Arduino-Temp\\Nettside\\ArduinoTemperaturmåling.accdb");
+        private Database database = new Database("C:\\Users\\Martin\\Documents\\GitHub\\IA2-3-15-Arduino-Temp\\PC\\CabinTempArduino\\bin\\debug\\ArduinoTemperaturmåling.accdb");
         
-        //GET
-        //Retrieves current program settings from database
+        //index view
         public ActionResult Index() {
             if (!Account.User.Authorized) { //Check if user is logged in
                 //Not logged in, redirect to login page
@@ -53,7 +47,7 @@ namespace WebApplication6.Controllers {
 
         }
 
-        //Get
+        //error view
         public ActionResult Error() {
             return View();
         }
@@ -66,21 +60,21 @@ namespace WebApplication6.Controllers {
         }
 
         [HttpPost]
-        public ActionResult SignAlarm(HomeViewModel model) {
+        public void SignAlarm(HomeViewModel model) {
             database.SignAlarm(model.AlarmId);
             model.alarmHide = "hidden";
-            return RedirectToAction("Index", "Home");
+            Response.Redirect("~/");
         }
 
         [HttpPost]
         //upload settings to database
-        public ActionResult UpdateSettings(HomeViewModel model) {
+        public void UpdateSettings(HomeViewModel model) {
             database.UpdateSetting(model.AlarmUpperLimit, 1, 0);
             database.UpdateSetting(model.AlarmLowerLimit, 4, 0);
             database.UpdateSetting(model.LogInterval, 5, 0);
             database.UpdateSetting(model.FurnaceUpperLimit, 2, 0);
             database.UpdateSetting(model.FurnaceLowerLimit, 3, 0);
-            return RedirectToAction("Index", "Home");
+            Response.Redirect("~/");
         }
     }
 }

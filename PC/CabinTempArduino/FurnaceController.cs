@@ -7,6 +7,14 @@ using System.Threading.Tasks;
 
 namespace CabinTempArduino
 {
+     /*
+     * Written by: Øystein Lorentzen Rød
+     * 
+     * This class uses the Arduino class as its base. 
+     * This class is for fetching the temperature readings from the arduino,
+     * checking the alarm status and setting upper and lower limits for 
+     * alarm and furnace.
+     */
     class FurnaceController  : Arduino
     {
         public FurnaceController(double alarmUp, double alarmLow, 

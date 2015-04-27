@@ -10,6 +10,10 @@ using System.Windows.Forms;
 
 namespace CabinTempArduino
 {
+    /*
+        Wrtitten by: Martin Terjesen  
+        Changes the limits of the Arduino.
+    */
     public partial class frmLimits : Form
     {
         #region Objects
@@ -40,11 +44,8 @@ namespace CabinTempArduino
         private void btnSetLimit_Click(object sender, EventArgs e)
         {
             //Updates limits
-            int interval = 0;
-
-            int.TryParse(txtValue.Text, out interval);
-
-            if (interval >= 1)
+            double value = 0;
+            if (double.TryParse(txtValue.Text, out value))
             {
                 try
                 {
@@ -70,7 +71,7 @@ namespace CabinTempArduino
                     MessageBox.Show(ex.Message);
                 }
             }
-            else MessageBox.Show("Verdi må være et heltall større enn 0");
+            else MessageBox.Show("Verdi må være et tall");
         }
 
         private void cboLimitType_SelectedIndexChanged(object sender, EventArgs e)

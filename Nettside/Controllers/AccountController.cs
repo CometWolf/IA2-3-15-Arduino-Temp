@@ -1,9 +1,4 @@
-﻿/*
-  Written by: Haakon N. Unelsrød
-  Login page controller. Handles user credentials and authorization.
-*/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,7 +12,7 @@ namespace WebApplication6.Controllers
     [Authorize]
     public class AccountController : Controller {
         //Login database
-        private Database database = new Database("C:\\Users\\Haakon\\Desktop\\IA2-3-15-Arduino-Temp\\Nettside\\ArduinoTemperaturmåling.accdb");
+        private Database database = new Database("C:\\Users\\Martin\\Documents\\GitHub\\IA2-3-15-Arduino-Temp\\PC\\CabinTempArduino\\bin\\debug\\ArduinoTemperaturmåling.accdb");
 
         // GET: /Account/Login
         [AllowAnonymous]
