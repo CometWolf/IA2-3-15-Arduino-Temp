@@ -18,17 +18,18 @@ String furnaceUpper = "0";
 String received;
 String action;
 String value;
+
 float currentMillis;
 float alarmUpperLimit;
 float alarmLowerLimit;
 float furnaceUpperLimit;
 float furnaceLowerLimit;
 float tempValue;
-char temp[5];
-char displayChar[5];
 float previousMillis = 0;
 float interval = 1000;
 float previousTemp; 
+
+char temp[5];
 
 PC pc = PC();
 TempSensor tempSensor(tempPin);
