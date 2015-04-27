@@ -5,7 +5,7 @@
 
 #include "TempSensor.h"
 
-TempSensor::TempSensor(int pin,int min, int max)
+TempSensor::TempSensor(byte pin,int min, int max)
 {
 	this->pin = pin;
   this->min = min;

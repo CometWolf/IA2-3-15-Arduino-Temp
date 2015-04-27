@@ -11,9 +11,9 @@
 class Relay
 {
 	public :
-	int pin;
+	byte pin;
 	bool getState();
-	Relay(int pin);
+	Relay(byte pin);
 	void setState(bool state);
 	
 

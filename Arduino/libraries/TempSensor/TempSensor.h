@@ -22,7 +22,7 @@ class TempSensor
 	  
 	  float getTemp();
 	  
-	  TempSensor(int pin,int min, int max);
+	  TempSensor(int byte,int min, int max);
 
 };
 
