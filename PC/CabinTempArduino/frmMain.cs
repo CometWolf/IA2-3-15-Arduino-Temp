@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+     Wrtitten by: Martin Terjesen
+     The main part of the program, with temperature logging, battery surveillance and fetching of values.
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,11 +17,7 @@ using System.Threading;
 using System.Timers;
 
 namespace CabinTempArduino
-{   /*
-        Wrtitten by: Martin Terjesen
-        The main part of the program, with temperature logging, battery surveillance and fetching of values.
-    */
-
+{
     public partial class frmMain : Form
     {
         #region Variables

@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+    Wrtitten by: Martin Terjesen  
+    Change Arduino port and interval.
+*/
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,10 +15,6 @@ using System.IO.Ports;
 
 namespace CabinTempArduino
 {
-    /*
-        Wrtitten by: Martin Terjesen  
-        Change Arduino port and interval.
-    */
     public partial class frmSettings : Form
     {
         Database settings = new Database("ArduinoTemperaturMåling.accdb");

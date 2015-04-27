@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+    Wrtitten by: Martin Terjesen  
+    Change the limits of the Arduino.
+*/
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,10 +14,6 @@ using System.Windows.Forms;
 
 namespace CabinTempArduino
 {
-    /*
-        Wrtitten by: Martin Terjesen  
-        Change the limits of the Arduino.
-    */
     public partial class frmLimits : Form
     {
         #region Objects
