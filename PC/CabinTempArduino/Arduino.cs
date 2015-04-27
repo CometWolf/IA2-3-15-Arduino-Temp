@@ -56,7 +56,7 @@ namespace CabinTempArduino
             receivedData = true;
         }
 
-        public void Send(string text) //Sending out information.
+        public void Send(string text) //Sending information.
         {
             try
             {
