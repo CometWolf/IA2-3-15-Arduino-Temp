@@ -80,7 +80,7 @@
             this.MaximizeBox = false;
             this.Name = "frmLimits";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Grenser";
+            this.Text = "Grenseverdier";
             this.ResumeLayout(false);
             this.PerformLayout();
 

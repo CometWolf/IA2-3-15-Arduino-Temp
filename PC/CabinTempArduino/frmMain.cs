@@ -253,22 +253,27 @@ namespace CabinTempArduino
 
                 if (prevTemp == "") 
                     prevTemp = temp;
-                differenceTemp = Convert.ToDouble(prevTemp.Replace(".",",")) - Convert.ToDouble(temp.Replace(".",",")); //Calulates the difference between the new temperature and the previous one.
+                else if (temp != prevTemp)
+                {
+                    differenceTemp = Convert.ToDouble(prevTemp.Replace(".", ",")) - Convert.ToDouble(temp.Replace(".", ",")); //Calulates the difference between the new temperature and the previous one.
 
-                if (differenceTemp > 10) //If the difference is higher than 10, the temperaturesensor is inaccurate and possibly damaged. Minus or signal connector broken.
-                {
-                    txtCurrent.Text = "Temp. feil";
-                    throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
-                }
-                else if (differenceTemp < -10) //If the difference is lower than -10, the temperaturesensor is inaccurate and possibly damaged. Minus or signal connector broken.
-                {
-                    txtCurrent.Text = "Temp. feil";
-                    throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
-                }
-                else if (Convert.ToDouble(temp.Replace(".", ",")) <= -50) //If the temperature is lower or equal to the lowest value possible, the plus connector on the sensor has been broken.
-                {
-                    txtCurrent.Text = "Temp. feil";
-                    throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
+                    if (differenceTemp > 10) //If the difference is higher than 10, the temperaturesensor is inaccurate and possibly damaged. Minus or signal connector broken.
+                    {
+                        txtCurrent.Text = "Temp. feil";
+                        throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
+                    }
+                    else if (differenceTemp < -10) //If the difference is lower than -10, the temperaturesensor is inaccurate and possibly damaged. Minus or signal connector broken.
+                    {
+                        txtCurrent.Text = "Temp. feil";
+                        throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
+                    }
+                    else if (Convert.ToDouble(temp.Replace(".", ",")) <= -50) //If the temperature is lower or equal to the lowest value possible, the plus connector on the sensor has been broken.
+                    {
+                        txtCurrent.Text = "Temp. feil";
+                        throw new Exception("Temperaturføleren er ustabil, muligens ødelagt. Må sjekkes.");
+                    }
+                    
+                    prevTemp = temp;
                 }
 
                 txtCurrent.Text = temp;

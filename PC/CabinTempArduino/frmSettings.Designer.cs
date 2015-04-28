@@ -28,34 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grbLogging = new System.Windows.Forms.GroupBox();
             this.btnInterval = new System.Windows.Forms.Button();
             this.rbtMinutes = new System.Windows.Forms.RadioButton();
             this.rbtHours = new System.Windows.Forms.RadioButton();
             this.txtCustomInterval = new System.Windows.Forms.TextBox();
             this.cboPreset = new System.Windows.Forms.ComboBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.grbPort = new System.Windows.Forms.GroupBox();
             this.btnComPort = new System.Windows.Forms.Button();
             this.cboComPort = new System.Windows.Forms.ComboBox();
-            this.intervalLockDown = new System.Windows.Forms.Timer(this.components);
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.grbLogging.SuspendLayout();
+            this.grbPort.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // grbLogging
             // 
-            this.groupBox1.Controls.Add(this.btnInterval);
-            this.groupBox1.Controls.Add(this.rbtMinutes);
-            this.groupBox1.Controls.Add(this.rbtHours);
-            this.groupBox1.Controls.Add(this.txtCustomInterval);
-            this.groupBox1.Controls.Add(this.cboPreset);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(223, 95);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Intervall logging";
+            this.grbLogging.Controls.Add(this.btnInterval);
+            this.grbLogging.Controls.Add(this.rbtMinutes);
+            this.grbLogging.Controls.Add(this.rbtHours);
+            this.grbLogging.Controls.Add(this.txtCustomInterval);
+            this.grbLogging.Controls.Add(this.cboPreset);
+            this.grbLogging.Location = new System.Drawing.Point(12, 12);
+            this.grbLogging.Name = "grbLogging";
+            this.grbLogging.Size = new System.Drawing.Size(223, 95);
+            this.grbLogging.TabIndex = 0;
+            this.grbLogging.TabStop = false;
+            this.grbLogging.Text = "Intervall logging";
             // 
             // btnInterval
             // 
@@ -113,16 +111,16 @@
             this.cboPreset.Text = "Fohåndsinnstillinger";
             this.cboPreset.SelectedIndexChanged += new System.EventHandler(this.cboPreset_SelectedIndexChanged);
             // 
-            // groupBox2
+            // grbPort
             // 
-            this.groupBox2.Controls.Add(this.btnComPort);
-            this.groupBox2.Controls.Add(this.cboComPort);
-            this.groupBox2.Location = new System.Drawing.Point(12, 113);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(223, 54);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "COM Port";
+            this.grbPort.Controls.Add(this.btnComPort);
+            this.grbPort.Controls.Add(this.cboComPort);
+            this.grbPort.Location = new System.Drawing.Point(12, 113);
+            this.grbPort.Name = "grbPort";
+            this.grbPort.Size = new System.Drawing.Size(223, 54);
+            this.grbPort.TabIndex = 1;
+            this.grbPort.TabStop = false;
+            this.grbPort.Text = "COM Port";
             // 
             // btnComPort
             // 
@@ -150,31 +148,30 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(250, 178);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.grbPort);
+            this.Controls.Add(this.grbLogging);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.Name = "frmSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Innstillinger";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
+            this.grbLogging.ResumeLayout(false);
+            this.grbLogging.PerformLayout();
+            this.grbPort.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grbLogging;
         private System.Windows.Forms.TextBox txtCustomInterval;
         private System.Windows.Forms.ComboBox cboPreset;
         private System.Windows.Forms.Button btnInterval;
         private System.Windows.Forms.RadioButton rbtMinutes;
         private System.Windows.Forms.RadioButton rbtHours;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox grbPort;
         private System.Windows.Forms.Button btnComPort;
         private System.Windows.Forms.ComboBox cboComPort;
-        private System.Windows.Forms.Timer intervalLockDown;
     }
 }
